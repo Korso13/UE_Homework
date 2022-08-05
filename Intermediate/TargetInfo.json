@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "Test3P_Proj",
+			"Path": "F:\\UE_projects\\Test3P_Proj\\Source\\Test3P_Proj.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "Test3P_ProjEditor",
+			"Path": "F:\\UE_projects\\Test3P_Proj\\Source\\Test3P_ProjEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

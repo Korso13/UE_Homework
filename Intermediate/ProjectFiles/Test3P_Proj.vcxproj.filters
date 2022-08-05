@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Test3P_Proj.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{41F36D00-C8CC-41F7-9AFC-EAC730132BAF}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Test3P_Proj.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\Test3P_ProjEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{C7E08BA2-7127-4A6A-8019-DA21B49B309C}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\Test3P_Proj">
+      <UniqueIdentifier>{D590E626-117E-4F1E-9FB0-B1EAC37EAB16}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Test3P_Proj\Test3P_Proj.Build.cs">
+      <Filter>Source\Test3P_Proj</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\Test3P_Proj\Test3P_Proj.cpp">
+      <Filter>Source\Test3P_Proj</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Test3P_Proj\Test3P_Proj.h">
+      <Filter>Source\Test3P_Proj</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Test3P_Proj\Test3P_ProjCharacter.cpp">
+      <Filter>Source\Test3P_Proj</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Test3P_Proj\Test3P_ProjCharacter.h">
+      <Filter>Source\Test3P_Proj</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Test3P_Proj\Test3P_ProjGameMode.cpp">
+      <Filter>Source\Test3P_Proj</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Test3P_Proj\Test3P_ProjGameMode.h">
+      <Filter>Source\Test3P_Proj</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

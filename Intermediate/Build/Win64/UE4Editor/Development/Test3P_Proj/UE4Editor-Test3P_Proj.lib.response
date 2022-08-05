@@ -1,0 +1,17 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-Test3P_Proj.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\Test3P_ProjEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\UE4Editor\Development\Test3P_Proj\Test3P_Proj.cpp.obj"
+"F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\UE4Editor\Development\Test3P_Proj\Test3P_ProjCharacter.cpp.obj"
+"F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\UE4Editor\Development\Test3P_Proj\Test3P_ProjGameMode.cpp.obj"
+"F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\UE4Editor\Development\Test3P_Proj\Test3P_Proj.init.gen.cpp.obj"
+"F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\UE4Editor\Development\Test3P_Proj\Test3P_ProjCharacter.gen.cpp.obj"
+"F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\UE4Editor\Development\Test3P_Proj\Test3P_ProjGameMode.gen.cpp.obj"
+"F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\UE4Editor\Development\Test3P_Proj\Default.rc2.res"
+/OUT:"F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\UE4Editor\Development\Test3P_Proj\UE4Editor-Test3P_Proj.lib"
