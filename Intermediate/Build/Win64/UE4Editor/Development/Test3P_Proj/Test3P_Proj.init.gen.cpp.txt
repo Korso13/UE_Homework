@@ -1,3 +1,0 @@
-F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\UE4Editor\Development\Test3P_Proj\Definitions.Test3P_Proj.h
-F:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
-F:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h

@@ -1,9 +1,0 @@
-F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\UE4Editor\Development\Test3P_Proj\Definitions.Test3P_Proj.h
-F:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
-F:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
-F:\UE_projects\Test3P_Proj\Source\Test3P_Proj/Test3P_ProjGameMode.h
-F:\UE_4.27\Engine\Source\Runtime\Engine\Classes\GameFramework/GameModeBase.h
-F:\UE_4.27\Engine\Source\Runtime\Engine\Classes\Engine/ServerStatReplicator.h
-F:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ServerStatReplicator.generated.h
-F:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameModeBase.generated.h
-F:\UE_projects\Test3P_Proj\Intermediate\Build\Win64\UE4Editor\Inc\Test3P_Proj\Test3P_ProjGameMode.generated.h
