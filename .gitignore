@@ -1,2 +1,6 @@
 Content/*
 Intermediate/*
+Binaries/*
+Saved/EditorCooked/*
+Saved/StagedBuilds/*
+bfg.jar
