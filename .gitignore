@@ -1,6 +1,7 @@
-Content/*
-Intermediate/*
+.vs/*
 Binaries/*
-Saved/EditorCooked/*
-Saved/StagedBuilds/*
-bfg.jar
+Build/*
+Content/StarterContent/HDRI/*
+DerivedDataCache/
+Intermediate/*
+Saved/*
