@@ -1,0 +1,76 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "Components/ArrowComponent.h"
+#include "TimerManager.h"
+#include "GameStructs.h"
+#include "Canon.generated.h"
+
+
+
+class UArrowComponent;
+
+UCLASS()
+class TANKOGEDDON_API ACanon : public AActor
+{
+	GENERATED_BODY()
+public:
+	//meshes
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
+	USceneComponent* sceenecmp;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
+	UStaticMeshComponent* CanonMesh;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
+	UArrowComponent* ProjectileSpawnPoint;
+
+protected:
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
+		CanonType Type;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
+		float FireRate = 1;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
+		float RefireSpeed = 0.5f;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
+		float EffectiveRange = 1000;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
+		float Damage = 1;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
+		int32 StartingAmmo = 10;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
+		int32 AmmoPrimaryConsumption = 1;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
+		int32 AmmoSecondaryConsumption = 1;
+
+private:
+	int32 Ammo = StartingAmmo;
+	FTimerHandle ReloadTimer;
+	FTimerHandle RefireTimer;
+	FTimerHandle RefireCD;
+	bool ReadyToFire = true;
+
+public:	
+	// Sets default values for this actor's properties
+	ACanon();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+	bool IsReadyToFire() const {return ReadyToFire;}
+
+	void Reload() { ReadyToFire = true; }
+
+	void Refire();
+
+public:	
+	// Called every frame
+	//virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+		void Fire(FireType att_type);
+
+
+};

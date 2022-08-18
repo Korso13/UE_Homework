@@ -13,24 +13,40 @@
 
 class ATank;
 
+
+
 UCLASS()
 class TANKOGEDDON_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
-
+private:
+	FVector WorldMousePosition;
+	
 protected:
 	ATank* TankPawn = nullptr;
+
 public:
-	//ATankPlayerController();
+	ATankPlayerController();
 
 	virtual void OnPossess(APawn* InTankPawn) override;
 
 	virtual void SetupInputComponent() override;
 
+	virtual void Tick(float DeltaTime) override;
+
+	FVector GetMousePos() const;
+
 	UFUNCTION()
 	void MoveForward(float ForwardAxisImpulse);
 	UFUNCTION()
 	void StrafeRight(float StrafeAxisImpulse);
+	UFUNCTION()
+	void RotateRight(float RightRotationImpulse);
 
+	UFUNCTION()
+	void PrimaryFire();
+	UFUNCTION()
+	void SecondaryFire();
+	
 };
