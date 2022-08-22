@@ -9,6 +9,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/BoxComponent.h"
 #include "Canon.h"
+#include "AmmoBox.h"
 #include "Components/ArrowComponent.h"
 #include "TankPlayerController.h"
 #include "Tank.generated.h"
@@ -19,6 +20,7 @@ class UCameraComponent;
 class UBoxComponent;
 class ACanon;
 class ATankPlayerController;
+
 
 UCLASS()
 class TANKOGEDDON_API ATank : public APawn
@@ -59,7 +61,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 	UCameraComponent* Camera;
 
-
 	//service values
 private:
 	float ForwardAxisMoveValue = 0;
@@ -69,12 +70,27 @@ private:
 	float RightAxisRotationValue = 0; 
 	float CurrentRotationImpulse = 0;
 
+	int32 FirstCannonAmmo;
+	int32 SecondCannonAmmo;
+
 
 protected:
-	UPROPERTY()
+	//UPROPERTY()
 	ACanon* TankCanon;
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components")
-	TSubclassOf<ACanon> CanonClass;
+	UPROPERTY()
+	ACanon* CannonOne;
+	UPROPERTY()
+	ACanon* CannonTwo;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components|Weapons")
+	TSubclassOf<ACanon> FirstCannon;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components|Weapons")
+	TSubclassOf<ACanon> SecondCannon;
+
+	bool FirstCannonUsed = false;
+	bool SecondCannonUsed = false;
+	TSubclassOf<ACanon> CurrentCanonClass;
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components")
 	ATankPlayerController* TankController;
@@ -82,6 +98,8 @@ protected:
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void Destroyed() override;
 
 
 public:	
@@ -96,6 +114,8 @@ public:
 
 	void SetupCanon();
 
+	void ChangeCanon(TSubclassOf<ACanon> _CanonType);
+
 	UFUNCTION()
 	void MoveForward(const float ForwardAxisImpulse);
 
@@ -106,8 +126,15 @@ public:
 	void RotateRight(float RightRotationImpulse);
 
 	UFUNCTION()
-	void PrimaryFire(); 
+	void PrimaryFire() const; 
 
 	UFUNCTION()
-	void SecondaryFire(); 
+	void SecondaryFire() const;
+
+	UFUNCTION()
+	void SwitchWeapon();
+
+	UFUNCTION()
+		ACanon* GetCannon() const { return TankCanon; }
+
 };

@@ -1,9 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Tank.h"
+#include "Canon.h"
 #include "Math/UnrealMathUtility.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Engine/Engine.h"
 #include "GameStructs.h"
-#include "Tank.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(TankLog, All, All);
 DEFINE_LOG_CATEGORY(TankLog);
@@ -32,8 +34,8 @@ ATank::ATank()
 	SpringArm->bInheritPitch = false;
 	SpringArm->bInheritRoll = false;
 	SpringArm->bInheritYaw = false;
-	SpringArm->TargetArmLength = 800;
-	SpringArm->bDoCollisionTest = false;
+	SpringArm->TargetArmLength = 1000;
+	SpringArm->bDoCollisionTest = true;
 };
 
 // Called when the game starts or when spawned
@@ -42,8 +44,11 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 
 	TankController = Cast<ATankPlayerController>(GetController());
-
+	CurrentCanonClass = FirstCannon;
+	FirstCannonUsed = true;
+	SecondCannonUsed = false;
 	SetupCanon();
+	CannonOne = TankCanon;
 }
 
 // Called every frame
@@ -54,7 +59,7 @@ void ATank::Tick(float DeltaTime)
 	//forward movement
 	CurrentForwardAxisImpulse = FMath::Lerp(CurrentForwardAxisImpulse, ForwardAxisMoveValue, ForwardMovementLerpKey); //interpolating current speed by target speed
 	FVector MovePosition = GetActorLocation() + GetActorForwardVector() * MoveSpeed * CurrentForwardAxisImpulse * DeltaTime; //using interpolated forward speed
-	UE_LOG(TankLog, Warning, TEXT("Forward Impulse: %f, Forward Value: %f"), CurrentForwardAxisImpulse, ForwardAxisMoveValue); //debug!!
+	//UE_LOG(TankLog, Warning, TEXT("Forward Impulse: %f, Forward Value: %f"), CurrentForwardAxisImpulse, ForwardAxisMoveValue); //debug!!
 	SetActorLocation(MovePosition, true);
 	//strafing
 	CurrentStrafeAxisImpulse = FMath::Lerp(CurrentStrafeAxisImpulse, StrafeAxisMoveValue, StrafeLerpKey);
@@ -64,7 +69,7 @@ void ATank::Tick(float DeltaTime)
 	FRotator Rotation = GetActorRotation();
 	CurrentRotationImpulse = FMath::Lerp(CurrentRotationImpulse, RightAxisRotationValue, RotationLerpKey);
 	Rotation.Yaw = Rotation.Yaw + RotationSpeed * DeltaTime * CurrentRotationImpulse;
-	UE_LOG(LogTemp, Warning, TEXT("Impulse: %f, RotationValue: %f"), CurrentRotationImpulse, RightAxisRotationValue); //debug!!
+	//UE_LOG(LogTemp, Warning, TEXT("Impulse: %f, RotationValue: %f"), CurrentRotationImpulse, RightAxisRotationValue); //debug!!
 	SetActorRotation(Rotation);
 	//turret rotation
 	FVector MousePosition = TankController->GetMousePos(); //getting Mouse position for turret rotation
@@ -101,16 +106,89 @@ void ATank::SetupCanon()
 {
 	if (TankCanon)
 	{
-		TankCanon->Destroy();
+		while(TankCanon->IsPendingKillPending())
+		{
+			//
+		}
+			TankCanon->Destroy();
+
 	}
 	FActorSpawnParameters spawnParams;
 	spawnParams.Instigator = this;
 	spawnParams.Owner = this;
-	TankCanon = GetWorld()->SpawnActor<ACanon>(CanonClass, spawnParams);
-	TankCanon->AttachToComponent(CanonMountingPoint, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	if(CurrentCanonClass)
+	{
+		//TankCanon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
+		if(FirstCannonUsed)
+		{
+			if (CannonOne)
+			{
+				TankCanon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
+				TankCanon->SetCurrAmmo(CannonOne->GetCurrAmmo());
+			}
+			else
+			{
+				TankCanon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
+				TankCanon->ResetAmmo();
+				CannonOne = TankCanon;
+				CannonOne->ResetAmmo();
+			}
+		}
+		else
+		{
+			if (CannonTwo)
+			{
+				TankCanon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
+				TankCanon->SetCurrAmmo(CannonTwo->GetCurrAmmo());
+			}
+			else
+			{
+				TankCanon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
+				TankCanon->ResetAmmo();
+				CannonTwo = TankCanon;
+				CannonTwo->ResetAmmo();
+			}
+		}
+		TankCanon->AttachToComponent(CanonMountingPoint, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	}
+
 }
 
-void ATank::PrimaryFire()
+void ATank::ChangeCanon(TSubclassOf<ACanon> _CanonType)
+{
+	if(!SecondCannon)
+	{
+		SecondCannon = _CanonType;
+		CurrentCanonClass = SecondCannon;
+		SecondCannonUsed = true;
+		FirstCannonUsed = false;
+		SetupCanon();
+		return;
+	}
+
+	if(FirstCannonUsed)
+	{
+		FirstCannon = _CanonType;
+		CurrentCanonClass = FirstCannon;
+		SecondCannonUsed = false;
+		FirstCannonUsed = true;
+		//TankCanon->Destroy();
+		CannonOne->Destroy();
+	}
+	else
+	{
+		SecondCannon = _CanonType;
+		CurrentCanonClass = SecondCannon;
+		SecondCannonUsed = true;
+		FirstCannonUsed = false;
+		//TankCanon->Destroy();
+		CannonTwo->Destroy();
+	}
+	SetupCanon();
+}
+
+
+void ATank::PrimaryFire() const
 {
 	if (!TankCanon)
 	{
@@ -120,7 +198,7 @@ void ATank::PrimaryFire()
 	TankCanon->Fire(FireType::Primary);
 }
 
-void ATank::SecondaryFire()
+void ATank::SecondaryFire() const
 {
 	if (!TankCanon)
 	{
@@ -128,3 +206,55 @@ void ATank::SecondaryFire()
 	}
 	TankCanon->Fire(FireType::Secondary);
 }
+
+
+void ATank::Destroyed()
+{
+	Super::Destroyed();
+
+	if(TankCanon)
+	{
+		TankCanon->Destroy();
+	}
+}
+
+void ATank::SwitchWeapon()
+{
+	if(FirstCannonUsed)
+	{
+		if(SecondCannon)
+		{
+			CurrentCanonClass = SecondCannon;
+			FirstCannonUsed = false;
+			SecondCannonUsed = true;
+			CannonOne = TankCanon;
+			SetupCanon();
+			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan, "Switched to second weapon", true);
+		}
+		else
+		{
+			return;
+		}
+	}
+	else
+	{
+		if(!SecondCannonUsed)
+		{
+			return;
+		}
+		else if(FirstCannon)
+		{
+			CurrentCanonClass = FirstCannon;
+			FirstCannonUsed = true;
+			SecondCannonUsed = false;
+			CannonTwo = TankCanon;
+			SetupCanon();
+			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan, "Switched to first weapon", true);
+		}
+		else
+		{
+			return;
+		}
+	}
+}
+

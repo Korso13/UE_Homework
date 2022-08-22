@@ -5,13 +5,22 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/ArrowComponent.h"
-#include "TimerManager.h"
+#include "Projectile.h"
+#include "Tank.h"
 #include "GameStructs.h"
 #include "Canon.generated.h"
 
 
-
+class AProjectile;
 class UArrowComponent;
+
+struct FProjPool
+{
+	//GENERATED_BODY()
+	bool IsFree;
+	AProjectile* Projectile;
+};
+
 
 UCLASS()
 class TANKOGEDDON_API ACanon : public AActor
@@ -36,13 +45,20 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 		float EffectiveRange = 1000;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
+		float LaserRange = 1300;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 		float Damage = 1;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
-		int32 StartingAmmo = 10;
+		int32 StartingAmmo = 5;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 		int32 AmmoPrimaryConsumption = 1;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 		int32 AmmoSecondaryConsumption = 1;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components")
+	TSubclassOf<AProjectile> AmmoType;
+
+	FProjPool Pool[20];
 
 private:
 	int32 Ammo = StartingAmmo;
@@ -71,6 +87,18 @@ public:
 
 	UFUNCTION()
 		void Fire(FireType att_type);
+
+	UFUNCTION()
+		void AddAmmo(int32 Count);
+
+	UFUNCTION()
+		int32 GetCurrAmmo() const;
+
+	UFUNCTION()
+		void SetCurrAmmo(int32 Count);
+
+	UFUNCTION()
+		void ResetAmmo() { Ammo = StartingAmmo; };
 
 
 };

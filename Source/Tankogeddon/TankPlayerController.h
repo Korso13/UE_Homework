@@ -48,5 +48,7 @@ public:
 	void PrimaryFire();
 	UFUNCTION()
 	void SecondaryFire();
+	UFUNCTION()
+	void SwitchWeapon();
 	
 };

@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "TankPlayerController.h"
 #include "Math/UnrealMathUtility.h"
 #include "DrawDebugHelpers.h" //for drawing debuglines
-#include "TankPlayerController.h"
 
 
 ATankPlayerController::ATankPlayerController()
@@ -26,6 +26,7 @@ void ATankPlayerController::SetupInputComponent()
 	InputComponent->BindAxis("RightTurnAxis", this, &ATankPlayerController::RotateRight);
 	InputComponent->BindAction("PrimaryFire", IE_Pressed, this, &ATankPlayerController::PrimaryFire);
 	InputComponent->BindAction("SecondaryFire", IE_Pressed, this, &ATankPlayerController::SecondaryFire);
+	InputComponent->BindAction("SwitchWeapon", IE_Pressed, this, &ATankPlayerController::SwitchWeapon); 
 }
 
 
@@ -40,7 +41,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 	float Z = FMath::Abs(TankPawn->TankTurretMesh->GetComponentLocation().Z - MousePosition.Z); //height difference between turret and mouse pointer "on screen"
 	WorldMousePosition = MousePosition - (MouseDirection * Z / MouseDirection.Z); //calculating final mouse pointer position in 3D space
 	//drawing debug aim lines
-	DrawDebugLine(GetWorld(), TankPawn->CanonMountingPoint->GetComponentLocation(), TankPawn->CanonMountingPoint->GetComponentLocation() + TankPawn->CanonMountingPoint->GetForwardVector() * 1000, FColor::Green, false, -1, 0, 5);
+	DrawDebugLine(GetWorld(), TankPawn->CanonMountingPoint->GetComponentLocation(), TankPawn->CanonMountingPoint->GetComponentLocation() + TankPawn->CanonMountingPoint->GetForwardVector() * 700, FColor::Green, false, -1, 0, 1);
 }
 
 void ATankPlayerController::MoveForward(float ForwardAxisImpulse)
@@ -85,6 +86,14 @@ void ATankPlayerController::SecondaryFire()
 	if (TankPawn)
 	{
 		TankPawn->SecondaryFire();
+	}
+}
+
+void ATankPlayerController::SwitchWeapon()
+{
+	if (TankPawn)
+	{
+		TankPawn->SwitchWeapon();
 	}
 }
 

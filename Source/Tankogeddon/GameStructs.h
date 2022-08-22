@@ -29,3 +29,5 @@ class TANKOGEDDON_API UGameStructs : public UObject
 	GENERATED_BODY()
 	
 };
+
+
