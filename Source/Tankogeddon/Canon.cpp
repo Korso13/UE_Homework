@@ -3,6 +3,7 @@
 #include "Canon.h"
 
 #include "DrawDebugHelpers.h"
+#include "DamageTaker.h"
 #include "Engine/Engine.h"
 
 // Sets default values
@@ -19,11 +20,13 @@ ACanon::ACanon()
 	ProjectileSpawnPoint = CreateDefaultSubobject<UArrowComponent>("Projectile spawn point");
 	ProjectileSpawnPoint->SetupAttachment(CanonMesh);
 
-	//Pool.Reserve(20);
-	for (size_t i = 0; i < 20; i++)
+	if (Type == CanonType::ProjectileCanon)
 	{
-		//Pool.Push();
-		Pool[i].IsFree = true;
+		for (size_t i = 0; i < 20; i++)
+		{
+			Pool.AddDefaulted();
+			Pool[i].IsFree = true;
+		}
 	}
 }
 
@@ -55,7 +58,7 @@ void ACanon::Fire(FireType att_type)
 		//checking cannon type
 		if (Type == CanonType::ProjectileCanon && AmmoType)
 		{
-			GEngine->AddOnScreenDebugMessage(10, 1, FColor::Red, "Firing projectile");
+			GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing projectile");
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Instigator = GetInstigator();
 			SpawnParams.Owner = this;
@@ -64,7 +67,7 @@ void ACanon::Fire(FireType att_type)
 			{
 				if(!Pool[i].IsFree)
 				{
-					if(!IsValid(Pool[i].Projectile))
+					if(!Pool[i].Projectile.IsValid())
 					{
 						Pool[i].IsFree = true;
 					}
@@ -78,11 +81,10 @@ void ACanon::Fire(FireType att_type)
 				}
 			}
 
-			//GetWorld()->SpawnActor<AProjectile>(AmmoType, ProjectileSpawnPoint->GetComponentTransform(), SpawnParams);
 		}
 		else if(Type == CanonType::LaserCanon)
 		{
-			GEngine->AddOnScreenDebugMessage(10, 1, FColor::Red, "Firing laser");
+			GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing laser");
 			FHitResult HitResult;
 			FCollisionQueryParams CollParams;
 			CollParams.AddIgnoredActor(this);
@@ -92,13 +94,30 @@ void ACanon::Fire(FireType att_type)
 			CollParams.TraceTag = FName(TEXT("Projectile"));
 			FVector start = ProjectileSpawnPoint->GetComponentLocation();
 			FVector end = ProjectileSpawnPoint->GetForwardVector() * LaserRange + start;
+
+			//drawing tracer
 			GetWorld()->LineTraceSingleByChannel(HitResult, start, end, ECollisionChannel::ECC_Visibility, CollParams);
 			DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 0.1f, 0, 4);
+
+			//Dealing laser damage
 			if(HitResult.Actor.IsValid())
 			{
-				HitResult.Actor->Destroy();
+				IDamageTaker* Damageable = Cast<IDamageTaker>(HitResult.Actor);
+				if(Damageable)
+				{
+					FDamageInfo DamageData;
+					DamageData.Instigator = GetInstigator();
+					DamageData.DamageDealer = this;
+					DamageData.DamageValue = LaserDamage;
+					Damageable->TakeDamage(DamageData);
+				}
+				else
+				{
+					HitResult.Actor->Destroy();
+				}
 			}
 		}
+		Ammo -= AmmoPrimaryConsumption;
 		break;
 		}
 
@@ -110,7 +129,8 @@ void ACanon::Fire(FireType att_type)
 			FTimerDelegate ClearTimerDelegate;
 			ClearTimerDelegate.BindLambda([&]() {GetWorld()->GetTimerManager().ClearTimer(RefireTimer); });
 			GetWorld()->GetTimerManager().SetTimer(RefireCD, ClearTimerDelegate, 0.5f * 3 + 0.01f, false);
-			
+
+			Ammo -= AmmoSecondaryConsumption;
 			break;
 		}
 
@@ -119,15 +139,15 @@ void ACanon::Fire(FireType att_type)
 	}
 	//seting up reload timer:
 	GetWorld()->GetTimerManager().SetTimer(ReloadTimer, this, &ACanon::Reload, FireRate, false);
-	Ammo--;
+	
 }
 
 void ACanon::Refire()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, "Firing alternate fire");
+	GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing alternate fire");
 	if(CanonType::LaserCanon == Type)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, "Laser");
+		GEngine->AddOnScreenDebugMessage(11, 1, FColor::Red, "Laser");
 		FHitResult HitResult;
 		FCollisionQueryParams CollParams;
 		CollParams.AddIgnoredActor(this);
@@ -137,21 +157,56 @@ void ACanon::Refire()
 		CollParams.TraceTag = FName(TEXT("Projectile"));
 		FVector start = ProjectileSpawnPoint->GetComponentLocation();
 		FVector end = ProjectileSpawnPoint->GetForwardVector() * LaserRange + start;
+
+		//drawing tracer
 		GetWorld()->LineTraceSingleByChannel(HitResult, start, end, ECollisionChannel::ECC_Visibility, CollParams);
 		DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 0.1f, 0, 4);
+
+		//Dealing laser damage
 		if (HitResult.Actor.IsValid())
 		{
-			HitResult.Actor->Destroy();
+			IDamageTaker* Damageable = Cast<IDamageTaker>(HitResult.Actor);
+			if (Damageable)
+			{
+				FDamageInfo DamageData;
+				DamageData.Instigator = GetInstigator();
+				DamageData.DamageDealer = this;
+				DamageData.DamageValue = LaserDamage;
+				Damageable->TakeDamage(DamageData);
+			}
+			else
+			{
+				HitResult.Actor->Destroy();
+			}
 		}
 	}
 	else if (Type == CanonType::ProjectileCanon && AmmoType)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, "Projectile");
+		GEngine->AddOnScreenDebugMessage(11, 1, FColor::Red, "Projectile");
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Instigator = GetInstigator();
 		SpawnParams.Owner = this;
-		GetWorld()->SpawnActor<AProjectile>(AmmoType, ProjectileSpawnPoint->GetComponentTransform(), SpawnParams);
-		//PPool->SpawnProjectile(GetWorld(), AmmoType, SpawnParams, ProjectileSpawnPoint->GetComponentTransform());
+		//GetWorld()->SpawnActor<AProjectile>(AmmoType, ProjectileSpawnPoint->GetComponentTransform(), SpawnParams);
+		
+		for (size_t i = 0; i < 20; i++)
+		{
+			if (!Pool[i].IsFree)
+			{
+				if (!Pool[i].Projectile.IsValid())
+				{
+					Pool[i].IsFree = true;
+				}
+			}
+
+			if (Pool[i].IsFree)
+			{
+				Pool[i].Projectile = GetWorld()->SpawnActor<AProjectile>(AmmoType, ProjectileSpawnPoint->GetComponentTransform(), SpawnParams);
+				Pool[i].IsFree = false;
+				break;
+			}
+		}
+
+
 	}
 }
 

@@ -2,6 +2,7 @@
 
 #include "TankPlayerController.h"
 #include "Math/UnrealMathUtility.h"
+#include "Tank.h"
 #include "DrawDebugHelpers.h" //for drawing debuglines
 
 
@@ -38,7 +39,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 	FVector MousePosition;
 	FVector MouseDirection;
 	DeprojectMousePositionToWorld(MousePosition, MouseDirection); //obtaining a vector from mouse pointer "on screen" and a point in 3D space it is supposedly pointing
-	float Z = FMath::Abs(TankPawn->TankTurretMesh->GetComponentLocation().Z - MousePosition.Z); //height difference between turret and mouse pointer "on screen"
+	float Z = FMath::Abs(TankPawn->TurretMesh->GetComponentLocation().Z - MousePosition.Z); //height difference between turret and mouse pointer "on screen"
 	WorldMousePosition = MousePosition - (MouseDirection * Z / MouseDirection.Z); //calculating final mouse pointer position in 3D space
 	//drawing debug aim lines
 	DrawDebugLine(GetWorld(), TankPawn->CanonMountingPoint->GetComponentLocation(), TankPawn->CanonMountingPoint->GetComponentLocation() + TankPawn->CanonMountingPoint->GetForwardVector() * 700, FColor::Green, false, -1, 0, 1);

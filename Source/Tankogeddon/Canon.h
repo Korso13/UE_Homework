@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Components/ArrowComponent.h"
 #include "Projectile.h"
-#include "Tank.h"
+#include "Base_Pawn.h"
 #include "GameStructs.h"
 #include "Canon.generated.h"
 
@@ -14,11 +14,12 @@
 class AProjectile;
 class UArrowComponent;
 
+USTRUCT()
 struct FProjPool
 {
-	//GENERATED_BODY()
+	GENERATED_BODY()
 	bool IsFree;
-	AProjectile* Projectile;
+	TWeakObjectPtr<AProjectile> Projectile;
 };
 
 
@@ -36,12 +37,16 @@ public:
 	UArrowComponent* ProjectileSpawnPoint;
 
 protected:
+
+	//Basic canon firing type
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 		CanonType Type;
+
+	//firing properties
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 		float FireRate = 1;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
-		float RefireSpeed = 0.5f;
+		float RefireSpeed = 0.5f; //used in secondary attack
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 		float EffectiveRange = 1000;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
@@ -49,16 +54,21 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 		float Damage = 1;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
-		int32 StartingAmmo = 5;
+		float LaserDamage = 1;
+
+	//ammo settings
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
+		int32 StartingAmmo = 20;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 		int32 AmmoPrimaryConsumption = 1;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
-		int32 AmmoSecondaryConsumption = 1;
+		int32 AmmoSecondaryConsumption = 2;
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components")
 	TSubclassOf<AProjectile> AmmoType;
 
-	FProjPool Pool[20];
+	UPROPERTY()
+	TArray<FProjPool> Pool;
 
 private:
 	int32 Ammo = StartingAmmo;

@@ -23,6 +23,78 @@
 				"Win64",
 				"Linux"
 			]
+		},
+		{
+			"Name": "MagicLeapCamera",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Lumin",
+				"Win64",
+				"Mac"
+			]
+		},
+		{
+			"Name": "MagicLeapBLE",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Lumin",
+				"Win64",
+				"Mac"
+			]
+		},
+		{
+			"Name": "MagicLeapConnections",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Lumin",
+				"Win64",
+				"Mac"
+			]
+		},
+		{
+			"Name": "MagicLeapDispatch",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Lumin",
+				"Win64",
+				"Mac"
+			]
+		},
+		{
+			"Name": "MagicLeapLocation",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Win64",
+				"Mac",
+				"Lumin"
+			]
+		},
+		{
+			"Name": "MagicLeapMovement",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Lumin",
+				"Win64",
+				"Mac"
+			]
+		},
+		{
+			"Name": "MagicLeapContacts",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Lumin",
+				"Win64",
+				"Mac"
+			]
+		},
+		{
+			"Name": "MagicLeapSharedFile",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Lumin",
+				"Win64",
+				"Mac"
+			]
 		}
 	]
 }

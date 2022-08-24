@@ -3,27 +3,22 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
-#include "Components/StaticMeshComponent.h"
+#include "Base_Pawn.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
-#include "Components/BoxComponent.h"
-#include "Canon.h"
-#include "AmmoBox.h"
-#include "Components/ArrowComponent.h"
 #include "TankPlayerController.h"
 #include "Tank.generated.h"
 
-class UStaticMeshComponent;
 class USpringArmComponent;
 class UCameraComponent;
-class UBoxComponent;
-class ACanon;
+//class UStaticMeshComponent;
+//class UBoxComponent;
+//class ACanon;
 class ATankPlayerController;
 
 
 UCLASS()
-class TANKOGEDDON_API ATank : public APawn
+class TANKOGEDDON_API ATank : public ABase_Pawn
 {
 	GENERATED_BODY()
 
@@ -43,18 +38,7 @@ public:
 	float StrafeLerpKey = 0.1f;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Motion|Acceleration")
 	float RotationLerpKey = 0.1f;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Motion|Turret Rotation Speed")
-	float TurretRotationLerpKey = 0.1f;
 
-	//meshes and components
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
-	UBoxComponent* Collision;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
-	UStaticMeshComponent* TankBodyMesh;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
-	UStaticMeshComponent* TankTurretMesh;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
-	UArrowComponent* CanonMountingPoint;
 	//camera components
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 	USpringArmComponent* SpringArm;
@@ -70,13 +54,10 @@ private:
 	float RightAxisRotationValue = 0; 
 	float CurrentRotationImpulse = 0;
 
-	int32 FirstCannonAmmo;
-	int32 SecondCannonAmmo;
-
+private:
+	void OnDamage(FDamageInfo Damage);
 
 protected:
-	//UPROPERTY()
-	ACanon* TankCanon;
 	UPROPERTY()
 	ACanon* CannonOne;
 	UPROPERTY()
@@ -98,8 +79,6 @@ protected:
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	virtual void Destroyed() override;
 
 
 public:	
@@ -135,6 +114,6 @@ public:
 	void SwitchWeapon();
 
 	UFUNCTION()
-		ACanon* GetCannon() const { return TankCanon; }
+		ACanon* GetCannon() const { return Cannon; }
 
 };

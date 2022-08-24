@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "Tank.h"
+#include "Base_Pawn.h"
 #include "TankPlayerController.generated.h"
 
 /**
@@ -24,6 +24,7 @@ private:
 	FVector WorldMousePosition;
 	
 protected:
+	UPROPERTY()
 	ATank* TankPawn = nullptr;
 
 public:

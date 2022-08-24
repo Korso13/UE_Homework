@@ -18,17 +18,17 @@ ATank::ATank()
 	Collision = CreateDefaultSubobject<UBoxComponent>(TEXT("TankCollision"));
 	RootComponent = Collision;
 
-	TankBodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tank Body"));
-	TankBodyMesh->SetupAttachment(Collision);
+	BodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tank Body"));
+	BodyMesh->SetupAttachment(Collision);
 
-	TankTurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tank Turret"));
-	TankTurretMesh->SetupAttachment(TankBodyMesh);
+	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tank Turret"));
+	TurretMesh->SetupAttachment(BodyMesh);
 
 	CanonMountingPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("Canon Mounting Point"));
-	CanonMountingPoint->AttachToComponent(TankTurretMesh, FAttachmentTransformRules::KeepRelativeTransform);
+	CanonMountingPoint->AttachToComponent(TurretMesh, FAttachmentTransformRules::KeepRelativeTransform);
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
-	SpringArm->SetupAttachment(TankBodyMesh);
+	SpringArm->SetupAttachment(BodyMesh);
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 	SpringArm->bInheritPitch = false;
@@ -36,6 +36,11 @@ ATank::ATank()
 	SpringArm->bInheritYaw = false;
 	SpringArm->TargetArmLength = 1000;
 	SpringArm->bDoCollisionTest = true;
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>("Health Component");
+	HealthComponent->OnDeath.AddUObject(this, &ATank::OnDeath);
+	HealthComponent->OnDamage.AddUObject(this, &ATank::OnDamage);
+
 };
 
 // Called when the game starts or when spawned
@@ -48,7 +53,7 @@ void ATank::BeginPlay()
 	FirstCannonUsed = true;
 	SecondCannonUsed = false;
 	SetupCanon();
-	CannonOne = TankCanon;
+	CannonOne = Cannon;
 }
 
 // Called every frame
@@ -74,10 +79,17 @@ void ATank::Tick(float DeltaTime)
 	//turret rotation
 	FVector MousePosition = TankController->GetMousePos(); //getting Mouse position for turret rotation
 	FRotator TargetTurretRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), MousePosition);
-	FRotator CurrentTurretRotation = TankTurretMesh->GetComponentRotation();
+	FRotator CurrentTurretRotation = TurretMesh->GetComponentRotation();
 	TargetTurretRotation.Pitch = CurrentTurretRotation.Pitch;
 	TargetTurretRotation.Roll = CurrentTurretRotation.Roll;
-	TankTurretMesh->SetWorldRotation(FMath::Lerp(CurrentTurretRotation, TargetTurretRotation, TurretRotationLerpKey));
+	TurretMesh->SetWorldRotation(FMath::Lerp(CurrentTurretRotation, TargetTurretRotation, TurretRotationLerpKey));
+
+	//AmmoHUD
+	GEngine->AddOnScreenDebugMessage(20, 0.5f, FColor::Cyan, FString::Printf(TEXT("Ammo: %d"), Cannon->GetCurrAmmo()));
+
+	//ScoreHUD
+	GEngine->AddOnScreenDebugMessage(21, 0.5f, FColor::Purple, FString::Printf(TEXT("Your Score: %d"), TotalScore));
+
 }
 
 // Called to bind functionality to input
@@ -104,33 +116,36 @@ void ATank::RotateRight(float RightRotationImpulse)
 
 void ATank::SetupCanon()
 {
-	if (TankCanon)
+	if (Cannon)
 	{
-		while(TankCanon->IsPendingKillPending())
+
+		for (const auto child : Cannon->Children)
 		{
-			//
+			while (child->IsActorBeingDestroyed())
+			{
+				//
+			};
 		}
-			TankCanon->Destroy();
+		Cannon->Destroy();
 
 	}
 	FActorSpawnParameters spawnParams;
 	spawnParams.Instigator = this;
 	spawnParams.Owner = this;
-	if(CurrentCanonClass)
+	if (CurrentCanonClass)
 	{
-		//TankCanon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
-		if(FirstCannonUsed)
+		if (FirstCannonUsed)
 		{
 			if (CannonOne)
 			{
-				TankCanon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
-				TankCanon->SetCurrAmmo(CannonOne->GetCurrAmmo());
+				Cannon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
+				Cannon->SetCurrAmmo(CannonOne->GetCurrAmmo());
 			}
 			else
 			{
-				TankCanon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
-				TankCanon->ResetAmmo();
-				CannonOne = TankCanon;
+				Cannon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
+				Cannon->ResetAmmo();
+				CannonOne = Cannon;
 				CannonOne->ResetAmmo();
 			}
 		}
@@ -138,25 +153,25 @@ void ATank::SetupCanon()
 		{
 			if (CannonTwo)
 			{
-				TankCanon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
-				TankCanon->SetCurrAmmo(CannonTwo->GetCurrAmmo());
+				Cannon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
+				Cannon->SetCurrAmmo(CannonTwo->GetCurrAmmo());
 			}
 			else
 			{
-				TankCanon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
-				TankCanon->ResetAmmo();
-				CannonTwo = TankCanon;
+				Cannon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
+				Cannon->ResetAmmo();
+				CannonTwo = Cannon;
 				CannonTwo->ResetAmmo();
 			}
 		}
-		TankCanon->AttachToComponent(CanonMountingPoint, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+		Cannon->AttachToComponent(CanonMountingPoint, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	}
 
 }
 
 void ATank::ChangeCanon(TSubclassOf<ACanon> _CanonType)
 {
-	if(!SecondCannon)
+	if (!SecondCannon)
 	{
 		SecondCannon = _CanonType;
 		CurrentCanonClass = SecondCannon;
@@ -166,13 +181,12 @@ void ATank::ChangeCanon(TSubclassOf<ACanon> _CanonType)
 		return;
 	}
 
-	if(FirstCannonUsed)
+	if (FirstCannonUsed)
 	{
 		FirstCannon = _CanonType;
 		CurrentCanonClass = FirstCannon;
 		SecondCannonUsed = false;
 		FirstCannonUsed = true;
-		//TankCanon->Destroy();
 		CannonOne->Destroy();
 	}
 	else
@@ -181,7 +195,6 @@ void ATank::ChangeCanon(TSubclassOf<ACanon> _CanonType)
 		CurrentCanonClass = SecondCannon;
 		SecondCannonUsed = true;
 		FirstCannonUsed = false;
-		//TankCanon->Destroy();
 		CannonTwo->Destroy();
 	}
 	SetupCanon();
@@ -190,44 +203,33 @@ void ATank::ChangeCanon(TSubclassOf<ACanon> _CanonType)
 
 void ATank::PrimaryFire() const
 {
-	if (!TankCanon)
+	if (!Cannon)
 	{
 		return;
 	}
-	
-	TankCanon->Fire(FireType::Primary);
+
+	Cannon->Fire(FireType::Primary);
 }
 
 void ATank::SecondaryFire() const
 {
-	if (!TankCanon)
+	if (!Cannon)
 	{
 		return;
 	}
-	TankCanon->Fire(FireType::Secondary);
-}
-
-
-void ATank::Destroyed()
-{
-	Super::Destroyed();
-
-	if(TankCanon)
-	{
-		TankCanon->Destroy();
-	}
+	Cannon->Fire(FireType::Secondary);
 }
 
 void ATank::SwitchWeapon()
 {
-	if(FirstCannonUsed)
+	if (FirstCannonUsed)
 	{
-		if(SecondCannon)
+		if (SecondCannon)
 		{
 			CurrentCanonClass = SecondCannon;
 			FirstCannonUsed = false;
 			SecondCannonUsed = true;
-			CannonOne = TankCanon;
+			CannonOne = Cannon;
 			SetupCanon();
 			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan, "Switched to second weapon", true);
 		}
@@ -238,16 +240,16 @@ void ATank::SwitchWeapon()
 	}
 	else
 	{
-		if(!SecondCannonUsed)
+		if (!SecondCannonUsed)
 		{
 			return;
 		}
-		else if(FirstCannon)
+		else if (FirstCannon)
 		{
 			CurrentCanonClass = FirstCannon;
 			FirstCannonUsed = true;
 			SecondCannonUsed = false;
-			CannonTwo = TankCanon;
+			CannonTwo = Cannon;
 			SetupCanon();
 			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan, "Switched to first weapon", true);
 		}
@@ -258,3 +260,7 @@ void ATank::SwitchWeapon()
 	}
 }
 
+void ATank::OnDamage(FDamageInfo Damage)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Blue, FString::Printf(TEXT("Tank took damage from %s, HP: %f"), ToCStr(Damage.Instigator->GetName()), HealthComponent->CurrentHP));
+}

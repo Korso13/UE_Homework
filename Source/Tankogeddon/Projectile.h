@@ -15,6 +15,8 @@ class TANKOGEDDON_API AProjectile : public AActor
 {
 	GENERATED_BODY()
 
+	//DECLARE_DELEGATE_OneParam(FOnScoredKill, FScoredKillData);
+
 public: 
 	//meshes and components
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = Components)
@@ -30,9 +32,13 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = Projectile)
 		float Damage = 1;
 
+	//IScorable::FOnScoredKill OnScoredKill;
+
 protected:
 	FVector LaunchPointVector;
 
+
+	UPROPERTY()
 	ACanon* LaunchingCanon;
 public:	
 	// Sets default values for this actor's properties
@@ -40,6 +46,7 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
