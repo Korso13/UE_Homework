@@ -7,13 +7,11 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "TankPlayerController.h"
+#include "Components/SphereComponent.h"
 #include "Tank.generated.h"
 
 class USpringArmComponent;
 class UCameraComponent;
-//class UStaticMeshComponent;
-//class UBoxComponent;
-//class ACanon;
 class ATankPlayerController;
 
 
@@ -22,16 +20,16 @@ class TANKOGEDDON_API ATank : public ABase_Pawn
 {
 	GENERATED_BODY()
 
-
+	DECLARE_EVENT(ATank, FOnTargetsChanged);
 public:
 
 	//Tank settings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Motion|Speed")
-	float MoveSpeed = 100;
+	float MoveSpeed = 760;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Motion|Speed")
-	float StrafeSpeed = 100;
+	float StrafeSpeed = 300;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Motion|Speed")
-	float RotationSpeed = 20;
+	float RotationSpeed = 50;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Motion|Acceleration")
 	float ForwardMovementLerpKey = 0.1f;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Motion|Acceleration")
@@ -39,13 +37,14 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Motion|Acceleration")
 	float RotationLerpKey = 0.1f;
 
+	float TurretRotationLerpKey = 0.035f;
+
 	//camera components
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 	USpringArmComponent* SpringArm;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 	UCameraComponent* Camera;
 
-	//service values
 private:
 	float ForwardAxisMoveValue = 0;
 	float CurrentForwardAxisImpulse = 0;
@@ -54,16 +53,13 @@ private:
 	float RightAxisRotationValue = 0; 
 	float CurrentRotationImpulse = 0;
 
-private:
-	void OnDamage(FDamageInfo Damage);
-
 protected:
 	UPROPERTY()
 	ACanon* CannonOne;
 	UPROPERTY()
 	ACanon* CannonTwo;
 
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components|Weapons")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components|Weapons")
 	TSubclassOf<ACanon> FirstCannon;
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components|Weapons")
@@ -73,12 +69,12 @@ protected:
 	bool SecondCannonUsed = false;
 	TSubclassOf<ACanon> CurrentCanonClass;
 
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components")
-	ATankPlayerController* TankController;
-	
-	
+	//UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components")
+	IControllerTargeting* TankController;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 
 
 public:	
@@ -114,6 +110,25 @@ public:
 	void SwitchWeapon();
 
 	UFUNCTION()
-		ACanon* GetCannon() const { return Cannon; }
+	ACanon* GetCannon() const { return Cannon; }
+
+
+
+	//for AI purposes
+	friend class AEnemyTankAIController;
+
+	const TArray<TWeakObjectPtr<AActor>>& GetPossibleTargets() const { return Targets; };
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Patrolling")
+		FName PatrollingPointTag;
+
+	FOnTargetsChanged OnTargetsChanged;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Cannon Type")
+		float Accuracy = 10;
+
+private:
+		virtual void OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+		virtual void OnDetectionSphereEndOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) override;
 
 };

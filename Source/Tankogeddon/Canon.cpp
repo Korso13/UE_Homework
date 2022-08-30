@@ -3,8 +3,12 @@
 #include "Canon.h"
 
 #include "DrawDebugHelpers.h"
+#include "Base_Pawn.h"
 #include "DamageTaker.h"
+#include "EnemyTankAIController.h"
+#include "Components/AudioComponent.h"
 #include "Engine/Engine.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 ACanon::ACanon()
@@ -28,6 +32,11 @@ ACanon::ACanon()
 			Pool[i].IsFree = true;
 		}
 	}
+
+	ParticleEffect = CreateDefaultSubobject<UParticleSystemComponent>("Particle Effects");
+	ParticleEffect->SetupAttachment(RootComponent);
+	AudioEffect = CreateDefaultSubobject<UAudioComponent>("Audio Effects");
+	AudioEffect->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -81,6 +90,18 @@ void ACanon::Fire(FireType att_type)
 				}
 			}
 
+			ParticleEffect->ActivateSystem();
+			AudioEffect->Play();
+
+			auto Controller = Cast<APlayerController>(GetInstigatorController());
+			if(Controller)
+			{
+				Controller->ClientPlayForceFeedback(FeedbackEffect);
+				if(CameraShake)
+				{
+					Controller->ClientStartCameraShake(CameraShake);
+				}
+			}
 		}
 		else if(Type == CanonType::LaserCanon)
 		{
@@ -123,7 +144,10 @@ void ACanon::Fire(FireType att_type)
 
 	case(FireType::Secondary):
 		{
-
+			if(Ammo < AmmoSecondaryConsumption)
+			{
+				break;
+			}
 			GetWorld()->GetTimerManager().SetTimer(RefireTimer, this, &ACanon::Refire, RefireSpeed, true);
 			//ending RefireTimer
 			FTimerDelegate ClearTimerDelegate;
@@ -206,7 +230,18 @@ void ACanon::Refire()
 			}
 		}
 
+		ParticleEffect->ActivateSystem();
+		AudioEffect->Play();
 
+		auto Controller = Cast<APlayerController>(GetInstigatorController());
+		if (Controller)
+		{
+			Controller->ClientPlayForceFeedback(FeedbackEffect);
+			if (CameraShake)
+			{
+				Controller->ClientStartCameraShake(CameraShake);
+			}
+		}
 	}
 }
 

@@ -12,9 +12,6 @@ class TANKOGEDDON_API ATurret : public ABase_Pawn
 {
 	GENERATED_BODY()
 public:
-	//meshes and components
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
-		USphereComponent* DetectionSphere;
 
 	//turret properties
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Cannon Type")
@@ -31,12 +28,6 @@ protected:
 private:
 	FTimerHandle TargetingTimer;
 
-	TArray<TWeakObjectPtr<AActor>> Targets;
-
-	TWeakObjectPtr<AActor> CurrentTarget;
-
-
-
 public:	
 	// Sets default values for this actor's properties
 	ATurret();
@@ -48,19 +39,14 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UFUNCTION()
-		void OnDetectionSphere_BeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	UFUNCTION()
-		void OnDetectionSphereEndOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-	void OnDamage(FDamageInfo Damage);
-
-
-	void FindBestTarget();
+	virtual void FindBestTarget() override;
 
 	void Targeting();
 
 	bool CanFire();
+
+	bool IsVisible(TWeakObjectPtr<AActor> CurrentTarget) const;
 
 public:	
 	virtual int32 GetScore() const override;

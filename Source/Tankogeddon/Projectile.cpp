@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Projectile.h"
+#include "Canon.h"
+#include "Base_Pawn.h"
 #include "Scorable.h"
 
 // Sets default values

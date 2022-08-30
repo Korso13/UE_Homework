@@ -15,17 +15,6 @@ ATank::ATank()
 {
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	Collision = CreateDefaultSubobject<UBoxComponent>(TEXT("TankCollision"));
-	RootComponent = Collision;
-
-	BodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tank Body"));
-	BodyMesh->SetupAttachment(Collision);
-
-	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tank Turret"));
-	TurretMesh->SetupAttachment(BodyMesh);
-
-	CanonMountingPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("Canon Mounting Point"));
-	CanonMountingPoint->AttachToComponent(TurretMesh, FAttachmentTransformRules::KeepRelativeTransform);
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
 	SpringArm->SetupAttachment(BodyMesh);
@@ -37,9 +26,6 @@ ATank::ATank()
 	SpringArm->TargetArmLength = 1000;
 	SpringArm->bDoCollisionTest = true;
 
-	HealthComponent = CreateDefaultSubobject<UHealthComponent>("Health Component");
-	HealthComponent->OnDeath.AddUObject(this, &ATank::OnDeath);
-	HealthComponent->OnDamage.AddUObject(this, &ATank::OnDamage);
 
 };
 
@@ -48,7 +34,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	TankController = Cast<ATankPlayerController>(GetController());
+	TankController = Cast<IControllerTargeting>(GetController());
 	CurrentCanonClass = FirstCannon;
 	FirstCannonUsed = true;
 	SecondCannonUsed = false;
@@ -74,16 +60,17 @@ void ATank::Tick(float DeltaTime)
 	FRotator Rotation = GetActorRotation();
 	CurrentRotationImpulse = FMath::Lerp(CurrentRotationImpulse, RightAxisRotationValue, RotationLerpKey);
 	Rotation.Yaw = Rotation.Yaw + RotationSpeed * DeltaTime * CurrentRotationImpulse;
-	//UE_LOG(LogTemp, Warning, TEXT("Impulse: %f, RotationValue: %f"), CurrentRotationImpulse, RightAxisRotationValue); //debug!!
 	SetActorRotation(Rotation);
 	//turret rotation
-	FVector MousePosition = TankController->GetMousePos(); //getting Mouse position for turret rotation
-	FRotator TargetTurretRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), MousePosition);
-	FRotator CurrentTurretRotation = TurretMesh->GetComponentRotation();
-	TargetTurretRotation.Pitch = CurrentTurretRotation.Pitch;
-	TargetTurretRotation.Roll = CurrentTurretRotation.Roll;
-	TurretMesh->SetWorldRotation(FMath::Lerp(CurrentTurretRotation, TargetTurretRotation, TurretRotationLerpKey));
-
+	if (TankController)
+	{
+		FVector MousePosition = TankController->GetTargetLocation(); //getting Mouse position for turret rotation
+		FRotator TargetTurretRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), MousePosition);
+		FRotator CurrentTurretRotation = TurretMesh->GetComponentRotation();
+		TargetTurretRotation.Pitch = CurrentTurretRotation.Pitch;
+		TargetTurretRotation.Roll = CurrentTurretRotation.Roll;
+		TurretMesh->SetWorldRotation(FMath::Lerp(CurrentTurretRotation, TargetTurretRotation, TurretRotationLerpKey));
+	}
 	//AmmoHUD
 	GEngine->AddOnScreenDebugMessage(20, 0.5f, FColor::Cyan, FString::Printf(TEXT("Ammo: %d"), Cannon->GetCurrAmmo()));
 
@@ -260,7 +247,37 @@ void ATank::SwitchWeapon()
 	}
 }
 
-void ATank::OnDamage(FDamageInfo Damage)
+//for AI purposes
+void ATank::OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Blue, FString::Printf(TEXT("Tank took damage from %s, HP: %f"), ToCStr(Damage.Instigator->GetName()), HealthComponent->CurrentHP));
+	if (OtherActor == this || OtherActor == GetInstigator() || OtherActor == nullptr)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Black, "Overlapped with wrong actor(self)", true);
+		return;
+	}
+	if (OtherActor->GetClass() != TargetType)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Black, "Overlapped with wrong actor(not ATank)", true);
+		return;
+	}
+	Targets.Add(OtherActor);
+	OnTargetsChanged.Broadcast();
+}
+
+void ATank::OnDetectionSphereEndOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor == this || OtherActor == GetInstigator() || OtherActor == nullptr)
+	{
+		return;
+	}
+	if (OtherActor->GetClass() != TargetType)
+	{
+		return;
+	}
+
+	Targets.Remove(OtherActor);
+	if (OtherActor == CurrentTarget)
+	{
+		OnTargetsChanged.Broadcast();
+	}
 }

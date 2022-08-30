@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "Components/ArrowComponent.h"
 #include "Projectile.h"
-#include "Base_Pawn.h"
 #include "GameStructs.h"
 #include "Canon.generated.h"
 
@@ -28,13 +27,22 @@ class TANKOGEDDON_API ACanon : public AActor
 {
 	GENERATED_BODY()
 public:
-	//meshes
+	//meshes and components
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 	USceneComponent* sceenecmp;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 	UStaticMeshComponent* CanonMesh;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 	UArrowComponent* ProjectileSpawnPoint;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
+	UParticleSystemComponent* ParticleEffect;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
+	UAudioComponent* AudioEffect;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
+	UForceFeedbackEffect* FeedbackEffect;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
+	TSubclassOf<UCameraShakeBase> CameraShake;
 
 protected:
 

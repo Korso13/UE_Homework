@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Base_Pawn.h"
+#include "ControllerTargeting.h"
 #include "TankPlayerController.generated.h"
 
 /**
@@ -16,17 +17,23 @@ class ATank;
 
 
 UCLASS()
-class TANKOGEDDON_API ATankPlayerController : public APlayerController
+class TANKOGEDDON_API ATankPlayerController : public APlayerController, public IControllerTargeting
 {
 	GENERATED_BODY()
 	
 private:
 	FVector WorldMousePosition;
-	
+	FVector LastWorldMousePosition;
+	FVector StickAxis;
+	FVector LastStickAxis{0,0,0};
+	float StickXAxis;
+	float StickYAxis;
+
+
 protected:
 	UPROPERTY()
 	ATank* TankPawn = nullptr;
-
+	TSharedPtr<GenericApplication, ESPMode::NotThreadSafe> App;
 public:
 	ATankPlayerController();
 
@@ -36,7 +43,7 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
-	FVector GetMousePos() const;
+	virtual FVector GetTargetLocation() const override;
 
 	UFUNCTION()
 	void MoveForward(float ForwardAxisImpulse);
@@ -46,6 +53,12 @@ public:
 	void RotateRight(float RightRotationImpulse);
 
 	UFUNCTION()
+	void StickRotationY(float StickY);
+	UFUNCTION()
+	void StickRotationX(float StickX);
+
+
+	UFUNCTION()
 	void PrimaryFire();
 	UFUNCTION()
 	void SecondaryFire();
@@ -53,3 +66,5 @@ public:
 	void SwitchWeapon();
 	
 };
+
+

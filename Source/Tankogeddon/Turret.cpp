@@ -10,26 +10,8 @@ ATurret::ATurret()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Collision = CreateDefaultSubobject<UBoxComponent>(TEXT("TankCollision"));
-	RootComponent = Collision;
-
-	BodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tank Body"));
-	BodyMesh->SetupAttachment(Collision);
-
-	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tank Turret"));
-	TurretMesh->SetupAttachment(BodyMesh);
-
-	CanonMountingPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("Canon Mounting Point"));
-	CanonMountingPoint->AttachToComponent(TurretMesh, FAttachmentTransformRules::KeepRelativeTransform);
-
-	DetectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Detection Sphere"));
-	DetectionSphere->SetupAttachment(Collision);
-	DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &ATurret::OnDetectionSphere_BeginOverlap);
-	DetectionSphere->OnComponentEndOverlap.AddDynamic(this, &ATurret::OnDetectionSphereEndOverlap);
-
-	HealthComponent = CreateDefaultSubobject<UHealthComponent>("Health Component");
-	HealthComponent->OnDeath.AddUObject(this, &ATurret::OnDeath);
-	HealthComponent->OnDamage.AddUObject(this, &ATurret::OnDamage);
+	//DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &ATurret::OnBeginOverlap);
+	//DetectionSphere->OnComponentEndOverlap.AddDynamic(this, &ATurret::OnDetectionSphereEndOverlap);
 
 }
 
@@ -55,7 +37,7 @@ void ATurret::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (CanFire())
+	if (CanFire() && IsVisible(CurrentTarget))
 	{
 		Cannon->Fire(FireType::Primary);
 	}
@@ -63,7 +45,7 @@ void ATurret::Tick(float DeltaTime)
 
 void ATurret::Targeting()
 {
-	if (CurrentTarget.IsValid())
+	if (CurrentTarget.IsValid() && IsVisible(CurrentTarget))
 	{
 		FRotator TargetingRotation = UKismetMathLibrary::FindLookAtRotation(TurretMesh->GetComponentLocation(), CurrentTarget->GetActorLocation());
 		FRotator TurretRotation = TurretMesh->GetComponentRotation();
@@ -95,42 +77,36 @@ bool ATurret::CanFire()
 	}
 }
 
+bool ATurret::IsVisible(TWeakObjectPtr<AActor> InCurrentTarget) const
+{
+	FHitResult HitResult;
+	FCollisionQueryParams CollParams;
+	CollParams.AddIgnoredActor(this);
+	CollParams.AddIgnoredActor(GetInstigator());
+	CollParams.bTraceComplex = true;
+	CollParams.bReturnPhysicalMaterial = false;
+	CollParams.TraceTag = FName(TEXT("VisibilityTracer"));
+	FVector start = Cannon->ProjectileSpawnPoint->GetComponentLocation();
+	FVector end = InCurrentTarget->GetActorLocation();
+
+	//drawing tracer
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, start, end, ECollisionChannel::ECC_Visibility, CollParams))
+	{
+		if (HitResult.GetActor() == InCurrentTarget)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+	else
+		return false;
+
+}
+
 int32 ATurret::GetScore() const
 {
 	return ScoreValue;
-}
-
-
-void ATurret::OnDetectionSphere_BeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if (OtherActor == this || OtherActor == GetInstigator() || OtherActor == nullptr)
-	{
-		return;
-	}
-	if (!OtherActor->IsA<ATank>())
-	{
-		return;
-	}
-	Targets.Add(OtherActor);
-	FindBestTarget();
-}
-
-void ATurret::OnDetectionSphereEndOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	if (OtherActor == this || OtherActor == GetInstigator() || OtherActor == nullptr)
-	{
-		return;
-	}
-	if (!OtherActor->IsA<ATank>())
-	{
-		return;
-	}
-
-	Targets.Remove(OtherActor);
-	if (OtherActor == CurrentTarget)
-	{
-		FindBestTarget();
-	}
 }
 
 
@@ -173,9 +149,4 @@ void ATurret::FindBestTarget()
 	{
 		CurrentTarget = BestTarget;
 	}
-}
-
-void ATurret::OnDamage(FDamageInfo Damage)
-{
-	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::Printf(TEXT("Turret took damage from %s, HP: %f"), ToCStr(Damage.Instigator->GetName()), HealthComponent->CurrentHP));
 }

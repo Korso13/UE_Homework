@@ -11,6 +11,7 @@
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Scorable.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Base_Pawn.generated.h"
 
@@ -25,7 +26,6 @@ class TANKOGEDDON_API ABase_Pawn : public APawn, public IDamageTaker, public ISc
 
 	//DECLARE_EVENT_OneParam(ABase_Pawn, FOnScoredKill, FScoredKillData);
 
-
 public:
 	//meshes and components
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
@@ -36,6 +36,21 @@ public:
 		UStaticMeshComponent* TurretMesh;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 		UArrowComponent* CanonMountingPoint;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
+		USphereComponent* DetectionSphere;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
+		UParticleSystemComponent* OnDeathParticleEffect;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
+		UAudioComponent* OnDeathAudioEffect;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
+		UParticleSystemComponent* OnHitParticleEffect;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
+		UAudioComponent* OnHitAudioEffect;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
+		UForceFeedbackEffect* OnHitForceFeedback;
+
+
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 		UHealthComponent* HealthComponent;
@@ -48,15 +63,28 @@ public:
 
 protected:
 	UPROPERTY()
-		ACanon* Cannon;
+	ACanon* Cannon;
 
+	friend class AEnemyTankAIController;
+	friend class ATankPlayerController;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Scoring")
+	int32 ScoreValue = 0;
+
+	int32 TotalScore = 0;
+
+	TArray<TWeakObjectPtr<AActor>> Targets;
+
+	TWeakObjectPtr<AActor> CurrentTarget;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Targeting")
+	TSubclassOf<ABase_Pawn> TargetType;
 public:
 	// Sets default values for this pawn's properties
 	ABase_Pawn();
 
 	// Called every frame
-	//virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -67,17 +95,22 @@ protected:
 
 	virtual void Destroyed() override;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Scoring")
-		int32 ScoreValue = 0;
-
-	int32 TotalScore = 0;
-
-protected:
 	virtual void OnDeath();
-	//virtual void OnDamage(FDamageInfo Damage);
+
+	UFUNCTION()
+	void DestroyActor();
+
+	virtual void OnDamage(FDamageInfo Damage);
 
 	UFUNCTION()
 	virtual void ScoredKill(FScoredKillData KillData);
+
+	UFUNCTION()
+	virtual void OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	virtual void OnDetectionSphereEndOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	virtual void FindBestTarget();
 
 public:	
 

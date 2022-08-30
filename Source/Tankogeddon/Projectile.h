@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
-#include "Canon.h"
 #include "Projectile.generated.h"
 
 class ACanon;
