@@ -70,7 +70,7 @@ void AProjectile::OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, clas
 
 		Damageable->TakeDamage(DamageData);
 
-		if(OtherActor->IsPendingKillPending())
+		if(Damageable->GetHealth() <= 0)
 		{
 			Cast<ABase_Pawn>(ScoreData.Killer)->OnScoredKill.Broadcast(ScoreData);
 		}

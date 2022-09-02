@@ -42,4 +42,6 @@ class TANKOGEDDON_API IDamageTaker
 public:
 
 	virtual void TakeDamage(FDamageInfo DamageData) = 0;
+
+	virtual float GetHealth() const = 0;
 };

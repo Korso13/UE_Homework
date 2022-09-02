@@ -2,7 +2,11 @@
 
 
 #include "Base_Pawn.h"
+
+#include "EnemyTankAIController.h"
 #include "Projectile.h"
+#include "TankPlayerController.h"
+#include "Turret.h"
 #include "Components/AudioComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -39,9 +43,9 @@ ABase_Pawn::ABase_Pawn()
 	OnHitAudioEffect->SetupAttachment(RootComponent);
 	OnHitParticleEffect = CreateDefaultSubobject<UParticleSystemComponent>("On Hit Visual SFX");
 	OnHitParticleEffect->SetupAttachment(RootComponent);
+
 	OnDeathAudioEffect = CreateDefaultSubobject<UAudioComponent>("On Death Audio SFX");
 	OnDeathAudioEffect->SetupAttachment(RootComponent);
-
 	OnDeathParticleEffect = CreateDefaultSubobject<UParticleSystemComponent>("On Death Visual SFX");
 	OnDeathParticleEffect->SetupAttachment(RootComponent);
 }
@@ -51,6 +55,16 @@ void ABase_Pawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//auto PlayerController = Cast<ATankPlayerController>(GetInstigator()->GetController());
+	if (IsPlayerControlled())
+		GEngine->AddOnScreenDebugMessage(22, 0.5f, FColor::Red, FString::Printf(TEXT("Current HP: %2f"), HealthComponent->CurrentHP));
+}
+
+void ABase_Pawn::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Orange, FString::Printf(TEXT("Spawned Tank with ID: %d"), TankSpawnID));
 }
 
 // Called to bind functionality to input
@@ -71,15 +85,31 @@ void ABase_Pawn::BeginPlay()
 void ABase_Pawn::OnDeath()
 {
 	SetActorTickEnabled(false);
+	if(!IsA<ATurret>())
+		GetInstigatorController()->SetActorTickEnabled(false);
+	else if(IsA<ATurret>())
+	{
+		auto pawn = Cast<ATurret>(GetInstigator());
+		GetWorld()->GetTimerManager().ClearTimer(pawn->TargetingTimer);
+	}
 	OnDeathParticleEffect->Activate();
 	OnDeathAudioEffect->Play();
-	TScriptDelegate<> PawnDestroyed;
-	PawnDestroyed.BindUFunction(this, FName("Destroyed"));
-	OnDeathAudioEffect->OnAudioFinished.Add(PawnDestroyed);
+	FTimerHandle PawnDestructionTimer;
+	FTimerDelegate PawnDestructionDel;
+	PawnDestructionDel.BindUFunction(this, FName("DestroyPawn"));
+	if(IsPlayerControlled())
+		GetWorld()->GetTimerManager().SetTimer(PawnDestructionTimer, PawnDestructionDel, 2, false, -1);
+	else
+		GetWorld()->GetTimerManager().SetTimer(PawnDestructionTimer, PawnDestructionDel, 10, false, -1);
 }
 
-void ABase_Pawn::DestroyActor()
+void ABase_Pawn::DestroyPawn()
 {
+	auto PlayerController = Cast<ATankPlayerController>(GetController());
+	if(PlayerController)
+	{
+		UKismetSystemLibrary::QuitGame(GetWorld(), PlayerController, EQuitPreference::Quit, false);
+	}
 	Destroy();
 }
 
@@ -90,11 +120,6 @@ void ABase_Pawn::Destroyed()
 	if (Cannon)
 	{
 		Cannon->Destroy();
-	}
-	auto PlayerController = Cast<APlayerController>(GetController());
-	if(PlayerController)
-	{
-		UKismetSystemLibrary::QuitGame(GetWorld(), PlayerController, EQuitPreference::Quit, false);
 	}
 }
 
@@ -120,6 +145,16 @@ void ABase_Pawn::TakeDamage(FDamageInfo DamageData)
 int32 ABase_Pawn::GetScore() const
 {
 	return ScoreValue;
+}
+
+float ABase_Pawn::GetHealth() const
+{
+	return HealthComponent->CurrentHP;
+}
+
+int32 ABase_Pawn::GetTotalScore() const
+{
+	return TotalScore;
 }
 
 void ABase_Pawn::ScoredKill(FScoredKillData KillData) 

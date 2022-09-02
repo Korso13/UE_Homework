@@ -48,3 +48,8 @@ void UHealthComponent::TakeDamage(FDamageInfo Damage)
 	}
 }
 
+float UHealthComponent::GetHealth() const
+{
+	return CurrentHP;
+}
+

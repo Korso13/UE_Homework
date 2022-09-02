@@ -17,7 +17,7 @@ class TANKOGEDDON_API UHealthComponent : public UActorComponent
 	DECLARE_EVENT_OneParam(UHealthComponent, FOnDamage, FDamageInfo);
 
 public:
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Health")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Health")
 		float MaxHP = 10;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Health")
 		float CurrentHP = 10;
@@ -38,4 +38,6 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void TakeDamage(FDamageInfo Damage);
+
+	virtual float GetHealth() const;
 };

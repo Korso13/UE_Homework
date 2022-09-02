@@ -24,8 +24,6 @@ class TANKOGEDDON_API ABase_Pawn : public APawn, public IDamageTaker, public ISc
 {
 	GENERATED_BODY()
 
-	//DECLARE_EVENT_OneParam(ABase_Pawn, FOnScoredKill, FScoredKillData);
-
 public:
 	//meshes and components
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
@@ -61,6 +59,8 @@ public:
 
 	FOnScoredKill OnScoredKill;
 
+	int32 TankSpawnID = -1;
+
 protected:
 	UPROPERTY()
 	ACanon* Cannon;
@@ -89,16 +89,18 @@ public:
 	// Called to bind functionality to input
 	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual void OnConstruction(const FTransform& Transform) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	virtual void Destroyed() override;
 
-	virtual void OnDeath();
-
 	UFUNCTION()
-	void DestroyActor();
+	void DestroyPawn();
+
+	virtual void OnDeath();
 
 	virtual void OnDamage(FDamageInfo Damage);
 
@@ -118,4 +120,7 @@ public:
 
 	virtual int32 GetScore() const override;
 
+	virtual float GetHealth() const override;
+
+	virtual int32 GetTotalScore() const;
 };

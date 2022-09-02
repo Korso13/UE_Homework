@@ -30,10 +30,13 @@ private:
 	float StickYAxis;
 
 
-protected:
+public:
 	UPROPERTY()
 	ATank* TankPawn = nullptr;
+
+protected:
 	TSharedPtr<GenericApplication, ESPMode::NotThreadSafe> App;
+
 public:
 	ATankPlayerController();
 

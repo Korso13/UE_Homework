@@ -9,6 +9,7 @@
 #include "Components/AudioComponent.h"
 #include "Engine/Engine.h"
 #include "Particles/ParticleSystemComponent.h"
+#include <Tankogeddon/TankPlayerController.h>
 
 // Sets default values
 ACanon::ACanon()
@@ -67,7 +68,9 @@ void ACanon::Fire(FireType att_type)
 		//checking cannon type
 		if (Type == CanonType::ProjectileCanon && AmmoType)
 		{
-			GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing projectile");
+			auto PlayerController = Cast<ATankPlayerController>(GetInstigator()->GetController());
+			if (PlayerController)
+				GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing projectile");
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Instigator = GetInstigator();
 			SpawnParams.Owner = this;
@@ -105,7 +108,9 @@ void ACanon::Fire(FireType att_type)
 		}
 		else if(Type == CanonType::LaserCanon)
 		{
-			GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing laser");
+			auto PlayerController = Cast<ATankPlayerController>(GetInstigator()->GetController());
+			if (PlayerController)
+				GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing laser");
 			FHitResult HitResult;
 			FCollisionQueryParams CollParams;
 			CollParams.AddIgnoredActor(this);
@@ -117,8 +122,9 @@ void ACanon::Fire(FireType att_type)
 			FVector end = ProjectileSpawnPoint->GetForwardVector() * LaserRange + start;
 
 			//drawing tracer
-			GetWorld()->LineTraceSingleByChannel(HitResult, start, end, ECollisionChannel::ECC_Visibility, CollParams);
+			GetWorld()->LineTraceSingleByChannel(HitResult, start, end, ECollisionChannel::ECC_GameTraceChannel1, CollParams);
 			DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 0.1f, 0, 4);
+			AudioEffect->Play();
 
 			//Dealing laser damage
 			if(HitResult.Actor.IsValid())
@@ -168,10 +174,13 @@ void ACanon::Fire(FireType att_type)
 
 void ACanon::Refire()
 {
-	GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing alternate fire");
+	auto PlayerController = Cast<ATankPlayerController>(GetInstigator()->GetController());
+	if (PlayerController)
+		GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing alternate fire");
 	if(CanonType::LaserCanon == Type)
 	{
-		GEngine->AddOnScreenDebugMessage(11, 1, FColor::Red, "Laser");
+		if (PlayerController)
+			GEngine->AddOnScreenDebugMessage(11, 1, FColor::Red, "Laser");
 		FHitResult HitResult;
 		FCollisionQueryParams CollParams;
 		CollParams.AddIgnoredActor(this);
@@ -206,7 +215,8 @@ void ACanon::Refire()
 	}
 	else if (Type == CanonType::ProjectileCanon && AmmoType)
 	{
-		GEngine->AddOnScreenDebugMessage(11, 1, FColor::Red, "Projectile");
+		if (PlayerController)
+			GEngine->AddOnScreenDebugMessage(11, 1, FColor::Red, "Projectile");
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Instigator = GetInstigator();
 		SpawnParams.Owner = this;

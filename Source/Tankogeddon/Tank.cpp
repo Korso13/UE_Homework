@@ -71,12 +71,15 @@ void ATank::Tick(float DeltaTime)
 		TargetTurretRotation.Roll = CurrentTurretRotation.Roll;
 		TurretMesh->SetWorldRotation(FMath::Lerp(CurrentTurretRotation, TargetTurretRotation, TurretRotationLerpKey));
 	}
-	//AmmoHUD
-	GEngine->AddOnScreenDebugMessage(20, 0.5f, FColor::Cyan, FString::Printf(TEXT("Ammo: %d"), Cannon->GetCurrAmmo()));
+	auto PlayerController = Cast<ATankPlayerController>(GetInstigator()->GetController());
+	if (PlayerController)
+	{
+		//AmmoHUD
+		GEngine->AddOnScreenDebugMessage(20, 0.5f, FColor::Cyan, FString::Printf(TEXT("Ammo: %d"), Cannon->GetCurrAmmo()));
 
-	//ScoreHUD
-	GEngine->AddOnScreenDebugMessage(21, 0.5f, FColor::Purple, FString::Printf(TEXT("Your Score: %d"), TotalScore));
-
+		//ScoreHUD
+		GEngine->AddOnScreenDebugMessage(21, 0.5f, FColor::Purple, FString::Printf(TEXT("Your Score: %d"), TotalScore));
+	}
 }
 
 // Called to bind functionality to input
@@ -252,12 +255,10 @@ void ATank::OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AAct
 {
 	if (OtherActor == this || OtherActor == GetInstigator() || OtherActor == nullptr)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Black, "Overlapped with wrong actor(self)", true);
 		return;
 	}
 	if (OtherActor->GetClass() != TargetType)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Black, "Overlapped with wrong actor(not ATank)", true);
 		return;
 	}
 	Targets.Add(OtherActor);

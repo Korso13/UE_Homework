@@ -19,6 +19,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Cannon Type")
 	float Accuracy = 10;
 
+	FTimerHandle TargetingTimer;
 protected:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components|Weapons")
 	TSubclassOf<ACanon> CanonClass;
@@ -26,7 +27,6 @@ protected:
 	int32 ScoreValue = 100;
 
 private:
-	FTimerHandle TargetingTimer;
 
 public:	
 	// Sets default values for this actor's properties
