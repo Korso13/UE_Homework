@@ -185,7 +185,7 @@ void ABase_Pawn::OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class
 
 void ABase_Pawn::OnDetectionSphereEndOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (OtherActor == this || OtherActor == GetInstigator() || OtherActor == nullptr)
+	if (OtherActor == this /*|| OtherActor == GetInstigator()*/ || OtherActor == nullptr)
 	{
 		return;
 	}

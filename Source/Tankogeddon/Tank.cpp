@@ -39,6 +39,7 @@ void ATank::BeginPlay()
 	FirstCannonUsed = true;
 	SecondCannonUsed = false;
 	SetupCanon();
+	if(Cannon)
 	CannonOne = Cannon;
 }
 
@@ -49,9 +50,10 @@ void ATank::Tick(float DeltaTime)
 
 	//forward movement
 	CurrentForwardAxisImpulse = FMath::Lerp(CurrentForwardAxisImpulse, ForwardAxisMoveValue, ForwardMovementLerpKey); //interpolating current speed by target speed
-	FVector MovePosition = GetActorLocation() + GetActorForwardVector() * MoveSpeed * CurrentForwardAxisImpulse * DeltaTime; //using interpolated forward speed
-	//UE_LOG(TankLog, Warning, TEXT("Forward Impulse: %f, Forward Value: %f"), CurrentForwardAxisImpulse, ForwardAxisMoveValue); //debug!!
-	SetActorLocation(MovePosition, true);
+	Collision->AddForce(GetActorForwardVector() * MoveSpeed * 10000 * CurrentForwardAxisImpulse);
+	//FVector MovePosition = GetActorLocation() + GetActorForwardVector() * MoveSpeed * CurrentForwardAxisImpulse * DeltaTime; //using interpolated forward speed
+	//SetActorLocation(MovePosition, true);
+
 	//strafing
 	CurrentStrafeAxisImpulse = FMath::Lerp(CurrentStrafeAxisImpulse, StrafeAxisMoveValue, StrafeLerpKey);
 	FVector StrafePosition = GetActorLocation() + GetActorRightVector() * StrafeSpeed * CurrentStrafeAxisImpulse * DeltaTime;
@@ -75,6 +77,7 @@ void ATank::Tick(float DeltaTime)
 	if (PlayerController)
 	{
 		//AmmoHUD
+		if (Cannon)
 		GEngine->AddOnScreenDebugMessage(20, 0.5f, FColor::Cyan, FString::Printf(TEXT("Ammo: %d"), Cannon->GetCurrAmmo()));
 
 		//ScoreHUD
@@ -146,7 +149,7 @@ void ATank::SetupCanon()
 				Cannon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
 				Cannon->SetCurrAmmo(CannonTwo->GetCurrAmmo());
 			}
-			else
+			else 
 			{
 				Cannon = GetWorld()->SpawnActor<ACanon>(CurrentCanonClass, spawnParams);
 				Cannon->ResetAmmo();
@@ -154,6 +157,7 @@ void ATank::SetupCanon()
 				CannonTwo->ResetAmmo();
 			}
 		}
+		if (Cannon)
 		Cannon->AttachToComponent(CanonMountingPoint, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	}
 
@@ -212,6 +216,9 @@ void ATank::SecondaryFire() const
 
 void ATank::SwitchWeapon()
 {
+	if (!Cannon)
+		return;
+
 	if (FirstCannonUsed)
 	{
 		if (SecondCannon)

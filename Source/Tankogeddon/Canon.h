@@ -10,6 +10,7 @@
 #include "Canon.generated.h"
 
 
+class ABase_Pawn;
 class AProjectile;
 class UArrowComponent;
 
@@ -29,7 +30,7 @@ class TANKOGEDDON_API ACanon : public AActor
 public:
 	//meshes and components
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
-	USceneComponent* sceenecmp;
+	UStaticMeshComponent* Base;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 	UStaticMeshComponent* CanonMesh;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
@@ -44,6 +45,14 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
 	TSubclassOf<UCameraShakeBase> CameraShake;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Cannon Type|Angle")
+	bool AngleTargetingNeeded = false;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Cannon Type|Angle")
+	float BaseAngle;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Cannon Type|Angle")
+	float MaxFiringAngle = 27.4; //1500 firing distance under 1200 speed and 10kg and normal gravity
+	float ExtraAngle = 0;
+	float CurrentPitchAngle = 0;
 protected:
 
 	//Basic canon firing type
@@ -72,17 +81,20 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 		int32 AmmoSecondaryConsumption = 2;
 
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Components")
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 	TSubclassOf<AProjectile> AmmoType;
+
 
 	UPROPERTY()
 	TArray<FProjPool> Pool;
-
+	UPROPERTY()
+	ABase_Pawn* Pawn;
 private:
 	int32 Ammo = StartingAmmo;
 	FTimerHandle ReloadTimer;
 	FTimerHandle RefireTimer;
 	FTimerHandle RefireCD;
+	FTimerHandle AngleTargetingTimer;
 	bool ReadyToFire = true;
 
 public:	
@@ -99,6 +111,10 @@ protected:
 
 	void Refire();
 
+	virtual void Destroyed() override;
+
+	UFUNCTION()
+	void AngleTargeting();
 public:	
 	// Called every frame
 	//virtual void Tick(float DeltaTime) override;
@@ -118,5 +134,5 @@ public:
 	UFUNCTION()
 		void ResetAmmo() { Ammo = StartingAmmo; };
 
-
+	TSubclassOf<AProjectile> GetAmmoType() const { return AmmoType; };
 };

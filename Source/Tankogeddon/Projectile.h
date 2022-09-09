@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DamageTaker.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
@@ -18,10 +19,12 @@ class TANKOGEDDON_API AProjectile : public AActor
 
 public: 
 	//meshes and components
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = Components)
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = Components)
 		UBoxComponent* Collisions;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = Components)
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = Components)
 		UStaticMeshComponent* ProjectileMesh;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = Components)
+		UStaticMeshComponent* ProjectileMesh2;
 
 	//properties
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = Projectile)
@@ -30,12 +33,21 @@ public:
 		float FlightRange = 2000;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = Projectile)
 		float Damage = 1;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = Projectile)
+		float HitImpulse = 1000;
 
-	//IScorable::FOnScoredKill OnScoredKill;
+	//explosive payload settings and components
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Projectile|Explosives")
+	bool ExplodesOnImpact = false;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Projectile|Explosives")
+	float ExplosionRadius = 200;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
+	UParticleSystemComponent* HitExplosion;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
+	UAudioComponent* HitExplosionSound;
 
 protected:
 	FVector LaunchPointVector;
-
 
 	UPROPERTY()
 	ACanon* LaunchingCanon;
@@ -50,7 +62,17 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-private:
+	void DeferredDestruction();
+
+	void GetAOEHits(TArray<FHitResult>& HitResults, const FVector HitLocation);
+
+	void DealDamage(AActor* Actor, IDamageTaker* Damageable);
+
+	void ApplyImpact(UPrimitiveComponent* PhysicsComponent, const FHitResult &SweepResult);
+
+protected:
 	UFUNCTION()
-	void OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	virtual void OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	virtual void NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) override;
 };

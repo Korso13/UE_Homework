@@ -11,6 +11,8 @@
 #include "Particles/ParticleSystemComponent.h"
 #include <Tankogeddon/TankPlayerController.h>
 
+#include "MortarShell.h"
+
 // Sets default values
 ACanon::ACanon()
 {
@@ -18,10 +20,10 @@ ACanon::ACanon()
 	PrimaryActorTick.bCanEverTick = false;
 
 	//setting up meshes
-	sceenecmp = CreateDefaultSubobject<USceneComponent>("Scene CMP");
-	RootComponent = sceenecmp;
+	Base = CreateDefaultSubobject<UStaticMeshComponent>("Base");
+	RootComponent = Base;
 	CanonMesh = CreateDefaultSubobject<UStaticMeshComponent>("Cannon mesh");
-	CanonMesh->SetupAttachment(RootComponent);
+	CanonMesh->SetupAttachment(Base);
 	ProjectileSpawnPoint = CreateDefaultSubobject<UArrowComponent>("Projectile spawn point");
 	ProjectileSpawnPoint->SetupAttachment(CanonMesh);
 
@@ -46,6 +48,24 @@ void ACanon::BeginPlay()
 	Super::BeginPlay();
 	
 	Reload();
+	Pawn = Cast<ABase_Pawn>(GetInstigator());
+
+	if (AngleTargetingNeeded)
+	{
+		BaseAngle = Pawn->TurretMesh->GetComponentRotation().Pitch;
+		FTimerDelegate AngleTargetingDelegate;
+		AngleTargetingDelegate.BindUFunction(this, FName("AngleTargeting"));
+		GetWorld()->GetTimerManager().SetTimer(AngleTargetingTimer, AngleTargetingDelegate, 0.5, true, -1); //replace 1 with property!!
+	}
+
+}
+
+void ACanon::Destroyed()
+{
+	Super::Destroyed();
+
+	//if (AngleTargetingNeeded)
+	GetWorld()->GetTimerManager().ClearAllTimersForObject(this);
 }
 
 void ACanon::Fire(FireType att_type)
@@ -253,6 +273,16 @@ void ACanon::Refire()
 			}
 		}
 	}
+}
+
+
+void ACanon::AngleTargeting()
+{
+	CurrentPitchAngle = Pawn->TurretMesh->GetComponentRotation().Pitch;
+	FRotator Rotation;
+	Rotation = Pawn->TurretMesh->GetComponentRotation();
+	Rotation.Pitch = BaseAngle + FMath::Lerp(CurrentPitchAngle, BaseAngle + ExtraAngle, Pawn->TurretRotationLerpKey);
+	Pawn->TurretMesh->SetWorldRotation(Rotation);
 }
 
 void ACanon::AddAmmo(int32 Count)

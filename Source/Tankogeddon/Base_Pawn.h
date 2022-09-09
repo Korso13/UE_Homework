@@ -67,6 +67,7 @@ protected:
 
 	friend class AEnemyTankAIController;
 	friend class ATankPlayerController;
+	friend class ACanon;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Scoring")
 	int32 ScoreValue = 0;
@@ -77,7 +78,7 @@ protected:
 
 	TWeakObjectPtr<AActor> CurrentTarget;
 
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Targeting")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Targeting")
 	TSubclassOf<ABase_Pawn> TargetType;
 public:
 	// Sets default values for this pawn's properties

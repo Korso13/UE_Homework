@@ -4,6 +4,8 @@
 #include "Canon.h"
 #include "Base_Pawn.h"
 #include "Scorable.h"
+#include "Components/AudioComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -18,6 +20,16 @@ AProjectile::AProjectile()
 
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>("Projectile mesh");
 	ProjectileMesh->SetupAttachment(RootComponent);
+
+	ProjectileMesh2 = CreateDefaultSubobject<UStaticMeshComponent>("Projectile mesh part 2");
+	ProjectileMesh2->AttachToComponent(ProjectileMesh, FAttachmentTransformRules::SnapToTargetIncludingScale);
+
+	HitExplosion = CreateDefaultSubobject<UParticleSystemComponent>("Hit Explosion particles");
+	HitExplosion->SetupAttachment(RootComponent);
+
+	HitExplosionSound = CreateDefaultSubobject<UAudioComponent>("Explosion sound");
+	HitExplosionSound->SetupAttachment(RootComponent);
+
 
 	LaunchingCanon = Cast<ACanon>(this->GetOwner());
 }
@@ -43,6 +55,68 @@ void AProjectile::Tick(float DeltaTime)
 	}
 }
 
+void AProjectile::DeferredDestruction()
+{
+	ProjectileMesh->SetVisibility(false);
+	ProjectileMesh2->SetVisibility(false);
+	FTimerHandle DestroyTimer;
+	FTimerDelegate DestroyDelegate;
+	DisableComponentsSimulatePhysics();
+	ProjectileSpeed = 0;
+	SetActorEnableCollision(false);
+	Damage = 0;
+	DestroyDelegate.BindLambda([this]()
+		{
+			Destroy();
+		});
+	GetWorld()->GetTimerManager().SetTimer(DestroyTimer, DestroyDelegate, 2, false, -1);
+}
+
+//sweep all targets hit by AOE blast
+void AProjectile::GetAOEHits(TArray<FHitResult> &HitResults, const FVector HitLocation)
+{
+	FCollisionQueryParams CollParams;
+	CollParams.AddIgnoredActor(this->GetInstigator());
+	CollParams.AddIgnoredActor(this);
+	CollParams.bTraceComplex = true;
+	GetWorld()->SweepMultiByChannel(HitResults, HitLocation, HitLocation + FVector(0.1f), FQuat::Identity, ECollisionChannel::ECC_Visibility, FCollisionShape::MakeSphere(ExplosionRadius), CollParams);
+}
+
+//func to deal damage and earn kill score
+void AProjectile::DealDamage(AActor* Actor, IDamageTaker* Damageable)
+{
+	FDamageInfo DamageData;
+	DamageData.Instigator = GetInstigator();
+	DamageData.DamageDealer = this;
+	DamageData.DamageValue = Damage;
+
+	IScorable* Scoreable = Cast<IScorable>(Actor);
+	FScoredKillData ScoreData; //need to gather in advance just in case
+	if (Scoreable)
+	{
+		ScoreData.Killer = GetInstigator();
+		ScoreData.Killed = Actor->GetInstigator();
+		ScoreData.ScoreValue = Scoreable->GetScore();
+	}
+
+	Damageable->TakeDamage(DamageData);
+
+	if (Damageable->GetHealth() <= 0)
+	{
+		Cast<ABase_Pawn>(ScoreData.Killer)->OnScoredKill.Broadcast(ScoreData);
+	}
+}
+
+//apply explosion impact
+void AProjectile::ApplyImpact(UPrimitiveComponent* PhysicsComponent, const FHitResult& SweepResult)
+{
+	if (PhysicsComponent->IsSimulatingPhysics())
+	{
+		PhysicsComponent->AddImpulseAtLocation(HitImpulse * GetActorForwardVector() * Damage, SweepResult.ImpactPoint);
+	}
+}
+
+
 
 void AProjectile::OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -51,33 +125,58 @@ void AProjectile::OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, clas
 		return;
 	}
 
-	IDamageTaker* Damageable = Cast<IDamageTaker>(OtherActor);
-	IScorable* Scoreable = Cast<IScorable>(OtherActor);
-	if (Damageable)
+	if (OtherActor) //checking if hit actor is still alive
 	{
-		FDamageInfo DamageData;
-		DamageData.Instigator = GetInstigator();
-		DamageData.DamageDealer = this;
-		DamageData.DamageValue = Damage;
 
-		FScoredKillData ScoreData; //need to gather in advance just in case
-		if(Scoreable)
+		TSet<AActor*> HitActors;
+		//checking if AOE payload and registering hit targets
+		if(ExplodesOnImpact)
 		{
-			ScoreData.Killer = GetInstigator();
-			ScoreData.Killed = OtherActor->GetInstigator();
-			ScoreData.ScoreValue = Scoreable->GetScore();
+			HitExplosion->Activate();
+			HitExplosionSound->Play();
+			TArray<FHitResult> HitResults;
+			GetAOEHits(HitResults, GetActorLocation());
+			for (auto const HitResult : HitResults)
+			{
+				HitActors.Add(HitResult.GetActor());
+			}
+		}
+		else
+		{
+			HitActors.Add(OtherActor);
 		}
 
-		Damageable->TakeDamage(DamageData);
-
-		if(Damageable->GetHealth() <= 0)
+		//dealing damage and impact to all affected actors, if possible
+		for (auto const HitActor : HitActors)
 		{
-			Cast<ABase_Pawn>(ScoreData.Killer)->OnScoredKill.Broadcast(ScoreData);
+			if (!IsValid(HitActor))
+			{
+				continue;
+			}
+			IDamageTaker* Damageable = Cast<IDamageTaker>(HitActor);
+			if(Damageable)
+			{
+				DealDamage(HitActor, Damageable);
+			}
+			else
+			{
+				UPrimitiveComponent* PhysComp = Cast<UPrimitiveComponent>(HitActor->GetRootComponent());
+				if (PhysComp)
+				{
+					ApplyImpact(PhysComp, SweepResult);
+				}
+			}
 		}
 	}
-	else
-	{
-		OtherActor->Destroy();
-	}
-	Destroy();
+	//launching deferred projectile destruction for SFX to safely play
+	DeferredDestruction();
 }
+
+void AProjectile::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, bool bSelfMoved,
+	FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
+{
+	Super::NotifyHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
+
+	DeferredDestruction();
+}
+

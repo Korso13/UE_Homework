@@ -2,6 +2,7 @@
 
 #include "Turret.h"
 #include "Tank.h"
+#include "DrawDebugHelpers.h"
 #include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
@@ -27,6 +28,7 @@ void ATurret::BeginPlay()
 		spawnParams.Owner = this;
 		Cannon = GetWorld()->SpawnActor<ACanon>(CanonClass, spawnParams);
 		Cannon->AttachToComponent(CanonMountingPoint, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+		Cannon->SetCurrAmmo(TurretAmmo);
 	}
 
 	GetWorld()->GetTimerManager().SetTimer(TargetingTimer, this, &ATurret::Targeting, TargetingUpdateRate, true);
@@ -37,21 +39,37 @@ void ATurret::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (CanFire() && IsVisible(CurrentTarget))
+	if (CanFire() && Cannon)
 	{
-		Cannon->Fire(FireType::Primary);
+		if(IsVisible(CurrentTarget) || Cannon->AngleTargetingNeeded)
+			Cannon->Fire(FireType::Primary);
 	}
 }
 
 void ATurret::Targeting()
 {
-	if (CurrentTarget.IsValid() && IsVisible(CurrentTarget))
+	if ((CurrentTarget.IsValid() && IsVisible(CurrentTarget)) || (CurrentTarget.IsValid() && Cannon->AngleTargetingNeeded))
 	{
 		FRotator TargetingRotation = UKismetMathLibrary::FindLookAtRotation(TurretMesh->GetComponentLocation(), CurrentTarget->GetActorLocation());
 		FRotator TurretRotation = TurretMesh->GetComponentRotation();
 		TargetingRotation.Pitch = TurretRotation.Pitch;
 		TargetingRotation.Roll = TurretRotation.Roll;
 		TurretMesh->SetWorldRotation(FMath::Lerp(TurretRotation, TargetingRotation, TurretRotationLerpKey));
+
+		if(Cannon->AngleTargetingNeeded)
+		{
+			float dist = FVector::DistXY(CurrentTarget->GetActorLocation(), GetActorLocation());
+
+			FVector TargetingSpot(GetActorLocation() + TurretMesh->GetForwardVector()*dist);
+			TargetingSpot.Z = -10;
+			DrawDebugSphere(GetWorld(), TargetingSpot, 32, 30, FColor::Red, false, -1, 1, 3);
+
+			float TargetingAngleOffset = (dist-655) / 25 - 6.4; //(dist - 655)/25 - 6.4 = ExtraAngle with mass 10kg and speed 1200 under normal gravity
+			if (TargetingAngleOffset < 0 || TargetingAngleOffset > Cannon->MaxFiringAngle)
+				Cannon->ExtraAngle = 0;
+			else
+				Cannon->ExtraAngle = TargetingAngleOffset;
+		}
 	}
 }
 
@@ -59,22 +77,22 @@ bool ATurret::CanFire()
 {
 	if (CurrentTarget.IsValid() && Cannon)
 	{
-		FRotator TargetingRotation = UKismetMathLibrary::FindLookAtRotation(CanonMountingPoint->GetComponentLocation(), CurrentTarget->GetActorLocation());
-		FRotator TurretRotation = CanonMountingPoint->GetComponentRotation();
+		if (IsVisible(CurrentTarget) || Cannon->AngleTargetingNeeded)
+		{
+			if(FVector::DistXY(CurrentTarget->GetActorLocation(), GetActorLocation()) <= DetectionSphere->GetScaledSphereRadius())
+			{
+				FRotator TargetingRotation = UKismetMathLibrary::FindLookAtRotation(CanonMountingPoint->GetComponentLocation(), CurrentTarget->GetActorLocation());
+				FRotator TurretRotation = CanonMountingPoint->GetComponentRotation();
 
-		if (FMath::Abs(TargetingRotation.Yaw - TurretRotation.Yaw) <= Accuracy)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
+				if (FMath::Abs(TargetingRotation.Yaw - TurretRotation.Yaw) <= Accuracy)
+				{
+					return true;
+				}
+			}
 		}
 	}
-	else
-	{
-		return false;
-	}
+
+	return false;
 }
 
 bool ATurret::IsVisible(TWeakObjectPtr<AActor> InCurrentTarget) const
