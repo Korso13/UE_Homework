@@ -42,8 +42,6 @@ protected:
 
 private:
 
-	virtual void FindBestTarget() override;
-
 	void Targeting();
 
 	bool CanFire();

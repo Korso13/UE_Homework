@@ -29,6 +29,8 @@ void ATurret::BeginPlay()
 		Cannon = GetWorld()->SpawnActor<ACanon>(CanonClass, spawnParams);
 		Cannon->AttachToComponent(CanonMountingPoint, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 		Cannon->SetCurrAmmo(TurretAmmo);
+		DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &ATurret::OnBeginOverlap);
+		DetectionSphere->OnComponentEndOverlap.AddDynamic(this, &ATurret::OnDetectionSphereEndOverlap);
 	}
 
 	GetWorld()->GetTimerManager().SetTimer(TargetingTimer, this, &ATurret::Targeting, TargetingUpdateRate, true);
@@ -125,46 +127,4 @@ bool ATurret::IsVisible(TWeakObjectPtr<AActor> InCurrentTarget) const
 int32 ATurret::GetScore() const
 {
 	return ScoreValue;
-}
-
-
-void ATurret::FindBestTarget()
-{
-	float MinRotation = 360;
-	float MinDistance = 1000000000;
-	TWeakObjectPtr<AActor> BestTarget;
-	FVector const TurretLocation = GetActorLocation();
-	FVector const TurretRotation = GetActorForwardVector();
-
-	for (auto const Target : Targets)
-	{
-		if (Target.IsValid())
-		{
-			FVector TargetingVector = Target->GetActorLocation() - TurretLocation;
-			TargetingVector.Normalize();
-			float AimRotation = FMath::RadiansToDegrees(FVector::DotProduct(TurretRotation, TargetingVector));
-			if (AimRotation < MinRotation && (MinRotation - AimRotation) < 15)
-			{
-				float const Distance = FVector::DistXY(TurretLocation, Target->GetActorLocation());
-				if (Distance < MinDistance)
-				{
-					MinDistance = Distance;
-					MinRotation = AimRotation;
-					BestTarget = Target;
-				}
-			}
-			else
-			{
-				float const Distance = FVector::DistXY(TurretLocation, Target->GetActorLocation());
-				MinDistance = Distance;
-				MinRotation = AimRotation;
-				BestTarget = Target;
-			}
-		}
-	}
-
-	if (BestTarget.IsValid())
-	{
-		CurrentTarget = BestTarget;
-	}
 }

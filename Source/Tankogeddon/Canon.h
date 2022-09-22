@@ -22,6 +22,7 @@ struct FProjPool
 	TWeakObjectPtr<AProjectile> Projectile;
 };
 
+#define COLLISION_LASER ECC_GameTraceChannel1
 
 UCLASS()
 class TANKOGEDDON_API ACanon : public AActor

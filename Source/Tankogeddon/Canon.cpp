@@ -13,6 +13,7 @@
 
 #include "MortarShell.h"
 
+
 // Sets default values
 ACanon::ACanon()
 {
@@ -137,12 +138,12 @@ void ACanon::Fire(FireType att_type)
 			CollParams.AddIgnoredActor(GetInstigator());
 			CollParams.bTraceComplex = true;
 			CollParams.bReturnPhysicalMaterial = false;
-			CollParams.TraceTag = FName(TEXT("Projectile"));
+			CollParams.TraceTag = FName(TEXT("Laser Tracer"));
 			FVector start = ProjectileSpawnPoint->GetComponentLocation();
 			FVector end = ProjectileSpawnPoint->GetForwardVector() * LaserRange + start;
 
 			//drawing tracer
-			GetWorld()->LineTraceSingleByChannel(HitResult, start, end, ECollisionChannel::ECC_GameTraceChannel1, CollParams);
+			GetWorld()->LineTraceSingleByChannel(HitResult, start, end, ECollisionChannel::ECC_Visibility, CollParams);
 			DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 0.1f, 0, 4);
 			AudioEffect->Play();
 
@@ -157,10 +158,6 @@ void ACanon::Fire(FireType att_type)
 					DamageData.DamageDealer = this;
 					DamageData.DamageValue = LaserDamage;
 					Damageable->TakeDamage(DamageData);
-				}
-				else
-				{
-					HitResult.Actor->Destroy();
 				}
 			}
 		}
@@ -226,10 +223,6 @@ void ACanon::Refire()
 				DamageData.DamageDealer = this;
 				DamageData.DamageValue = LaserDamage;
 				Damageable->TakeDamage(DamageData);
-			}
-			else
-			{
-				HitResult.Actor->Destroy();
 			}
 		}
 	}

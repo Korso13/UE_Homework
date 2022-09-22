@@ -48,6 +48,8 @@ void AMortarShell::NotifyHit(
 		return;
 	}
 
+	ProjectileMovement->Deactivate();
+
 	if (Other) //checking if hit actor is still alive
 	{
 		HitExplosion->Activate();

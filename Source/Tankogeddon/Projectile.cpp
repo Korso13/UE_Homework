@@ -62,9 +62,10 @@ void AProjectile::DeferredDestruction()
 	FTimerHandle DestroyTimer;
 	FTimerDelegate DestroyDelegate;
 	DisableComponentsSimulatePhysics();
+	
 	ProjectileSpeed = 0;
 	SetActorEnableCollision(false);
-	Damage = 0;
+	//Damage = 0;
 	DestroyDelegate.BindLambda([this]()
 		{
 			Destroy();
@@ -101,7 +102,7 @@ void AProjectile::DealDamage(AActor* Actor, IDamageTaker* Damageable)
 
 	Damageable->TakeDamage(DamageData);
 
-	if (Damageable->GetHealth() <= 0)
+	if (Damageable->GetHealth() <= 0 && (Scoreable))
 	{
 		Cast<ABase_Pawn>(ScoreData.Killer)->OnScoredKill.Broadcast(ScoreData);
 	}

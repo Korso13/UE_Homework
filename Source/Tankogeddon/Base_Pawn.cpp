@@ -36,8 +36,6 @@ ABase_Pawn::ABase_Pawn()
 
 	DetectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Detection Sphere"));
 	DetectionSphere->SetupAttachment(Collision);
-	DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &ABase_Pawn::OnBeginOverlap);
-	DetectionSphere->OnComponentEndOverlap.AddDynamic(this, &ABase_Pawn::OnDetectionSphereEndOverlap);
 
 	OnHitAudioEffect = CreateDefaultSubobject<UAudioComponent>("On Hit Audio SFX");
 	OnHitAudioEffect->SetupAttachment(RootComponent);
@@ -66,13 +64,6 @@ void ABase_Pawn::OnConstruction(const FTransform& Transform)
 
 	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Orange, FString::Printf(TEXT("Spawned Tank with ID: %d"), TankSpawnID));
 }
-
-// Called to bind functionality to input
-//void ABase_Pawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-//{
-//	Super::SetupPlayerInputComponent(PlayerInputComponent);
-//
-//}
 
  //Called when the game starts or when spawned
 void ABase_Pawn::BeginPlay()
@@ -204,5 +195,43 @@ void ABase_Pawn::OnDetectionSphereEndOverlap(class UPrimitiveComponent* Overlapp
 
 void ABase_Pawn::FindBestTarget()
 {
-	return;
+	float MinRotation = 360;
+	float MinDistance = 1000000000;
+	TWeakObjectPtr<AActor> BestTarget;
+	FVector const AIUnitLocation = GetActorLocation();
+	FVector const AIUnitRotation = GetActorForwardVector();
+
+	for (auto const Target : Targets)
+	{
+		if (Target.IsValid())
+		{
+			FVector TargetingVector = Target->GetActorLocation() - AIUnitLocation;
+			TargetingVector.Normalize();
+			float AimRotation = FMath::RadiansToDegrees(FVector::DotProduct(AIUnitRotation, TargetingVector));
+			if (AimRotation < MinRotation && (MinRotation - AimRotation) < 15)
+			{
+				float const Distance = FVector::DistXY(AIUnitLocation, Target->GetActorLocation());
+				if (Distance < MinDistance)
+				{
+					MinDistance = Distance;
+					MinRotation = AimRotation;
+					BestTarget = Target;
+				}
+			}
+			else
+			{
+				float const Distance = FVector::DistXY(AIUnitLocation, Target->GetActorLocation());
+				MinDistance = Distance;
+				MinRotation = AimRotation;
+				BestTarget = Target;
+			}
+		}
+	}
+
+	if (BestTarget.IsValid())
+	{
+		CurrentTarget = BestTarget;
+	}
+	else
+		CurrentTarget = nullptr;
 }

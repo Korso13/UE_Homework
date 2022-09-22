@@ -137,17 +137,17 @@ void AEnemyTankAIController::FindBestTarget()
 			FVector TargetingVector = Target->GetActorLocation() - TurretLocation;
 			TargetingVector.Normalize();
 			float AimRotation = FMath::RadiansToDegrees(FVector::DotProduct(TurretRotation, TargetingVector));
-			if (AimRotation < MinRotation && (MinRotation - AimRotation) < 15)
+			if (AimRotation < MinRotation && (MinRotation - AimRotation) < 15) //checking if rotation to Target is better than for the current best target
 			{
 				float const Distance = FVector::DistXY(TurretLocation, Target->GetActorLocation());
-				if (Distance < MinDistance && IsVisible(Target))
+				if (Distance < MinDistance && IsVisible(Target)) //checking if Target is closer than current Best target + visibility check
 				{
 					MinDistance = Distance;
 					MinRotation = AimRotation;
 					BestTarget = Target;
 				}
 			}
-			else if(IsVisible(Target))
+			else if(IsVisible(Target)) //check IsVisible!
 			{
 				float const Distance = FVector::DistXY(TurretLocation, Target->GetActorLocation());
 				MinDistance = Distance;
@@ -162,6 +162,8 @@ void AEnemyTankAIController::FindBestTarget()
 		CurrentTarget = BestTarget;
 		TankPawn->CurrentTarget = CurrentTarget;
 	}
+	else
+		CurrentTarget = nullptr;
 }
 
 bool AEnemyTankAIController::CanFire()
@@ -193,7 +195,7 @@ bool AEnemyTankAIController::IsVisible(TWeakObjectPtr<AActor> InCurrentTarget) c
 {
 	FHitResult HitResult;
 	FCollisionQueryParams CollParams;
-	CollParams.AddIgnoredActor(this);
+	CollParams.AddIgnoredActor(TankPawn);
 	CollParams.AddIgnoredActor(GetInstigator());
 	CollParams.bTraceComplex = true;
 	CollParams.bReturnPhysicalMaterial = false;
@@ -221,6 +223,7 @@ void AEnemyTankAIController::OnTargetsChanged()
 	{
 		return;
 	}
+
 	FindBestTarget();
 }
 

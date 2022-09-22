@@ -26,6 +26,8 @@ ATank::ATank()
 	SpringArm->TargetArmLength = 1000;
 	SpringArm->bDoCollisionTest = true;
 
+	DetectionSphere->OnComponentBeginOverlap.AddDynamic(this, &ATank::OnBeginOverlap);
+	DetectionSphere->OnComponentEndOverlap.AddDynamic(this, &ATank::OnDetectionSphereEndOverlap);
 
 };
 
@@ -255,6 +257,11 @@ void ATank::SwitchWeapon()
 			return;
 		}
 	}
+}
+
+void ATank::FindBestTarget()
+{
+	return;
 }
 
 //for AI purposes

@@ -20,7 +20,7 @@ class TANKOGEDDON_API ATank : public ABase_Pawn
 {
 	GENERATED_BODY()
 
-	DECLARE_EVENT(ATank, FOnTargetsChanged);
+	DECLARE_EVENT(AEnemyTankAIController, FOnTargetsChanged);
 public:
 
 	//Tank settings
@@ -123,6 +123,8 @@ public:
 		FName PatrollingPointTag;
 
 	FOnTargetsChanged OnTargetsChanged;
+
+	virtual void FindBestTarget() override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Cannon Type")
 		float Accuracy = 10;
