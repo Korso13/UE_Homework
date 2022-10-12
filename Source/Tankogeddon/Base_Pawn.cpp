@@ -99,7 +99,8 @@ void ABase_Pawn::DestroyPawn()
 	auto PlayerController = Cast<ATankPlayerController>(GetController());
 	if(PlayerController)
 	{
-		UKismetSystemLibrary::QuitGame(GetWorld(), PlayerController, EQuitPreference::Quit, false);
+		Destroyed();
+		//UKismetSystemLibrary::QuitGame(GetWorld(), PlayerController, EQuitPreference::Quit, false);
 	}
 	Destroy();
 }
