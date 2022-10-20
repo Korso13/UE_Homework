@@ -109,9 +109,11 @@ public:
 	UFUNCTION()
 	void SwitchWeapon();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	ACanon* GetCannon() const { return Cannon; }
 
+	UFUNCTION(BlueprintCallable)
+	TSubclassOf<ACanon> GetCannonClass() const { return CurrentCanonClass; }
 
 
 	//for AI purposes

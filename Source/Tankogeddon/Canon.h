@@ -106,7 +106,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	bool IsReadyToFire() const {return ReadyToFire;}
 
 	void Reload() { ReadyToFire = true; }
 
@@ -119,6 +118,8 @@ protected:
 public:	
 	// Called every frame
 	//virtual void Tick(float DeltaTime) override;
+	UFUNCTION(BlueprintCallable)
+	bool IsReadyToFire() const {return ReadyToFire;}
 
 	UFUNCTION()
 		void Fire(FireType att_type);
@@ -126,7 +127,7 @@ public:
 	UFUNCTION()
 		void AddAmmo(int32 Count);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		int32 GetCurrAmmo() const;
 
 	UFUNCTION()

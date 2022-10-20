@@ -75,6 +75,7 @@ void ABase_Pawn::BeginPlay()
 
 void ABase_Pawn::OnDeath()
 {
+	KilledInAction = true;
 	SetActorTickEnabled(false);
 	if(!IsA<ATurret>())
 		GetInstigatorController()->SetActorTickEnabled(false);

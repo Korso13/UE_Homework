@@ -74,6 +74,8 @@ protected:
 
 	int32 TotalScore = 0;
 
+	bool KilledInAction = false;
+	
 	TArray<TWeakObjectPtr<AActor>> Targets;
 
 	TWeakObjectPtr<AActor> CurrentTarget;
@@ -123,5 +125,9 @@ public:
 
 	virtual float GetHealth() const override;
 
+	UFUNCTION(BlueprintCallable)
 	virtual int32 GetTotalScore() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool IsKIA() const { return KilledInAction; }
 };
