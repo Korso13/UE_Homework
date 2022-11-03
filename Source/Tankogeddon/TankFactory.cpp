@@ -70,6 +70,7 @@ void ATankFactory::OnDeath()
 	//}
 
 	//Destroy();
+	Tags.Empty(); //for map loader goals proper work
 	OnDestructionEffect->Activate();
 	OnDestructionAudioEffect->Activate();
 	DestroyedBodyMesh->ToggleVisibility();
@@ -79,7 +80,7 @@ void ATankFactory::OnDeath()
 	PostDestructionPersistentEffect->Activate();
 }
 
-void ATankFactory::OnDamage(FDamageInfo Damage)
+void ATankFactory::OnDamage_Implementation(FDamageInfo Damage)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::Printf(TEXT("%s took damage from %s, HP: %f"), ToCStr(this->GetName()), ToCStr(Damage.Instigator->GetName()), HealthComponent->CurrentHP));
 }

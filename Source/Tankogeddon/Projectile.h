@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "DamageTaker.h"
+#include "Scorable.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
@@ -48,6 +49,9 @@ public:
 
 protected:
 	FVector LaunchPointVector;
+
+	UPROPERTY()
+	FScoredKillData ScoreData;
 
 	UPROPERTY()
 	ACanon* LaunchingCanon;

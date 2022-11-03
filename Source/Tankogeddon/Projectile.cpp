@@ -3,7 +3,7 @@
 #include "Projectile.h"
 #include "Canon.h"
 #include "Base_Pawn.h"
-#include "Scorable.h"
+//#include "Scorable.h"
 #include "Components/AudioComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 
@@ -92,7 +92,9 @@ void AProjectile::DealDamage(AActor* Actor, IDamageTaker* Damageable)
 	DamageData.DamageValue = Damage;
 
 	IScorable* Scoreable = Cast<IScorable>(Actor);
-	FScoredKillData ScoreData; //need to gather in advance just in case
+	 //need to gather in advance just in case
+	ScoreData.ScoreValue = 0;
+	
 	if (Scoreable)
 	{
 		ScoreData.Killer = GetInstigator();
@@ -101,9 +103,10 @@ void AProjectile::DealDamage(AActor* Actor, IDamageTaker* Damageable)
 	}
 
 	Damageable->TakeDamage(DamageData);
-
+	
 	if (Damageable->GetHealth() <= 0 && (Scoreable))
 	{
+		Scoreable->ResetScoreOnDeath();
 		Cast<ABase_Pawn>(ScoreData.Killer)->OnScoredKill.Broadcast(ScoreData);
 	}
 }

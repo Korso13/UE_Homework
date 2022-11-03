@@ -90,8 +90,8 @@ void ACanon::Fire(FireType att_type)
 		if (Type == CanonType::ProjectileCanon && AmmoType)
 		{
 			auto PlayerController = Cast<ATankPlayerController>(GetInstigator()->GetController());
-			if (PlayerController)
-				GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing projectile");
+			//if (PlayerController)
+			//	GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing projectile");
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Instigator = GetInstigator();
 			SpawnParams.Owner = this;
@@ -130,8 +130,8 @@ void ACanon::Fire(FireType att_type)
 		else if(Type == CanonType::LaserCanon)
 		{
 			auto PlayerController = Cast<ATankPlayerController>(GetInstigator()->GetController());
-			if (PlayerController)
-				GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing laser");
+			//if (PlayerController)
+			//	GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing laser");
 			FHitResult HitResult;
 			FCollisionQueryParams CollParams;
 			CollParams.AddIgnoredActor(this);
@@ -192,8 +192,8 @@ void ACanon::Fire(FireType att_type)
 void ACanon::Refire()
 {
 	auto PlayerController = Cast<ATankPlayerController>(GetInstigator()->GetController());
-	if (PlayerController)
-		GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing alternate fire");
+	//if (PlayerController)
+	//	GEngine->AddOnScreenDebugMessage(10, 1, FColor::Black, "Firing alternate fire");
 	if(CanonType::LaserCanon == Type)
 	{
 		if (PlayerController)

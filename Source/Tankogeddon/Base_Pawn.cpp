@@ -32,7 +32,7 @@ ABase_Pawn::ABase_Pawn()
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("Health Component");
 	HealthComponent->OnDeath.AddUObject(this, &ABase_Pawn::OnDeath);
-	HealthComponent->OnDamage.AddUObject(this, &ABase_Pawn::OnDamage);
+	HealthComponent->OnDamage.AddUObject(this, &ABase_Pawn::OnTakingDamage);
 
 	DetectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Detection Sphere"));
 	DetectionSphere->SetupAttachment(Collision);
@@ -54,15 +54,15 @@ void ABase_Pawn::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	//auto PlayerController = Cast<ATankPlayerController>(GetInstigator()->GetController());
-	if (IsPlayerControlled())
-		GEngine->AddOnScreenDebugMessage(22, 0.5f, FColor::Red, FString::Printf(TEXT("Current HP: %2f"), HealthComponent->CurrentHP));
+	//if (IsPlayerControlled())
+	//	GEngine->AddOnScreenDebugMessage(22, 0.5f, FColor::Red, FString::Printf(TEXT("Current HP: %2f"), HealthComponent->CurrentHP));
 }
 
 void ABase_Pawn::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 
-	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Orange, FString::Printf(TEXT("Spawned Tank with ID: %d"), TankSpawnID));
+	//GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Orange, FString::Printf(TEXT("Spawned Tank with ID: %d"), TankSpawnID));
 }
 
  //Called when the game starts or when spawned
@@ -76,6 +76,7 @@ void ABase_Pawn::BeginPlay()
 void ABase_Pawn::OnDeath()
 {
 	KilledInAction = true;
+	Tags.Empty(); //for map loader goals proper work
 	SetActorTickEnabled(false);
 	if(!IsA<ATurret>())
 		GetInstigatorController()->SetActorTickEnabled(false);
@@ -92,7 +93,7 @@ void ABase_Pawn::OnDeath()
 	if(IsPlayerControlled())
 		GetWorld()->GetTimerManager().SetTimer(PawnDestructionTimer, PawnDestructionDel, 2, false, -1);
 	else
-		GetWorld()->GetTimerManager().SetTimer(PawnDestructionTimer, PawnDestructionDel, 10, false, -1);
+		GetWorld()->GetTimerManager().SetTimer(PawnDestructionTimer, PawnDestructionDel, 7, false, -1);
 }
 
 void ABase_Pawn::DestroyPawn()
@@ -116,7 +117,7 @@ void ABase_Pawn::Destroyed()
 	}
 }
 
-void ABase_Pawn::OnDamage(FDamageInfo Damage)
+void ABase_Pawn::OnTakingDamage_Implementation(FDamageInfo Damage)
 {
 	auto IsPlayerController = Cast<APlayerController>(GetInstigatorController());
 	if (IsPlayerController)
@@ -126,7 +127,7 @@ void ABase_Pawn::OnDamage(FDamageInfo Damage)
 	OnHitParticleEffect->Activate();
 	OnHitAudioEffect->Play();
 
-	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::Printf(TEXT("%s took damage from %s, HP: %f"), ToCStr(this->GetName()), ToCStr(Damage.Instigator->GetName()), HealthComponent->CurrentHP));
+	//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::Printf(TEXT("%s took damage from %s, HP: %f"), ToCStr(this->GetName()), ToCStr(Damage.Instigator->GetName()), HealthComponent->CurrentHP));
 }
 
 
@@ -154,7 +155,7 @@ void ABase_Pawn::ScoredKill(FScoredKillData KillData)
 {
 	if(IsValid(KillData.Killer))
 	{
-		if((KillData.ScoreValue != 0) && KillData.Killer == this)
+		if((KillData.ScoreValue > 0) && KillData.Killer == this)
 		{
 			TotalScore += KillData.ScoreValue;
 		}

@@ -24,9 +24,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
 	TSubclassOf<ACanon> CanonClass;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Cannon Type")
-		int32 TurretAmmo = 100;
+	int32 TurretAmmo = 100;
 
-	int32 ScoreValue = 100;
+	//int32 ScoreValue = 100;
 
 private:
 
@@ -49,5 +49,5 @@ private:
 	bool IsVisible(TWeakObjectPtr<AActor> CurrentTarget) const;
 
 public:	
-	virtual int32 GetScore() const override;
+	//virtual int32 GetScore() const override;
 };

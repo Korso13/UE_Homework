@@ -126,7 +126,7 @@ public:
 
 	FOnTargetsChanged OnTargetsChanged;
 
-	virtual void FindBestTarget() override;
+	//virtual void FindBestTarget() override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Cannon Type")
 		float Accuracy = 10;

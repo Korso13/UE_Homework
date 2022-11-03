@@ -44,4 +44,6 @@ public:
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnScoredKill, FScoredKillData);
 	FOnScoredKill OnScoredKill;
 	virtual int32 GetScore() const = 0;
+	virtual void ResetScoreOnDeath() = 0;
+
 };

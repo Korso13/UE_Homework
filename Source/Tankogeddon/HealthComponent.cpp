@@ -36,6 +36,10 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UHealthComponent::TakeDamage(FDamageInfo Damage)
 {
+	if (CurrentHP == 0)
+	{
+		return;
+	}
 	float PreviousHP = CurrentHP;
 	CurrentHP -= Damage.DamageValue;
 	if (CurrentHP < 0)

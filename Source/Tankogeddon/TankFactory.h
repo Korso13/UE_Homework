@@ -83,7 +83,8 @@ protected:
 
 	virtual void OnDeath();
 
-	virtual void OnDamage(FDamageInfo Damage);
+	UFUNCTION(BlueprintNativeEvent)
+	void OnDamage(FDamageInfo Damage);
 
 	UFUNCTION()
 		void SFXStop();
@@ -96,6 +97,8 @@ public:
 	virtual float GetHealth() const override;
 
 	virtual int GetScore() const override;
+
+	virtual void ResetScoreOnDeath() override { ScoreValue = 0; }
 
 	UFUNCTION(BlueprintCallable)
 	void StartProduction();

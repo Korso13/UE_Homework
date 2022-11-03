@@ -124,7 +124,7 @@ bool ATurret::IsVisible(TWeakObjectPtr<AActor> InCurrentTarget) const
 
 }
 
-int32 ATurret::GetScore() const
-{
-	return ScoreValue;
-}
+//int32 ATurret::GetScore() const
+//{
+//	return ScoreValue;
+//}

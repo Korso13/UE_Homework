@@ -79,11 +79,11 @@ void ATank::Tick(float DeltaTime)
 	if (PlayerController)
 	{
 		//AmmoHUD
-		if (Cannon)
-		GEngine->AddOnScreenDebugMessage(20, 0.5f, FColor::Cyan, FString::Printf(TEXT("Ammo: %d"), Cannon->GetCurrAmmo()));
+		//if (Cannon)
+		//GEngine->AddOnScreenDebugMessage(20, 0.5f, FColor::Cyan, FString::Printf(TEXT("Ammo: %d"), Cannon->GetCurrAmmo()));
 
 		//ScoreHUD
-		GEngine->AddOnScreenDebugMessage(21, 0.5f, FColor::Purple, FString::Printf(TEXT("Your Score: %d"), TotalScore));
+		//GEngine->AddOnScreenDebugMessage(21, 0.5f, FColor::Purple, FString::Printf(TEXT("Your Score: %d"), TotalScore));
 	}
 }
 
@@ -259,10 +259,10 @@ void ATank::SwitchWeapon()
 	}
 }
 
-void ATank::FindBestTarget()
-{
-	return;
-}
+//void ATank::FindBestTarget()
+//{
+//	return;
+//}
 
 //for AI purposes
 void ATank::OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

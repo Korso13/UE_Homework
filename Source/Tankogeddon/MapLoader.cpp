@@ -58,8 +58,9 @@ void AMapLoader::StatusCheck()
 		auto player = Cast<ATankPlayerController>(GetGameInstance()->GetFirstLocalPlayerController());
 		if(player)
 		{
-			if (player->TankPawn->GetTotalScore() >= ScoreRequiredToWin)
-				condition2 = true;
+			if(player->GetPawn() != nullptr)
+				if (player->TankPawn->GetTotalScore() >= ScoreRequiredToWin)
+					condition2 = true;
 		}
 	}
 	else

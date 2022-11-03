@@ -19,6 +19,8 @@ class UStaticMeshComponent;
 class UBoxComponent;
 class ACanon;
 
+
+
 UCLASS()
 class TANKOGEDDON_API ABase_Pawn : public APawn, public IDamageTaker, public IScorable
 {
@@ -56,8 +58,6 @@ public:
 	//movement settings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Motion|Turret Rotation Speed")
 	float TurretRotationLerpKey = 0.1f;
-
-	FOnScoredKill OnScoredKill;
 
 	int32 TankSpawnID = -1;
 
@@ -105,7 +105,8 @@ protected:
 
 	virtual void OnDeath();
 
-	virtual void OnDamage(FDamageInfo Damage);
+	UFUNCTION(BlueprintNativeEvent)
+	void OnTakingDamage(FDamageInfo Damage);
 
 	UFUNCTION()
 	virtual void ScoredKill(FScoredKillData KillData);
@@ -117,11 +118,14 @@ protected:
 
 	virtual void FindBestTarget();
 
-public:	
+	FDelegateHandle OnScoredKillDelegate;
 
+public:	
 	virtual void TakeDamage(FDamageInfo DamageData) override;
 
 	virtual int32 GetScore() const override;
+
+	virtual void ResetScoreOnDeath() override { ScoreValue = 0; }
 
 	virtual float GetHealth() const override;
 
