@@ -145,6 +145,10 @@
 				"Android",
 				"HoloLens"
 			]
+		},
+		{
+			"Name": "ScooterUtils",
+			"Enabled": true
 		}
 	]
 }

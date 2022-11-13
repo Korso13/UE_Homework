@@ -3,15 +3,19 @@
 
 #include "SSRadioButtons.h"
 #include "SlateOptMacros.h"
+#include "Templates/SharedPointer.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSRadioButtons::Construct(const FArguments& InArgs)
 {
 	ButtonCountAtt = InArgs._ButtonCount;
+	InButtonCaptions = InArgs._ButtonCaptions;
+	ButtonCaptions = InButtonCaptions.Get(); //getting starting list of button captions
 	SelectedButton = InArgs._SelectedOnStartIndex;
 	ButtonSelectedDelegate = InArgs._OnRadioButtonSelected;
+	RadioButtonsStyle = InArgs._ButtonsStyle;
 	SSRadioButtons::OnRadioButtonsRebuild.AddRaw(this, &SSRadioButtons::RebuildRadioButtons);
-
+	SSRadioButtons::OnButtonsCaptionsChanged.AddRaw(this, &SSRadioButtons::UpdateCaptionsList);
 	ChildSlot
 	[
 		SAssignNew(ButtonHolder, SVerticalBox)
@@ -22,7 +26,7 @@ void SSRadioButtons::Construct(const FArguments& InArgs)
 	{
 		ButtonHolder->AddSlot()
 		[
-			CreateRadioButton(i)
+			CreateRadioButton(i, FText::FromString( (i < ButtonCaptions.Num()) ? (ButtonCaptions[i]) : ("Option")))
 		];
 	}
 }
@@ -34,9 +38,11 @@ TSharedRef<SCheckBox> SSRadioButtons::CreateRadioButton(int32 InIndex, FText But
 	return SNew(SCheckBox)
 		.OnCheckStateChanged_Raw(this, &SSRadioButtons::OnStateChanged, InIndex)
 		.IsChecked_Raw(this, &SSRadioButtons::IsChecked, InIndex)
+		.Style(&RadioButtonsStyle->CheckBoxStyle)
 		[
 			SNew(STextBlock)
 			.Text(ButtonCaption)
+			.TextStyle(&RadioButtonsStyle->TextStyle)
 		];
 }
 
@@ -47,10 +53,17 @@ void SSRadioButtons::RebuildRadioButtons()
 	{
 		ButtonHolder->AddSlot()
 		[
-			CreateRadioButton(i)
+			CreateRadioButton(i, FText::FromString((i < ButtonCaptions.Num()) ? (ButtonCaptions[i]) : ("Option")))
 		];
 	}
 	SelectedButton = 0;
+}
+
+void SSRadioButtons::UpdateCaptionsList()
+{
+	ButtonCaptions.Reset();
+	ButtonCaptions = InButtonCaptions.Get();
+	OnRadioButtonsRebuild.Broadcast();
 }
 
 void SSRadioButtons::OnStateChanged(ECheckBoxState NewState, int32 InIndex)
@@ -80,20 +93,7 @@ int32 SSRadioButtons::OnPaint
 {
 	if (ButtonHolder->NumSlots() != ButtonCountAtt.Get())
 		OnRadioButtonsRebuild.Broadcast();
+	if (InButtonCaptions.Get() != ButtonCaptions)
+		OnButtonsCaptionsChanged.Broadcast();
 	return SCompoundWidget::OnPaint(Args, AllottedGeometry, MyCullingRect, OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
 }
-
-
-//to be used later, maybe
-void SSRadioButtons::SetButtonCaption(int32 InIndex, FText ButtonCaption)
-{
-	static_cast<STextBlock&>(ButtonHolder->GetChildren()->GetChildAt(InIndex).Get())
-	.SetText(ButtonCaption);
-}
-
-void SSRadioButtons::RemoveRadioButton(int32 InIndex)
-{
-	ButtonHolder->RemoveSlot(ButtonHolder->GetChildren()->GetChildAt(InIndex));
-}
-
-

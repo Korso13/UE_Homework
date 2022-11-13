@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Widgets/SCompoundWidget.h"
+#include "RadioButtonsWidgetStyle.h"
 
 
 DECLARE_DELEGATE_OneParam(FOnRadioButtonSelected, int32)
 DECLARE_EVENT(SSRadioButtons, FOnRadioButtonsRebuild)
+DECLARE_EVENT(SSRadioButtons, FOnButtonsCaptionsChanged)
 /**
  * 
  */
@@ -18,8 +20,10 @@ public:
 	{}
 
 	SLATE_ATTRIBUTE(int32, ButtonCount)
+	SLATE_ATTRIBUTE(TArray<FString>, ButtonCaptions)
 	SLATE_ARGUMENT(int32, SelectedOnStartIndex)
 	SLATE_EVENT(FOnRadioButtonSelected, OnRadioButtonSelected)
+	SLATE_STYLE_ARGUMENT(FRadioButtonsStyle, ButtonsStyle)
 
 	SLATE_END_ARGS()
 
@@ -30,16 +34,26 @@ public:
 
 	void RebuildRadioButtons(); 
 
+	void UpdateCaptionsList();
+
 	FOnRadioButtonSelected ButtonSelectedDelegate;
 
 	FOnRadioButtonsRebuild OnRadioButtonsRebuild;
+
+	FOnButtonsCaptionsChanged OnButtonsCaptionsChanged;
 
 private:
 	int32 SelectedButton;
 
 	TAttribute<int32> ButtonCountAtt;
 
+	TAttribute<TArray<FString>> InButtonCaptions;
+
+	TArray<FString> ButtonCaptions;
+
 	TSharedPtr<SVerticalBox> ButtonHolder;
+
+	const FRadioButtonsStyle* RadioButtonsStyle = nullptr;
 
 	void OnStateChanged(ECheckBoxState NewState, int32 InIndex);
 
@@ -55,8 +69,4 @@ private:
 		const FWidgetStyle& InWidgetStyle,
 		bool bParentEnabled
 	) const;
-
-
-	void SetButtonCaption(int32 InIndex, FText ButtonCaption);
-	void RemoveRadioButton(int32 InIndex);
 };
