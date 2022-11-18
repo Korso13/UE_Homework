@@ -36,5 +36,5 @@ const ISlateStyle& FCustomCoreStyleLib::Get()
 	{
 		Initialize();
 	}
-	return *StyleLibPtr.ToSharedRef();
+	return *StyleLibPtr;
 }

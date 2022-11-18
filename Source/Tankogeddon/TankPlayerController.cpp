@@ -13,6 +13,13 @@ ATankPlayerController::ATankPlayerController()
 	bShowMouseCursor = true;
 }
 
+void ATankPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	bEnableClickEvents = true;
+}
+
 void ATankPlayerController::OnPossess(APawn* InTankPawn)
 {
 	Super::OnPossess(InTankPawn);
@@ -33,7 +40,7 @@ void ATankPlayerController::SetupInputComponent()
 	InputComponent->BindAction("SwitchWeapon", IE_Pressed, this, &ATankPlayerController::SwitchWeapon);
 	InputComponent->BindAxis("TurretRotationY", this, &ATankPlayerController::StickRotationY);
 	InputComponent->BindAxis("TurretRotationX", this, &ATankPlayerController::StickRotationX);
-
+	InputComponent->BindKey(EKeys::LeftMouseButton, EInputEvent::IE_Released, this, &ATankPlayerController::MouseButtonUp);
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -134,5 +141,10 @@ void ATankPlayerController::SwitchWeapon()
 	{
 		TankPawn->SwitchWeapon();
 	}
+}
+
+void ATankPlayerController::MouseButtonUp()
+{
+	OnMouseButtonUp.Broadcast();
 }
 

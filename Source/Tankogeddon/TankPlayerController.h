@@ -40,6 +40,8 @@ protected:
 public:
 	ATankPlayerController();
 
+	virtual void BeginPlay() override;
+
 	virtual void OnPossess(APawn* InTankPawn) override;
 
 	virtual void SetupInputComponent() override;
@@ -68,6 +70,10 @@ public:
 	UFUNCTION()
 	void SwitchWeapon();
 	
+	UFUNCTION()
+	void MouseButtonUp();
+
+	FSimpleMulticastDelegate OnMouseButtonUp;
 };
 
 
