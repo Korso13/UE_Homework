@@ -45,7 +45,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 	UCameraComponent* Camera;
 
-private:
+protected:
 	float ForwardAxisMoveValue = 0;
 	float CurrentForwardAxisImpulse = 0;
 	float StrafeAxisMoveValue = 0;
@@ -53,7 +53,6 @@ private:
 	float RightAxisRotationValue = 0; 
 	float CurrentRotationImpulse = 0;
 
-protected:
 	UPROPERTY()
 	ACanon* CannonOne;
 	UPROPERTY()
@@ -131,7 +130,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Cannon Type")
 		float Accuracy = 10;
 
-private:
+protected:
 		virtual void OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 		virtual void OnDetectionSphereEndOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) override;
 

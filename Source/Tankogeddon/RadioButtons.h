@@ -46,6 +46,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Content", Meta = (DisplayName = "Radio Buttons Captions"))
 	TArray<FString> ButtonCaptions;
 
+	UFUNCTION(BlueprintCallable)
 	void OnNewButtonSelected(int32 InIndex) const;
 
 	virtual const FText GetPaletteCategory() override;

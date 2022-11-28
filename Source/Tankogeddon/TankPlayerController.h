@@ -50,6 +50,8 @@ public:
 
 	virtual FVector GetTargetLocation() const override;
 
+	void ToggleInventoryWindow();
+
 	UFUNCTION()
 	void MoveForward(float ForwardAxisImpulse);
 	UFUNCTION()

@@ -4,6 +4,7 @@
 #include "MapLoader.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "TankWithInventory.h"
 
 // Sets default values
 AMapLoader::AMapLoader()

@@ -17,5 +17,6 @@ class TANKOGEDDON_API UFruitDragDropOperation : public UDragDropOperation
 public:
 	FText FruitName;
 
+	UPROPERTY()
 	UWidget* OriginalWidget;
 };

@@ -22,7 +22,7 @@ AProjectile::AProjectile()
 	ProjectileMesh->SetupAttachment(RootComponent);
 
 	ProjectileMesh2 = CreateDefaultSubobject<UStaticMeshComponent>("Projectile mesh part 2");
-	ProjectileMesh2->AttachToComponent(ProjectileMesh, FAttachmentTransformRules::SnapToTargetIncludingScale);
+	ProjectileMesh2->SetupAttachment(ProjectileMesh/*, FAttachmentTransformRules::SnapToTargetIncludingScale*/);
 
 	HitExplosion = CreateDefaultSubobject<UParticleSystemComponent>("Hit Explosion particles");
 	HitExplosion->SetupAttachment(RootComponent);

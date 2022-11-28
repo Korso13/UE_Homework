@@ -7,6 +7,8 @@
 #include "Components/PanelWidget.h"
 #include "TankPlayerController.h"
 #include "Kismet/GameplayStatics.h"
+#include "Turret.h"
+#include "TankWithInventory.h"
 
 void UDraggableSpawn::NativePreConstruct()
 {
@@ -34,13 +36,16 @@ FReply UDraggableSpawn::NativeOnMouseButtonDown(const FGeometry& InGeometry, con
 		int32 NantiteReserve = Spawner->GetNantiteCount();
 		if (NantiteReserve >= TurretCost)
 		{
-			Turret = GetWorld()->SpawnActor<ABase_Pawn>(TurretClass);
-			Turret->SetActorEnableCollision(false);
+			FActorSpawnParameters params;
+			params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+			Turret = GetWorld()->SpawnActor<ATurret>(TurretClass, params);
+			if(Turret)
+				Turret->SetActorEnableCollision(false);
 
 			SetColorAndOpacity(FLinearColor(1.0f, 1.0f, 1.0f, 0.5f));
 		}
 	}
-	return FReply::Handled();;
+	return FReply::Handled();
 }
 
 void UDraggableSpawn::NativeTick(const FGeometry& InGeometry, float DeltaTime)
@@ -74,6 +79,9 @@ void UDraggableSpawn::OnMouseButtonUp()
 	if (Spawner && Turret)
 	{
 		Spawner->SetNaniteCount(Spawner->GetNantiteCount() - TurretCost);
+		ATankWithInventory* Tank = Cast<ATankWithInventory>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+		if (Tank)
+			Tank->SetNanites(Spawner->GetNantiteCount());
 		Turret->SetActorEnableCollision(true);
 		Turret = nullptr;
 	}

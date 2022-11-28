@@ -7,6 +7,7 @@
 #include "DraggableListWidget.generated.h"
 
 class UTextBlock;
+
 /**
  * 
  */
@@ -17,6 +18,8 @@ class TANKOGEDDON_API UDraggableListWidget : public UUserWidget
 	
 public:
 	void NativePreConstruct() override;
+
+	void NativeConstruct() override;
 	
 	UPROPERTY(EditAnywhere)
 	FText FruitName;

@@ -48,7 +48,9 @@ private:
 	FWidgetAnimationDynamicEvent OnCloseMenuAnimEnded;
 
 public:
+	UFUNCTION(BlueprintCallable)
 	int32 GetNantiteCount() const { return BuldingNaniteCount; };
 
+	UFUNCTION(BlueprintCallable)
 	void SetNaniteCount(int32 InCount);
 };

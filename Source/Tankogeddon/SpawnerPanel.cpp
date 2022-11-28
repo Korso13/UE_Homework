@@ -11,7 +11,8 @@
 void USpawnerPanel::NativeConstruct()
 {
 	bMenuOpen = false;
-	BuildingNanitesIndicator->SetText(FText::FromString(FString::Printf(TEXT("%d"), BuldingNaniteCount)));
+	if(BuildingNanitesIndicator)
+		BuildingNanitesIndicator->SetText(FText::FromString(FString::Printf(TEXT("%d"), BuldingNaniteCount)));
 
 	Cast<ATankPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->InputComponent->
 		BindKey(EKeys::H, EInputEvent::IE_Pressed, this, &USpawnerPanel::SwitchMenu);

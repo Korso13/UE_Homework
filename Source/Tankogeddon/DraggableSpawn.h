@@ -3,15 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Base_Pawn.h"
 #include "TankPlayerController.h"
-//#include "SpawnerPanel.h" 
 #include "Blueprint/UserWidget.h"
 #include "DraggableSpawn.generated.h"
 
 class UImage;
 class UTextBlock;
 class USpawnerPanel;
+class ATurret;
 
 /**
  * 
@@ -42,11 +41,11 @@ public:
 	UTextBlock* TurretCostWidget;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Spawner Settings")
-	TSubclassOf<ABase_Pawn> TurretClass;
+	TSubclassOf<ATurret> TurretClass;
 
 protected:
 	UPROPERTY()
-	ABase_Pawn* Turret = nullptr;
+	ATurret* Turret = nullptr;
 
 	UPROPERTY()
 	ATankPlayerController* PlayerController;

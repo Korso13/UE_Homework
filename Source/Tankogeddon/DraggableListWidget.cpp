@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+
 #include "DraggableListWidget.h"
 #include "FruitDragDropOperation.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
@@ -7,9 +8,21 @@
 #include "components/VerticalBox.h"
 #include "Components/VerticalBoxSlot.h"
 
+#include "Kismet/GameplayStatics.h"
+
 void UDraggableListWidget::NativePreConstruct()
 {
 	Super::NativePreConstruct();
+
+	if (NameText)
+	{
+		NameText->SetText(FruitName);
+	}
+}
+
+void UDraggableListWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
 
 	if (NameText)
 	{
@@ -33,8 +46,10 @@ void UDraggableListWidget::NativeOnDragDetected(const FGeometry& InGeometry, con
 	
 	if (FruitDragDropOperation)
 	{
-		FruitDragDropOperation->DefaultDragVisual = this; /*CreateWidget(this, GetClass());*/
-
+		FruitDragDropOperation->DefaultDragVisual = CreateWidget(this, GetClass());
+		Cast<UDraggableListWidget>(FruitDragDropOperation->DefaultDragVisual)->FruitName = this->NameText->GetText();
+		Cast<UDraggableListWidget>(FruitDragDropOperation->DefaultDragVisual)->NameText->SetText(this->NameText->GetText());
+		
 		FruitDragDropOperation->OriginalWidget = this;
 
 		SetColorAndOpacity(FLinearColor(1.f, 1.f, 1.f, 0.7f));

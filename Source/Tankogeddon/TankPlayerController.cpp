@@ -6,6 +6,7 @@
 #include "DrawDebugHelpers.h" //for drawing debuglines
 //#include "Kismet/KismetMathLibrary.h"
 #include "SlateBasics.h"
+#include "TankWithInventory.h"
 
 
 ATankPlayerController::ATankPlayerController()
@@ -25,7 +26,7 @@ void ATankPlayerController::OnPossess(APawn* InTankPawn)
 	Super::OnPossess(InTankPawn);
 
 	TankPawn = Cast<ATank>(InTankPawn);
-	App = FSlateApplication::Get().GetPlatformApplication();
+	App = FSlateApplication::Get().GetPlatformApplication(); //support for correct gamepad input
 }
 
 void ATankPlayerController::SetupInputComponent()
@@ -35,12 +36,13 @@ void ATankPlayerController::SetupInputComponent()
 	InputComponent->BindAxis("ForwardAxis", this, &ATankPlayerController::MoveForward);
 	InputComponent->BindAxis("RightSlideAxis", this, &ATankPlayerController::StrafeRight);
 	InputComponent->BindAxis("RightTurnAxis", this, &ATankPlayerController::RotateRight);
+	InputComponent->BindAxis("TurretRotationY", this, &ATankPlayerController::StickRotationY);
+	InputComponent->BindAxis("TurretRotationX", this, &ATankPlayerController::StickRotationX);
 	InputComponent->BindAction("PrimaryFire", IE_Pressed, this, &ATankPlayerController::PrimaryFire);
 	InputComponent->BindAction("SecondaryFire", IE_Pressed, this, &ATankPlayerController::SecondaryFire);
 	InputComponent->BindAction("SwitchWeapon", IE_Pressed, this, &ATankPlayerController::SwitchWeapon);
-	InputComponent->BindAxis("TurretRotationY", this, &ATankPlayerController::StickRotationY);
-	InputComponent->BindAxis("TurretRotationX", this, &ATankPlayerController::StickRotationX);
 	InputComponent->BindKey(EKeys::LeftMouseButton, EInputEvent::IE_Released, this, &ATankPlayerController::MouseButtonUp);
+	InputComponent->BindKey(EKeys::I, EInputEvent::IE_Released, this, &ATankPlayerController::ToggleInventoryWindow);
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -52,30 +54,31 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 	if(App->IsGamepadAttached())
 	{
-	//gamepad aiming
-	FVector StickData{ StickXAxis, StickYAxis, 0 };
-	FVector PointerPosition = TankPawn->CanonMountingPoint->GetComponentLocation();
-	StickData = TankPawn->BodyMesh->GetComponentRotation().RotateVector(StickData);
-	if (StickXAxis != 0 && StickYAxis != 0)
-	{
-		PointerPosition += (StickData) * 1000;
-		LastStickAxis = StickData;
-	}
-	else
-		PointerPosition += LastStickAxis * 1000;
-	WorldMousePosition = PointerPosition;
+		//gamepad aiming
+		FVector StickData{ StickXAxis, StickYAxis, 0 };
+		FVector PointerPosition = TankPawn->CanonMountingPoint->GetComponentLocation();
+		StickData = TankPawn->BodyMesh->GetComponentRotation().RotateVector(StickData);
+		if (StickXAxis != 0 && StickYAxis != 0)
+		{
+			PointerPosition += (StickData) * 1000;
+			LastStickAxis = StickData;
+		}
+		else
+			PointerPosition += LastStickAxis * 1000;
+	
+		WorldMousePosition = PointerPosition;
 
-	//gamepad debugging line
-	DrawDebugLine(GetWorld(), TankPawn->CanonMountingPoint->GetComponentLocation(), PointerPosition, FColor::Black, false, -1, 0, 1);
+		//gamepad debugging line
+		DrawDebugLine(GetWorld(), TankPawn->CanonMountingPoint->GetComponentLocation(), PointerPosition, FColor::Black, false, -1, 0, 1);
 	}
 	else
 	{
-	//getting mouse pointer at the height of a turret for turret rotation
-	FVector MousePosition;
-	FVector MouseDirection;
-	DeprojectMousePositionToWorld(MousePosition, MouseDirection); //obtaining a vector from mouse pointer "on screen" and a point in 3D space it is supposedly pointing
-	float Z = FMath::Abs(TankPawn->TurretMesh->GetComponentLocation().Z - MousePosition.Z); //height difference between turret and mouse pointer "on screen"
-	WorldMousePosition = MousePosition - (MouseDirection * Z / MouseDirection.Z); //calculating final mouse pointer position in 3D space
+		//getting mouse pointer at the height of a turret for turret rotation
+		FVector MousePosition;
+		FVector MouseDirection;
+		DeprojectMousePositionToWorld(MousePosition, MouseDirection); //obtaining a vector from mouse pointer "on screen" and a point in 3D space it is supposedly pointing
+		float Z = FMath::Abs(TankPawn->TurretMesh->GetComponentLocation().Z - MousePosition.Z); //height difference between turret and mouse pointer "on screen"
+		WorldMousePosition = MousePosition - (MouseDirection * Z / MouseDirection.Z); //calculating final mouse pointer position in 3D space
 	}
 }
 
@@ -117,6 +120,13 @@ void ATankPlayerController::StickRotationX(float StickX)
 FVector ATankPlayerController::GetTargetLocation() const
 {
 	return WorldMousePosition;
+}
+
+void ATankPlayerController::ToggleInventoryWindow()
+{
+	auto InvTank = Cast<ATankWithInventory>(TankPawn);
+	if(InvTank)
+		InvTank->ToggleInventoryWidget();
 }
 
 void ATankPlayerController::PrimaryFire()
