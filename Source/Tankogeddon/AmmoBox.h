@@ -4,25 +4,30 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Canon.h"
-#include "Components/BoxComponent.h"
+#include "Base_Consumable.h"
+#include "InventoryStructs.h"
 #include "AmmoBox.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
-class TANKOGEDDON_API AAmmoBox : public AActor
+class TANKOGEDDON_API AAmmoBox : public ABase_Consumable
 {
 	GENERATED_BODY()
 
 public:
 	//meshes and components
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
-		UBoxComponent* Collision;
+	UBoxComponent* Collision;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
-		UStaticMeshComponent* BoxMesh;
+	UStaticMeshComponent* BoxMesh;
 
 protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Depricated Components")
+	int32 AmmoRefillCount = 30;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
-		int32 AmmoRefillCount = 30;
+	FInventorySlotInfo AmmoBoxType;
 
 public:	
 	// Sets default values for this actor's properties
@@ -34,9 +39,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
-	UFUNCTION()
-	void OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	virtual void OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const
-	FHitResult& SweepResult);
+	FHitResult& SweepResult) override;
+
+public:
+	virtual void UseConsumable() override;
 };

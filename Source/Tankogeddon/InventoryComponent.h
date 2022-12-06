@@ -20,10 +20,10 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TMap<int32, FInventorySlotInfo> InventoryContents;
 
-public:	
+public:
 	// Called every frame
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
@@ -41,11 +41,7 @@ public:
 
 	virtual void SetItem(int32 SlotIndex, const FInventorySlotInfo& InItem);
 
-	//void(UInventoryComponent::*SetterPtr)(int32, const FInventorySlotInfo&) = SetItem;
-
-	//virtual void SetItem(int32 SlotIndex, const FInventorySlotInfo& InItem);
-
 	virtual void ClearItem(int32 SlotIndex);
 
-	virtual void SwitchItems(); //TBD!!!
+	virtual int32 GetMaxItemAmount(int32 SlotIndex, const FInventoryItemInfo& InItem);
 };

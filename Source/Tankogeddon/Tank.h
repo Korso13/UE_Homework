@@ -86,12 +86,12 @@ public:
 	//Called to bind functionality to input
 	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void SetupCanon();
+	virtual void SetupCanon();
 
-	void ChangeCanon(TSubclassOf<ACanon> _CanonType);
+	virtual void ChangeCanon(TSubclassOf<ACanon> _CanonType);
 
 	UFUNCTION()
-	void MoveForward(const float ForwardAxisImpulse);
+	virtual void MoveForward(const float ForwardAxisImpulse);
 
 	UFUNCTION()
 	void StrafeRight(float StrafeAxisImpulse);
@@ -100,13 +100,13 @@ public:
 	void RotateRight(float RightRotationImpulse);
 
 	UFUNCTION()
-	void PrimaryFire() const; 
+	virtual void PrimaryFire();
 
 	UFUNCTION()
-	void SecondaryFire() const;
+	virtual void SecondaryFire();
 
 	UFUNCTION()
-	void SwitchWeapon();
+	virtual void SwitchWeapon();
 
 	UFUNCTION(BlueprintCallable)
 	ACanon* GetCannon() const { return Cannon; }
@@ -124,8 +124,6 @@ public:
 		FName PatrollingPointTag;
 
 	FOnTargetsChanged OnTargetsChanged;
-
-	//virtual void FindBestTarget() override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Cannon Type")
 		float Accuracy = 10;

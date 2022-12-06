@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "WeaponBox.h"
-#include "Tank.h"
+#include "Canon.h"
+#include "Components/BoxComponent.h"
+#include "TankWithInventory.h"
 
 // Sets default values
 AWeaponBox::AWeaponBox()
@@ -24,18 +26,26 @@ void AWeaponBox::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* Oth
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const
 	FHitResult& SweepResult)
 {
-	//if(IsValid(OtherActor))
-	//{
-		auto const Tank = Cast<ATank>(OtherActor);
-		if(Tank)
+	if (OtherActor)
+	{
+		auto const Tank = Cast<ATankWithInventory>(OtherActor);
+		if (Tank)
 		{
-			Tank->ChangeCanon(CanonClass);
+			Tank->PickUpItem(WeaponBoxType);
 			Destroy();
+			return;
 		}
-	//}
-
+		else
+		{
+			auto const TankOld = Cast<ATank>(OtherActor);
+			if (TankOld)
+			{
+				TankOld->ChangeCanon(CanonClass);
+				Destroy();
+			}
+		}
+	}
 }
-
 
 // Called when the game starts or when spawned
 void AWeaponBox::BeginPlay()

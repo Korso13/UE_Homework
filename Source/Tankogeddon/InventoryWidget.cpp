@@ -2,9 +2,23 @@
 
 
 #include "InventoryWidget.h"
+#include "InventoryComponent.h"
+#include "InventoryManagerComponent.h"
 #include "InventoryCellWidget.h"
 #include "Components/UniformGridPanel.h"
 
+
+void UInventoryWidget::NativeConstruct()
+{
+    Super::NativeConstruct();
+
+    for (auto* Cell : CellWidgets)
+    {
+        InitCell(Cell);
+    }
+    //if(ParentInventory)
+    //    Init(ParentInventory->GetInventorySize());
+}
 
 void UInventoryWidget::OnItemDropFunc(UInventoryCellWidget* From, UInventoryCellWidget* To) const
 {
@@ -17,12 +31,22 @@ UInventoryCellWidget* UInventoryWidget::CreateCell()
 	{
 		auto* Cell = CreateWidget<UInventoryCellWidget>(this, CellWidgetClass);
 		CellWidgets.Add(Cell);
-		Cell->OnItemDrop.AddUObject(this, &UInventoryWidget::OnItemDropFunc);
+        InitCell(Cell);
 		return Cell;
 	}
 	return nullptr;
 
 }
+
+void UInventoryWidget::InitCell(UInventoryCellWidget* NewCell)
+{
+    if (NewCell)
+    {
+        NewCell->OnItemDrop.AddUObject(this, &UInventoryWidget::OnItemDropFunc);
+        NewCell->ParentInventoryWidget = this;
+    }
+}
+
 
 void UInventoryWidget::Init(int32 InventorySize)
 {
@@ -39,10 +63,53 @@ void UInventoryWidget::Init(int32 InventorySize)
 			}
 		}
 	}
+    else if(ParentInventory)
+    {
+        FInventorySlotInfo SlotInfo;
+        
+        
+        if (CellWidgets.Num() == InventorySize)
+        {
+            int32 i = 0;
+            for (auto* Cell : CellWidgets)
+            {
+                if (ParentInventory->GetInventory().Find(i))
+                    SlotInfo = *ParentInventory->GetInventory().Find(i);
+                else
+                    SlotInfo = FInventorySlotInfo();
+                const FInventoryItemInfo* InitItemInfo1 = InventoryManager->GetItemData(SlotInfo.ItemId);
+                if (InitItemInfo1 != nullptr)
+                {
+                    CellWidgets[i]->Clear();
+                    CellWidgets[i]->AddItem(SlotInfo, *InitItemInfo1);
+                    CellWidgets[i]->IndexInInventory = i;
+                }
+                i++;
+            }
+        }
+        else
+        {
+            for (size_t i = 0; i < FMath::Min(CellWidgets.Num(), InventorySize); i++)
+            {
+                if (ParentInventory->GetInventory().Find(i))
+                    SlotInfo = *ParentInventory->GetInventory().Find(i);
+                else
+                    SlotInfo = FInventorySlotInfo();
+                const FInventoryItemInfo* InitItemInfo2 = InventoryManager->GetItemData(SlotInfo.ItemId);
+                if (InitItemInfo2 != nullptr)
+                {
+                    CellWidgets[i]->Clear();
+                    CellWidgets[i]->AddItem(SlotInfo, *InitItemInfo2);
+                    CellWidgets[i]->IndexInInventory = i;
+                }
+            }
+        }
+    }
 }
 
 bool UInventoryWidget::AddItem(const FInventorySlotInfo& InSlot, const FInventoryItemInfo& ItemInfo, int32 SlotIndex)
 {
+    if (InSlot.ItemId != "NONE")
     {
         if (ItemInfo.ItemArchType == EItemArchType::ET_Currency)
         {
@@ -57,9 +124,9 @@ bool UInventoryWidget::AddItem(const FInventorySlotInfo& InSlot, const FInventor
         {
             UInventoryCellWidget* FoundCell = nullptr;
             UInventoryCellWidget** FoundCellPtr = CellWidgets.FindByPredicate(
-                [SlotIndex](UInventoryCellWidget* Cell) 
+                [SlotIndex](UInventoryCellWidget* Cell)
                 {
-                    return Cell && Cell->IndexInInventory == SlotIndex; 
+                    return Cell && Cell->IndexInInventory == SlotIndex;
                 }
             );
 
@@ -86,7 +153,7 @@ bool UInventoryWidget::AddItem(const FInventorySlotInfo& InSlot, const FInventor
             }
 
         }
-        return false;
     }
+        return false;
 
-}
+};

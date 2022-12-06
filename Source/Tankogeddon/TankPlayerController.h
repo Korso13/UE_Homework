@@ -52,6 +52,10 @@ public:
 
 	void ToggleInventoryWindow();
 
+	void ToggleEquipmentWindow();
+
+	void UseConsumable();
+
 	UFUNCTION()
 	void MoveForward(float ForwardAxisImpulse);
 	UFUNCTION()
@@ -74,6 +78,9 @@ public:
 	
 	UFUNCTION()
 	void MouseButtonUp();
+
+	UFUNCTION()
+	void NullKey() { return; }
 
 	FSimpleMulticastDelegate OnMouseButtonUp;
 };

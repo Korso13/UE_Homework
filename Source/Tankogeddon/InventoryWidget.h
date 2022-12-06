@@ -9,7 +9,11 @@
 
 
 class UUniformGridPanel;
+class UInventoryComponent;
 class UInventoryCellWidget;
+class UButton;
+class UInventoryManagerComponent;
+
 /**
  * 
  */
@@ -19,11 +23,16 @@ class TANKOGEDDON_API UInventoryWidget : public UUserWidget
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	virtual void NativeConstruct() override;
+	
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidgetOptional))
 	UUniformGridPanel* InventoryPanel;
 
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidgetOptional))
 	UInventoryCellWidget* NanitesSlot;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidgetOptional))
+	UButton* CloseWindowButton;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings")
 	TSubclassOf<UInventoryCellWidget> CellWidgetClass;
@@ -31,15 +40,23 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings")
 	int32 ItemsInRow = 4;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings||Cells")
 	TArray<UInventoryCellWidget*> CellWidgets;
 
 	void OnItemDropFunc(UInventoryCellWidget* From, UInventoryCellWidget* To) const;
 
 	UInventoryCellWidget* CreateCell();
 
+	void InitCell(UInventoryCellWidget* NewCell);
+
 public:
 	FOnItemDrop OnItemDrop;
+
+	UPROPERTY()
+	UInventoryManagerComponent* InventoryManager;
+
+	UPROPERTY()
+	UInventoryComponent* ParentInventory;
 
 	void Init(int32 InventorySize);
 

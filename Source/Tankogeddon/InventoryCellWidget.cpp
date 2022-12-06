@@ -2,10 +2,12 @@
 
 
 #include "InventoryCellWidget.h"
+#include "InventoryWidget.h"
 //#include "InventoryStructs.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include <Tankogeddon/InventoryComponent.h>
 
 
 FReply UInventoryCellWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
@@ -44,6 +46,11 @@ bool UInventoryCellWidget::NativeOnDrop(const FGeometry& InGeometry, const FDrag
     return Super::NativeOnDrop(InGeometry, InMouseEvent, InOperation);
 }
 
+UInventoryComponent* UInventoryCellWidget::GetParentInventory() const
+{
+    return ParentInventoryWidget ? ParentInventoryWidget->ParentInventory : nullptr;
+};
+
 void UInventoryCellWidget::Clear()
 {
     if (!bHasItem)
@@ -56,6 +63,7 @@ void UInventoryCellWidget::Clear()
     }
 
     bHasItem = false;
+    bCanDrag = false;
     Item = {};
 }
 
@@ -64,15 +72,33 @@ bool UInventoryCellWidget::AddItem(const FInventorySlotInfo& InSlot, const FInve
     if (!bHasItem && ItemIcon && ItemCountText)
     {
         ItemIcon->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
-        ItemIcon->SetBrushFromTexture(Info.Icon.LoadSynchronous());
-        ItemCountText->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+        if(!Info.Icon.IsNull())
+            ItemIcon->SetBrushFromTexture(Info.Icon.LoadSynchronous());
+        if (InSlot.ItemCount > 0)
+         ItemCountText->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+        else
+            ItemCountText->SetVisibility(ESlateVisibility::Collapsed);
         ItemCountText->SetText(FText::FromString(FString::FromInt(InSlot.ItemCount)));
 
-        bHasItem = true;
+        if (InSlot.ItemCount < 0)
+        {
+            bHasItem = false;
+            bCanDrag = false;
+        }
+        else
+        {
+            bHasItem = true;
+            bCanDrag = true;
+        }
         Item = InSlot;
         return true;
     }
 
     return false;
+}
+
+void UInventoryCellWidget::OmmitTextBlock()
+{
+    ItemCountText->SetVisibility(ESlateVisibility::Collapsed);
 }
 

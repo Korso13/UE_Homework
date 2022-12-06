@@ -7,6 +7,7 @@
 //#include "Kismet/KismetMathLibrary.h"
 #include "SlateBasics.h"
 #include "TankWithInventory.h"
+#include "InventoryManagerComponent.h"
 
 
 ATankPlayerController::ATankPlayerController()
@@ -43,6 +44,8 @@ void ATankPlayerController::SetupInputComponent()
 	InputComponent->BindAction("SwitchWeapon", IE_Pressed, this, &ATankPlayerController::SwitchWeapon);
 	InputComponent->BindKey(EKeys::LeftMouseButton, EInputEvent::IE_Released, this, &ATankPlayerController::MouseButtonUp);
 	InputComponent->BindKey(EKeys::I, EInputEvent::IE_Released, this, &ATankPlayerController::ToggleInventoryWindow);
+	InputComponent->BindKey(EKeys::P, EInputEvent::IE_Released, this, &ATankPlayerController::ToggleEquipmentWindow);
+	InputComponent->BindKey(EKeys::F, EInputEvent::IE_Released, this, &ATankPlayerController::UseConsumable);
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -126,7 +129,23 @@ void ATankPlayerController::ToggleInventoryWindow()
 {
 	auto InvTank = Cast<ATankWithInventory>(TankPawn);
 	if(InvTank)
-		InvTank->ToggleInventoryWidget();
+		InvTank->InventoryManager->ToggleInventoryWindow();
+}
+
+void ATankPlayerController::ToggleEquipmentWindow()
+{
+	auto InvTank = Cast<ATankWithInventory>(TankPawn);
+	if (InvTank)
+		InvTank->InventoryManager->ToggleEquipmentWindow();
+}
+
+void ATankPlayerController::UseConsumable()
+{
+	auto InvTank = Cast<ATankWithInventory>(TankPawn);
+	if (InvTank)
+	{
+		InvTank->UseConsumable();
+	}
 }
 
 void ATankPlayerController::PrimaryFire()

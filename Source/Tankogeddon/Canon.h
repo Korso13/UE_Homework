@@ -122,13 +122,17 @@ public:
 	bool IsReadyToFire() const {return ReadyToFire;}
 
 	UFUNCTION()
-		void Fire(FireType att_type);
+	bool Fire(FireType att_type);
 
 	UFUNCTION()
-		void AddAmmo(int32 Count);
+	void AddAmmo(int32 Count);
 
 	UFUNCTION(BlueprintCallable)
-		int32 GetCurrAmmo() const;
+	int32 GetCurrAmmo() const;
+
+	int32 GetAmmoComsumption() const { return AmmoPrimaryConsumption; };
+
+	int32 GetAltFireAmmoComsumption() const { return AmmoSecondaryConsumption; };
 
 	UFUNCTION()
 		void SetCurrAmmo(int32 Count);

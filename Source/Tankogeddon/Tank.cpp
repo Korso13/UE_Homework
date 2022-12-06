@@ -197,7 +197,7 @@ void ATank::ChangeCanon(TSubclassOf<ACanon> _CanonType)
 }
 
 
-void ATank::PrimaryFire() const
+void ATank::PrimaryFire()
 {
 	if (!Cannon)
 	{
@@ -207,7 +207,7 @@ void ATank::PrimaryFire() const
 	Cannon->Fire(FireType::Primary);
 }
 
-void ATank::SecondaryFire() const
+void ATank::SecondaryFire()
 {
 	if (!Cannon)
 	{
@@ -258,11 +258,6 @@ void ATank::SwitchWeapon()
 		}
 	}
 }
-
-//void ATank::FindBestTarget()
-//{
-//	return;
-//}
 
 //for AI purposes
 void ATank::OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

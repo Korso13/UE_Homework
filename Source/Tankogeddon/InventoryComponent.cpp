@@ -42,9 +42,20 @@ void UInventoryComponent::SetItem(int32 SlotIndex, const FInventorySlotInfo& InI
 void UInventoryComponent::ClearItem(int32 SlotIndex)
 {
 	InventoryContents.Remove(SlotIndex);
+	InventoryContents.Add(SlotIndex, FInventorySlotInfo());
 }
 
-void UInventoryComponent::SwitchItems()
+int32 UInventoryComponent::GetMaxItemAmount(int32 SlotIndex, const FInventoryItemInfo& InItem)
 {
-}
+	FInventorySlotInfo* SlotPtr = InventoryContents.Find(SlotIndex);
+	if (SlotPtr == nullptr)
+		return -1; //error: slot not found, can't put item
+	else
+	{
+		if (SlotPtr->ItemId == InItem.ItemId)
+			return InItem.MaxStack - SlotPtr->ItemCount; //amount to top-up slot
+		else
+			return 0; //not equal items, can't stack, can switch them
+	}
 
+}

@@ -24,7 +24,27 @@ enum class EItemSubType : uint8
 	EST_Weapon = 1,
 	EST_Armor = 2,
 	EST_Ammo = 3,
-	EST_HPItem = 4
+	EST_HPItem = 4,
+	EST_EnginePowerModule = 5
+};
+
+UENUM(BlueprintType)
+enum class EEquipSlot : uint8
+{
+	EQ_NONE = 100,
+	EQ_PrimaryCannon = 0,
+	EQ_SecondaryCannon = 1,
+	EQ_Armor = 2,
+	EQ_PowerModule = 3,
+	EQ_Consumable = 4
+};
+
+UENUM(BlueprintType)
+enum class EInventoryClass : uint8
+{
+	IC_CharInventory = 0,
+	IC_EquipInventory = 1,
+	IC_Chest = 2
 };
 
 class UInventoryCellWidget;
@@ -42,11 +62,20 @@ struct FInventoryItemInfo : public FTableRowBase
 	UPROPERTY(EditDefaultsOnly, Category = "General")
 	FText Name;
 
+	UPROPERTY(EditDefaultsOnly, Category = "General")
+	int32 MaxStack;
+
+	UPROPERTY(EditDefaultsOnly, Category = "General")
+	TSubclassOf<UObject> ItemClass;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Types")
 	EItemArchType ItemArchType;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Types")
 	EItemSubType ItemCategory;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Types")
+	EEquipSlot EquipSlot;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Visual")
 	TSoftObjectPtr<UTexture2D> Icon;
@@ -61,6 +90,9 @@ struct FInventoryItemInfo : public FTableRowBase
 	float Armor;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Item stats")
+	float StatsBoost;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Item stats")
 	float ConsumableRestoreValue;
 };
 
@@ -68,6 +100,11 @@ USTRUCT(BlueprintType)
 struct FInventorySlotInfo : public FTableRowBase
 {
 	GENERATED_BODY()
+
+	FInventorySlotInfo() : ItemCount(-1) 
+	{
+		ItemId = FName{ "NoItem" };
+	};
 
 	UPROPERTY(EditDefaultsOnly, Category = "ID")
 	FName ItemId;

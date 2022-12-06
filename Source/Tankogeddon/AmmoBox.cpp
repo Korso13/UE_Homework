@@ -1,7 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AmmoBox.h"
-#include "Tank.h"
+#include "Canon.h"
+#include "Components/BoxComponent.h"
+#include "InventoryManagerComponent.h"
+#include "TankWithInventory.h"
 
 // Sets default values
 AAmmoBox::AAmmoBox()
@@ -16,6 +19,8 @@ AAmmoBox::AAmmoBox()
 
 	BoxMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Ammo Box Body"));
 	BoxMesh->SetupAttachment(Collision);
+
+
 }
 
 // Called when the game starts or when spawned
@@ -30,15 +35,38 @@ void AAmmoBox::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* Other
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const
 	FHitResult& SweepResult)
 {
-	auto const Tank = Cast<ATank>(OtherActor);
-	if(Tank)
+	if (OtherActor)
 	{
-		auto const Cannon = Tank->GetCannon();
-		if(Cannon)
+		auto const Tank = Cast<ATankWithInventory>(OtherActor);
+		if (Tank)
 		{
-			Cannon->AddAmmo(AmmoRefillCount);
+			Tank->PickUpItem(AmmoBoxType);
 			Destroy();
+			return;
 		}
+		else
+		{
+			auto const TankOld = Cast<ATank>(OtherActor);
+			if (TankOld)
+			{
+				auto const Cannon = TankOld->GetCannon();
+				if (Cannon)
+				{
+					Cannon->AddAmmo(AmmoRefillCount);
+					Destroy();
+				}
+			}
+		}
+	}
+}
+
+void AAmmoBox::UseConsumable()
+{
+	auto const Tank = Cast<ATankWithInventory>(OwningPawn);
+	if (Tank)
+	{
+		AmmoRefillCount = Tank->InventoryManager->GetItemData(AmmoBoxType.ItemId)->ConsumableRestoreValue;
+		Tank->AmmoTopup(AmmoRefillCount);
 	}
 }
 

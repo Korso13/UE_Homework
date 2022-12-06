@@ -69,15 +69,15 @@ void ACanon::Destroyed()
 	GetWorld()->GetTimerManager().ClearAllTimersForObject(this);
 }
 
-void ACanon::Fire(FireType att_type)
+bool ACanon::Fire(FireType att_type)
 {
 	if (!IsReadyToFire())
 	{
-		return;
+		return false;
 	}
 	if (Ammo <= 0)
 	{
-		return;
+		return false;
 	}
 	//firing
 	ReadyToFire = false;
@@ -186,7 +186,7 @@ void ACanon::Fire(FireType att_type)
 	}
 	//seting up reload timer:
 	GetWorld()->GetTimerManager().SetTimer(ReloadTimer, this, &ACanon::Reload, FireRate, false);
-	
+	return true;
 }
 
 void ACanon::Refire()
