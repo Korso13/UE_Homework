@@ -5,7 +5,9 @@
 #include "CoreMinimal.h"
 #include "Tank.h"
 #include "EquipInterface.h"
-#include "Templates/SharedPointer.h"
+//#include "Templates/SharedPointer.h"
+#include <TankInventorySystem.h>
+#include <TankInventorySystem/Public/ActorWithInventory.h>
 #include "TankWithInventory.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(InvTankLog, All, All);
@@ -31,7 +33,7 @@ class ABase_Consumable;
 class AAmmoBox;
 
 UCLASS()
-class TANKOGEDDON_API ATankWithInventory : public ATank, public IEquipInterface
+class TANKOGEDDON_API ATankWithInventory : public ATank, public IEquipInterface, public IActorWithInventory
 {
 	GENERATED_BODY()
 
@@ -115,12 +117,14 @@ public:
 
 	void HPTopup(float RestoredHP);
 	
-	//depricated or unused:
-	virtual UStaticMeshComponent* GetEquipComponent(EEquipSlot Slot) override;
+	virtual UInventoryManagerComponent* GetInventoryManager() { return InventoryManager; }
 	
 	UFUNCTION()
 	void ToggleInventoryWidget() const;
 
 	UFUNCTION(BlueprintCallable)
 	FStatusHUDInfo& GetHUDInfo() { return StatusHUDInfo; };//for status HUD widget
+
+	//depricated or unused:
+	virtual UStaticMeshComponent* GetEquipComponent(EEquipSlot Slot) override;
 };

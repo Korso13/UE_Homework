@@ -2,6 +2,7 @@
 
 
 #include "TankWithInventory.h"
+#include <TankInventorySystem.h>
 #include "InventoryComponent.h"
 #include "Base_Consumable.h"
 #include "EquipInventoryComponent.h"

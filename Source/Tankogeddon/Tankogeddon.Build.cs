@@ -10,7 +10,7 @@ public class Tankogeddon : ModuleRules
 
 		CppStandard = CppStandardVersion.Cpp17;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "TankInventorySystem" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 

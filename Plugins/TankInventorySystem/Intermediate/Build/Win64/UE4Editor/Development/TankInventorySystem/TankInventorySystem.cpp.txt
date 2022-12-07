@@ -1,0 +1,2 @@
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\Definitions.TankInventorySystem.h
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem\Public\TankInventorySystem.h
