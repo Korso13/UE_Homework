@@ -106,9 +106,9 @@ struct FInventorySlotInfo : public FTableRowBase
 		ItemId = FName{ "NoItem" };
 	};
 
-	UPROPERTY(EditDefaultsOnly, Category = "ID")
+	UPROPERTY(EditAnywhere, Category = "ID")
 	FName ItemId;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Count")
+	UPROPERTY(EditAnywhere, Category = "Count")
 	int32 ItemCount;
 };
