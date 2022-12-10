@@ -15,7 +15,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 #define Homework_Plugins_TankInventorySystem_Source_TankInventorySystem_Public_InventoryStructs_h_102_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FInventorySlotInfo_Statics; \
-	TANKINVENTORYSYSTEM_API static class UScriptStruct* StaticStruct(); \
+	static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
 
 
@@ -23,7 +23,7 @@ template<> TANKINVENTORYSYSTEM_API UScriptStruct* StaticStruct<struct FInventory
 
 #define Homework_Plugins_TankInventorySystem_Source_TankInventorySystem_Public_InventoryStructs_h_57_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FInventoryItemInfo_Statics; \
-	TANKINVENTORYSYSTEM_API static class UScriptStruct* StaticStruct(); \
+	static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
 
 

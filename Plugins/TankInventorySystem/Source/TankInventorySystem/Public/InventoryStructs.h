@@ -52,7 +52,7 @@ class UInventoryCellWidget;
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnItemDrop, UInventoryCellWidget* /*from slot*/, UInventoryCellWidget* /*to slot*/)
 
 USTRUCT(BlueprintType)
-struct FInventoryItemInfo : public FTableRowBase
+struct TANKINVENTORYSYSTEM_API FInventoryItemInfo : public FTableRowBase
 {
 	GENERATED_BODY()
 
@@ -97,7 +97,7 @@ struct FInventoryItemInfo : public FTableRowBase
 };
 
 USTRUCT(BlueprintType)
-struct FInventorySlotInfo : public FTableRowBase
+struct TANKINVENTORYSYSTEM_API FInventorySlotInfo : public FTableRowBase
 {
 	GENERATED_BODY()
 

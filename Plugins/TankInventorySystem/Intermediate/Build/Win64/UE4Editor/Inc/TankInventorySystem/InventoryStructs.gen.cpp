@@ -344,7 +344,7 @@ static struct FScriptStruct_TankInventorySystem_StaticRegisterNativesFInventoryS
 		Z_Construct_UScriptStruct_FInventorySlotInfo_Statics::PropPointers,
 		UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FInventorySlotInfo_Statics::PropPointers),
 		RF_Public|RF_Transient|RF_MarkAsNative,
-		EStructFlags(0x00000001),
+		EStructFlags(0x00000201),
 		METADATA_PARAMS(Z_Construct_UScriptStruct_FInventorySlotInfo_Statics::Struct_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FInventorySlotInfo_Statics::Struct_MetaDataParams))
 	};
 	UScriptStruct* Z_Construct_UScriptStruct_FInventorySlotInfo()
@@ -362,7 +362,7 @@ static struct FScriptStruct_TankInventorySystem_StaticRegisterNativesFInventoryS
 		}
 		return ReturnStruct;
 	}
-	uint32 Get_Z_Construct_UScriptStruct_FInventorySlotInfo_Hash() { return 2552725628U; }
+	uint32 Get_Z_Construct_UScriptStruct_FInventorySlotInfo_Hash() { return 1604610661U; }
 
 static_assert(std::is_polymorphic<FInventoryItemInfo>() == std::is_polymorphic<FTableRowBase>(), "USTRUCT FInventoryItemInfo cannot be polymorphic unless super FTableRowBase is polymorphic");
 
@@ -584,7 +584,7 @@ static struct FScriptStruct_TankInventorySystem_StaticRegisterNativesFInventoryI
 		Z_Construct_UScriptStruct_FInventoryItemInfo_Statics::PropPointers,
 		UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FInventoryItemInfo_Statics::PropPointers),
 		RF_Public|RF_Transient|RF_MarkAsNative,
-		EStructFlags(0x00000001),
+		EStructFlags(0x00000201),
 		METADATA_PARAMS(Z_Construct_UScriptStruct_FInventoryItemInfo_Statics::Struct_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FInventoryItemInfo_Statics::Struct_MetaDataParams))
 	};
 	UScriptStruct* Z_Construct_UScriptStruct_FInventoryItemInfo()
@@ -602,7 +602,7 @@ static struct FScriptStruct_TankInventorySystem_StaticRegisterNativesFInventoryI
 		}
 		return ReturnStruct;
 	}
-	uint32 Get_Z_Construct_UScriptStruct_FInventoryItemInfo_Hash() { return 600872251U; }
+	uint32 Get_Z_Construct_UScriptStruct_FInventoryItemInfo_Hash() { return 1361489655U; }
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 #ifdef _MSC_VER
 #pragma warning (pop)

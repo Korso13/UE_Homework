@@ -1,0 +1,13 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.MediaWidget.cpp.obj": [
+			"MediaPlayerWidget.cpp.obj",
+			"MediaWidget.cpp.obj"
+		],
+		"Module.MediaWidget.gen.cpp.obj": [
+			"MediaPlayerWidget.gen.cpp.obj",
+			"MediaWidget.init.gen.cpp.obj"
+		]
+	}
+}

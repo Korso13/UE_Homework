@@ -338,7 +338,8 @@ bool UInventoryManagerComponent::IsInventoryOpen() const
 
 void UInventoryManagerComponent::UpdateEquipWidget()
 {
-	EquipWidget->Init(EquipInventory->GetInventorySize());
+	if(EquipWidget)
+		EquipWidget->Init(EquipInventory->GetInventorySize());
 }
 
 void UInventoryManagerComponent::CloseContainer()

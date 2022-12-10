@@ -318,7 +318,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseLootContainer() {}
 		{ "ModuleRelativePath", "Public/BaseLootContainer.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseLootContainer_Statics::NewProp_Inventory = { "Inventory", nullptr, (EPropertyFlags)0x002008000008000c, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseLootContainer, Inventory), Z_Construct_UClass_UInventoryComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseLootContainer_Statics::NewProp_Inventory_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseLootContainer_Statics::NewProp_Inventory_MetaData)) };
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseLootContainer_Statics::NewProp_Inventory = { "Inventory", nullptr, (EPropertyFlags)0x002008000008000d, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseLootContainer, Inventory), Z_Construct_UClass_UInventoryComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseLootContainer_Statics::NewProp_Inventory_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseLootContainer_Statics::NewProp_Inventory_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseLootContainer_Statics::NewProp_ContainerContents_MetaData[] = {
 		{ "Category", "Container" },
@@ -383,7 +383,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseLootContainer() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(ABaseLootContainer, 928750368);
+	IMPLEMENT_CLASS(ABaseLootContainer, 1805954596);
 	template<> TANKINVENTORYSYSTEM_API UClass* StaticClass<ABaseLootContainer>()
 	{
 		return ABaseLootContainer::StaticClass();

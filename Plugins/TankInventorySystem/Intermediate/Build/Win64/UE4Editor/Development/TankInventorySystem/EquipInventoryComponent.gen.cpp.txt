@@ -1,0 +1,12 @@
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\Definitions.TankInventorySystem.h
+D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem/Public/EquipInventoryComponent.h
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem\Public\InventoryStructs.h
+D:\UE_4.27\Engine\Source\Runtime\Engine\Classes\Engine/DataTable.h
+D:\UE_4.27\Engine\Source\Runtime\Engine\Public\DataTableUtils.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DataTable.generated.h
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\InventoryStructs.generated.h
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem\Public\InventoryComponent.h
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\InventoryComponent.generated.h
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\EquipInventoryComponent.generated.h

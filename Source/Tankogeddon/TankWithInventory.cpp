@@ -338,7 +338,7 @@ void ATankWithInventory::TakeDamage(FDamageInfo DamageData)
 
 void ATankWithInventory::UseConsumable()
 {
-	UE_LOG(InvTankLog, Warning, TEXT("Use consumable called with %d available uses and %s consumable validity check"), (EquipInventory->GetInventory().Find(4)->ItemCount), ((ConsumableInSlot) ? "true" : "false"));
+	//UE_LOG(InvTankLog, Warning, TEXT("Use consumable called with %d available uses and %s consumable validity check"), (EquipInventory->GetInventory().Find(4)->ItemCount), ((ConsumableInSlot) ? "true" : "false"));
 	if (ConsumableInSlot && (EquipInventory->GetInventory().FindChecked(4).ItemCount > 0))
 	{
 		ConsumableInSlot->UseConsumable();

@@ -33,7 +33,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
 	UStaticMeshComponent* BoxMesh;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UInventoryComponent* Inventory;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Container")
