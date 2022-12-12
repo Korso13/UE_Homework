@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "InteractionSubsystem",
+	"Description": "Basic system for interaction between actors",
+	"Category": "Other",
+	"CreatedBy": "Tim Korso",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "InteractionSubsystem",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

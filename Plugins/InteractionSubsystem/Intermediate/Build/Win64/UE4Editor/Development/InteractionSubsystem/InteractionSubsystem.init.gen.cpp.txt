@@ -1,0 +1,3 @@
+D:\UE_projects\Homework\Plugins\InteractionSubsystem\Intermediate\Build\Win64\UE4Editor\Development\InteractionSubsystem\Definitions.InteractionSubsystem.h
+D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h

@@ -1,0 +1,14 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-InteractionSubsystem.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\UE_projects\Homework\Intermediate\Build\Win64\TankogeddonEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"D:\UE_projects\Homework\Plugins\InteractionSubsystem\Intermediate\Build\Win64\UE4Editor\Development\InteractionSubsystem\InteractionSubsystem.cpp.obj"
+"D:\UE_projects\Homework\Plugins\InteractionSubsystem\Intermediate\Build\Win64\UE4Editor\Development\InteractionSubsystem\InteractableActor.gen.cpp.obj"
+"D:\UE_projects\Homework\Plugins\InteractionSubsystem\Intermediate\Build\Win64\UE4Editor\Development\InteractionSubsystem\InteractionSubsystem.init.gen.cpp.obj"
+"D:\UE_projects\Homework\Plugins\InteractionSubsystem\Intermediate\Build\Win64\UE4Editor\Development\InteractionSubsystem\Default.rc2.res"
+/OUT:"D:\UE_projects\Homework\Plugins\InteractionSubsystem\Intermediate\Build\Win64\UE4Editor\Development\InteractionSubsystem\UE4Editor-InteractionSubsystem.lib"

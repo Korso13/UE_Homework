@@ -1,0 +1,2 @@
+D:\UE_projects\Homework\Plugins\InteractionSubsystem\Intermediate\Build\Win64\UE4Editor\Development\InteractionSubsystem\Definitions.InteractionSubsystem.h
+D:\UE_projects\Homework\Plugins\InteractionSubsystem\Source\InteractionSubsystem\Public\InteractionSubsystem.h

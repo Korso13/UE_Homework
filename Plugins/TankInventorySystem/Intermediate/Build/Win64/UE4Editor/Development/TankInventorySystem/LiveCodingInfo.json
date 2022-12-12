@@ -8,21 +8,21 @@
 			"EquipInventoryComponent.cpp.obj",
 			"InventoryCellWidget.cpp.obj",
 			"InventoryComponent.cpp.obj",
+			"InventoryManagerComponent.cpp.obj",
 			"InventoryStructs.cpp.obj",
 			"InventoryWidget.cpp.obj",
-			"TankInventorySystem.cpp.obj",
-			"InventoryManagerComponent.cpp.obj"
+			"TankInventorySystem.cpp.obj"
 		],
 		"Module.TankInventorySystem.gen.cpp.obj": [
 			"ActorWithInventory.gen.cpp.obj",
+			"BaseLootContainer.gen.cpp.obj",
 			"EquipInterface.gen.cpp.obj",
 			"EquipInventoryComponent.gen.cpp.obj",
 			"InventoryCellWidget.gen.cpp.obj",
 			"InventoryComponent.gen.cpp.obj",
 			"InventoryManagerComponent.gen.cpp.obj",
-			"InventoryWidget.gen.cpp.obj",
-			"BaseLootContainer.gen.cpp.obj",
 			"InventoryStructs.gen.cpp.obj",
+			"InventoryWidget.gen.cpp.obj",
 			"TankInventorySystem.init.gen.cpp.obj"
 		]
 	}

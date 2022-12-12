@@ -1,0 +1,16 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.InteractionSubsystem.cpp.obj": [
+			"BaseInteractionActor.cpp.obj",
+			"InteractionComponent.cpp.obj",
+			"InteractionSubsystem.cpp.obj"
+		],
+		"Module.InteractionSubsystem.gen.cpp.obj": [
+			"BaseInteractionActor.gen.cpp.obj",
+			"InteractableActor.gen.cpp.obj",
+			"InteractionComponent.gen.cpp.obj",
+			"InteractionSubsystem.init.gen.cpp.obj"
+		]
+	}
+}

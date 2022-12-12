@@ -34,11 +34,7 @@
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN
 "D:\UE_projects\Homework\Intermediate\Build\Win64\TankogeddonEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.Cpp17.h.obj"
-"D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\InventoryManagerComponent.cpp.obj"
 "D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\Module.TankInventorySystem.cpp.obj"
-"D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\BaseLootContainer.gen.cpp.obj"
-"D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\InventoryStructs.gen.cpp.obj"
-"D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\TankInventorySystem.init.gen.cpp.obj"
 "D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\Module.TankInventorySystem.gen.cpp.obj"
 "D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\Default.rc2.res"
 "D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\CoreUObject\UE4Editor-CoreUObject.lib"

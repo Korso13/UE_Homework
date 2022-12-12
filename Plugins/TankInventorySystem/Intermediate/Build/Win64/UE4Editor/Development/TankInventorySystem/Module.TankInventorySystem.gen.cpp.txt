@@ -9,6 +9,9 @@ D:\UE_4.27\Engine\Source\Runtime\Engine\Public\DataTableUtils.h
 D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DataTable.generated.h
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\InventoryStructs.generated.h
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\ActorWithInventory.generated.h
+D:/UE_projects/Homework/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Inc/TankInventorySystem/BaseLootContainer.gen.cpp
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem/Public/BaseLootContainer.h
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\BaseLootContainer.generated.h
 D:/UE_projects/Homework/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Inc/TankInventorySystem/EquipInterface.gen.cpp
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem/Public/EquipInterface.h
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\EquipInterface.generated.h
@@ -123,6 +126,8 @@ D:/UE_projects/Homework/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4
 D:/UE_projects/Homework/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Inc/TankInventorySystem/InventoryManagerComponent.gen.cpp
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem/Public/InventoryManagerComponent.h
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\InventoryManagerComponent.generated.h
+D:/UE_projects/Homework/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Inc/TankInventorySystem/InventoryStructs.gen.cpp
 D:/UE_projects/Homework/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Inc/TankInventorySystem/InventoryWidget.gen.cpp
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem/Public/InventoryWidget.h
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\InventoryWidget.generated.h
+D:/UE_projects/Homework/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Inc/TankInventorySystem/TankInventorySystem.init.gen.cpp
