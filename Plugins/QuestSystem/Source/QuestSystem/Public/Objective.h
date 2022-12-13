@@ -11,8 +11,7 @@ enum class EObjectiveType :uint8
 {
 	OT_Location,
 	OT_Interaction,
-	OT_Destruction,
-	OT_Score
+	OT_Extended
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnObjectiveCompleted, UObjective* /*Progressing quest*/)

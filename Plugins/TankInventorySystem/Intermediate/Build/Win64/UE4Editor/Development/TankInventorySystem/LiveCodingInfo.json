@@ -8,10 +8,10 @@
 			"EquipInventoryComponent.cpp.obj",
 			"InventoryCellWidget.cpp.obj",
 			"InventoryComponent.cpp.obj",
+			"InventoryManagerComponent.cpp.obj",
 			"InventoryStructs.cpp.obj",
 			"InventoryWidget.cpp.obj",
-			"TankInventorySystem.cpp.obj",
-			"InventoryManagerComponent.cpp.obj"
+			"TankInventorySystem.cpp.obj"
 		],
 		"Module.TankInventorySystem.gen.cpp.obj": [
 			"ActorWithInventory.gen.cpp.obj",

@@ -14,7 +14,8 @@
 				"AIModule",
 				"Slate",
 				"SlateCore",
-				"UMG"
+				"UMG",
+				"QuestSystem"
 			]
 		}
 	],

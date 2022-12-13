@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-TankInventorySystem-0017.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\UE_projects\Homework\Intermediate\Build\Win64\TankogeddonEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.Cpp17.h.obj"
+"D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\Module.TankInventorySystem.cpp.obj"
+"D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\Module.TankInventorySystem.gen.cpp.obj"
+"D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\Default.rc2.res"
+/OUT:"D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\UE4Editor-TankInventorySystem-0017.lib"
