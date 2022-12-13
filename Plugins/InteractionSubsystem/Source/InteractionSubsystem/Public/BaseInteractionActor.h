@@ -21,7 +21,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void OnInteractionFinished(AActor* InteractionInstigator);
+	virtual void OnInteractionFinished(AActor* InteractionInstigator); //must be called to notify all subscribers to OnInteractionFinished delegate in Interface
 	
 public:	
 	// Called every frame

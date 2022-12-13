@@ -46,12 +46,14 @@ int32 UInventoryManagerComponent::GetNanites() const
 	if (LocalInventory)
 	{
 		int32 OutCount = 0;
-		if(LocalInventory->GetInventorySize()>0)
+		if(LocalInventory->GetInventorySize()>0 && LocalInventory->GetItem(-1))
+		{
 			OutCount = LocalInventory->GetItem(-1)->ItemCount;
-		return OutCount;
+			return OutCount;
+		}
 	}
-	else
-		return 0;
+
+	return 0;
 }
 
 void UInventoryManagerComponent::PickupAddItem(FInventorySlotInfo& InSlot)

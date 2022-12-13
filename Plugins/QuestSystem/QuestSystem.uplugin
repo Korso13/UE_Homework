@@ -18,7 +18,18 @@
 		{
 			"Name": "QuestSystem",
 			"Type": "Runtime",
+			"LoadingPhase": "PreDefault"
+
+		}
+	],
+	"Plugins":
+	[
+		{
+			"Name": "InteractionSubsystem",
+			"Enabled": true,
+			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
 	]
+	
 }
