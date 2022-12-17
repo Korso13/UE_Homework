@@ -28,6 +28,7 @@ public class QuestSystem : ModuleRules
 				"Core",
 				"UMG",
 				"InteractionSubsystem",
+				"InputCore",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);

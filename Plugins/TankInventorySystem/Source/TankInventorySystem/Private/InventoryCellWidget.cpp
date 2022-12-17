@@ -69,7 +69,7 @@ void UInventoryCellWidget::Clear()
 
 bool UInventoryCellWidget::AddItem(const FInventorySlotInfo& InSlot, const FInventoryItemInfo& Info)
 {
-    if (!bHasItem && ItemIcon && ItemCountText)
+    if (/*!bHasItem && */ItemIcon && ItemCountText)
     {
         ItemIcon->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
         if(!Info.Icon.IsNull())

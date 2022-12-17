@@ -165,7 +165,9 @@ void EmptyLinkFunctionForGeneratedCodeQuest() {}
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AQuest_ResetLocation_Statics::Function_MetaDataParams[] = {
 		{ "CallInEditor", "true" },
+		{ "Comment", "//editor functions\n" },
 		{ "ModuleRelativePath", "Public/Quest.h" },
+		{ "ToolTip", "editor functions" },
 	};
 #endif
 	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AQuest_ResetLocation_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AQuest, nullptr, "ResetLocation", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AQuest_ResetLocation_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AQuest_ResetLocation_Statics::Function_MetaDataParams)) };
@@ -235,20 +237,25 @@ void EmptyLinkFunctionForGeneratedCodeQuest() {}
 #endif
 		static const UE4CodeGen_Private::FArrayPropertyParams NewProp_Objectives;
 #if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_IsTaken_MetaData[];
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_bIsTaken_MetaData[];
 #endif
-		static void NewProp_IsTaken_SetBit(void* Obj);
-		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_IsTaken;
+		static void NewProp_bIsTaken_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_bIsTaken;
 #if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_IsOrderedObjectives_MetaData[];
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_bIsOrderedObjectives_MetaData[];
 #endif
-		static void NewProp_IsOrderedObjectives_SetBit(void* Obj);
-		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_IsOrderedObjectives;
+		static void NewProp_bIsOrderedObjectives_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_bIsOrderedObjectives;
 #if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_IsMainQuest_MetaData[];
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_bIsMainQuest_MetaData[];
 #endif
-		static void NewProp_IsMainQuest_SetBit(void* Obj);
-		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_IsMainQuest;
+		static void NewProp_bIsMainQuest_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_bIsMainQuest;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_bIsCompleted_MetaData[];
+#endif
+		static void NewProp_bIsCompleted_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_bIsCompleted;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_PrerequisiteQuest_MetaData[];
 #endif
@@ -269,7 +276,7 @@ void EmptyLinkFunctionForGeneratedCodeQuest() {}
 		{ &Z_Construct_UFunction_AQuest_AddLocationObjective, "AddLocationObjective" }, // 2482702987
 #endif //WITH_EDITOR
 		{ &Z_Construct_UFunction_AQuest_OnObjectiveCompleted, "OnObjectiveCompleted" }, // 311613859
-		{ &Z_Construct_UFunction_AQuest_ResetLocation, "ResetLocation" }, // 1789417486
+		{ &Z_Construct_UFunction_AQuest_ResetLocation, "ResetLocation" }, // 1631102722
 		{ &Z_Construct_UFunction_AQuest_TakeQuest, "TakeQuest" }, // 164421975
 	};
 #if WITH_METADATA
@@ -301,38 +308,49 @@ void EmptyLinkFunctionForGeneratedCodeQuest() {}
 #endif
 	const UE4CodeGen_Private::FArrayPropertyParams Z_Construct_UClass_AQuest_Statics::NewProp_Objectives = { "Objectives", nullptr, (EPropertyFlags)0x0020080000000005, UE4CodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AQuest, Objectives), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_AQuest_Statics::NewProp_Objectives_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AQuest_Statics::NewProp_Objectives_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AQuest_Statics::NewProp_IsTaken_MetaData[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AQuest_Statics::NewProp_bIsTaken_MetaData[] = {
 		{ "Category", "Quest" },
 		{ "ModuleRelativePath", "Public/Quest.h" },
 	};
 #endif
-	void Z_Construct_UClass_AQuest_Statics::NewProp_IsTaken_SetBit(void* Obj)
+	void Z_Construct_UClass_AQuest_Statics::NewProp_bIsTaken_SetBit(void* Obj)
 	{
-		((AQuest*)Obj)->IsTaken = 1;
+		((AQuest*)Obj)->bIsTaken = 1;
 	}
-	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AQuest_Statics::NewProp_IsTaken = { "IsTaken", nullptr, (EPropertyFlags)0x0020080000000005, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(AQuest), &Z_Construct_UClass_AQuest_Statics::NewProp_IsTaken_SetBit, METADATA_PARAMS(Z_Construct_UClass_AQuest_Statics::NewProp_IsTaken_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AQuest_Statics::NewProp_IsTaken_MetaData)) };
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AQuest_Statics::NewProp_bIsTaken = { "bIsTaken", nullptr, (EPropertyFlags)0x0020080000000005, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(AQuest), &Z_Construct_UClass_AQuest_Statics::NewProp_bIsTaken_SetBit, METADATA_PARAMS(Z_Construct_UClass_AQuest_Statics::NewProp_bIsTaken_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AQuest_Statics::NewProp_bIsTaken_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AQuest_Statics::NewProp_IsOrderedObjectives_MetaData[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AQuest_Statics::NewProp_bIsOrderedObjectives_MetaData[] = {
 		{ "Category", "Quest" },
 		{ "ModuleRelativePath", "Public/Quest.h" },
 	};
 #endif
-	void Z_Construct_UClass_AQuest_Statics::NewProp_IsOrderedObjectives_SetBit(void* Obj)
+	void Z_Construct_UClass_AQuest_Statics::NewProp_bIsOrderedObjectives_SetBit(void* Obj)
 	{
-		((AQuest*)Obj)->IsOrderedObjectives = 1;
+		((AQuest*)Obj)->bIsOrderedObjectives = 1;
 	}
-	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AQuest_Statics::NewProp_IsOrderedObjectives = { "IsOrderedObjectives", nullptr, (EPropertyFlags)0x0020080000000005, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(AQuest), &Z_Construct_UClass_AQuest_Statics::NewProp_IsOrderedObjectives_SetBit, METADATA_PARAMS(Z_Construct_UClass_AQuest_Statics::NewProp_IsOrderedObjectives_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AQuest_Statics::NewProp_IsOrderedObjectives_MetaData)) };
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AQuest_Statics::NewProp_bIsOrderedObjectives = { "bIsOrderedObjectives", nullptr, (EPropertyFlags)0x0020080000000005, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(AQuest), &Z_Construct_UClass_AQuest_Statics::NewProp_bIsOrderedObjectives_SetBit, METADATA_PARAMS(Z_Construct_UClass_AQuest_Statics::NewProp_bIsOrderedObjectives_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AQuest_Statics::NewProp_bIsOrderedObjectives_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AQuest_Statics::NewProp_IsMainQuest_MetaData[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AQuest_Statics::NewProp_bIsMainQuest_MetaData[] = {
 		{ "Category", "Quest" },
 		{ "ModuleRelativePath", "Public/Quest.h" },
 	};
 #endif
-	void Z_Construct_UClass_AQuest_Statics::NewProp_IsMainQuest_SetBit(void* Obj)
+	void Z_Construct_UClass_AQuest_Statics::NewProp_bIsMainQuest_SetBit(void* Obj)
 	{
-		((AQuest*)Obj)->IsMainQuest = 1;
+		((AQuest*)Obj)->bIsMainQuest = 1;
 	}
-	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AQuest_Statics::NewProp_IsMainQuest = { "IsMainQuest", nullptr, (EPropertyFlags)0x0020080000000005, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(AQuest), &Z_Construct_UClass_AQuest_Statics::NewProp_IsMainQuest_SetBit, METADATA_PARAMS(Z_Construct_UClass_AQuest_Statics::NewProp_IsMainQuest_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AQuest_Statics::NewProp_IsMainQuest_MetaData)) };
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AQuest_Statics::NewProp_bIsMainQuest = { "bIsMainQuest", nullptr, (EPropertyFlags)0x0020080000000005, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(AQuest), &Z_Construct_UClass_AQuest_Statics::NewProp_bIsMainQuest_SetBit, METADATA_PARAMS(Z_Construct_UClass_AQuest_Statics::NewProp_bIsMainQuest_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AQuest_Statics::NewProp_bIsMainQuest_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AQuest_Statics::NewProp_bIsCompleted_MetaData[] = {
+		{ "Category", "Quest" },
+		{ "ModuleRelativePath", "Public/Quest.h" },
+	};
+#endif
+	void Z_Construct_UClass_AQuest_Statics::NewProp_bIsCompleted_SetBit(void* Obj)
+	{
+		((AQuest*)Obj)->bIsCompleted = 1;
+	}
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AQuest_Statics::NewProp_bIsCompleted = { "bIsCompleted", nullptr, (EPropertyFlags)0x0020080000010005, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(AQuest), &Z_Construct_UClass_AQuest_Statics::NewProp_bIsCompleted_SetBit, METADATA_PARAMS(Z_Construct_UClass_AQuest_Statics::NewProp_bIsCompleted_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AQuest_Statics::NewProp_bIsCompleted_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AQuest_Statics::NewProp_PrerequisiteQuest_MetaData[] = {
 		{ "Category", "Quest" },
@@ -345,9 +363,10 @@ void EmptyLinkFunctionForGeneratedCodeQuest() {}
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AQuest_Statics::NewProp_QuestDescription,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AQuest_Statics::NewProp_Objectives_Inner,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AQuest_Statics::NewProp_Objectives,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AQuest_Statics::NewProp_IsTaken,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AQuest_Statics::NewProp_IsOrderedObjectives,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AQuest_Statics::NewProp_IsMainQuest,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AQuest_Statics::NewProp_bIsTaken,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AQuest_Statics::NewProp_bIsOrderedObjectives,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AQuest_Statics::NewProp_bIsMainQuest,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AQuest_Statics::NewProp_bIsCompleted,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AQuest_Statics::NewProp_PrerequisiteQuest,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_AQuest_Statics::StaticCppClassTypeInfo = {
@@ -377,7 +396,7 @@ void EmptyLinkFunctionForGeneratedCodeQuest() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AQuest, 3158962080);
+	IMPLEMENT_CLASS(AQuest, 1794886664);
 	template<> QUESTSYSTEM_API UClass* StaticClass<AQuest>()
 	{
 		return AQuest::StaticClass();

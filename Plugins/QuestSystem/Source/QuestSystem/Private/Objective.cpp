@@ -3,6 +3,7 @@
 
 #include "Objective.h"
 #include "BaseInteractionActor.h"
+#include <mutex>
 #include "InteractableActor.h"
 #include "QuestLocationMarker.h"
 
@@ -25,11 +26,15 @@ void UInteractionObjective::ActivateObjective(AActor* QuestInstigator)
 		InteractionActor->OnInteractionFinished.AddLambda([this, QuestInstigator](
 			AActor* InteractibleObject, const AActor* InteractingActor)
 		{
-			if(CanBeCompleted && QuestInstigator == InteractingActor) //actor, who interacted is the same that took quest
+			if(CanBeCompleted() && QuestInstigator == InteractingActor) //actor, who interacted is the same that took quest
 			{
-				IsCompleted = true; //set after interaction triggered delegate, which, in turn, triggered this lambda 
-				if(OnObjectiveCompleted.IsBound())
+				//set after interaction triggered delegate, which, in turn, triggered this lambda 
+				SetCompleted();
+				if(OnObjectiveCompleted.IsBound() && !bDidOnce)
+				{
 					OnObjectiveCompleted.Broadcast(this);
+					bDidOnce = true;
+				}
 			}
 		});
 }
@@ -40,11 +45,14 @@ void ULocationObjective::ActivateObjective(AActor* QuestInstigator)
 	{
 		LocationActor->OnLocationReached.AddLambda([this, QuestInstigator](AActor* LocationMarkerActor, AActor* OverlappedActor)
 		{
-			if(OverlappedActor == QuestInstigator && CanBeCompleted)
+			if(OverlappedActor == QuestInstigator && CanBeCompleted())
 			{
-				IsCompleted = true;
-				if(OnObjectiveCompleted.IsBound())
+				SetCompleted();
+				if(OnObjectiveCompleted.IsBound() && !bDidOnce)
+				{
 					OnObjectiveCompleted.Broadcast(this);
+					bDidOnce = true;
+				}
 			}
 		});
 	}

@@ -342,12 +342,15 @@ void ATankWithInventory::UseConsumable()
 	if (ConsumableInSlot && (EquipInventory->GetInventory().FindChecked(4).ItemCount > 0))
 	{
 		ConsumableInSlot->UseConsumable();
-		FInventorySlotInfo Slot = EquipInventory->GetInventory().FindChecked(4)/*.Find(4)*/;
+		FInventorySlotInfo Slot = EquipInventory->GetInventory().FindChecked(4);
 		Slot.ItemCount--;
 		if(Slot.ItemCount > 0)
 			EquipInventory->SetItem(4, Slot);
 		else
+		{
 			EquipInventory->ClearItem(4);
+			ConsumableInSlot = nullptr;
+		}
 
 		InventoryManager->UpdateEquipWidget();
 	}

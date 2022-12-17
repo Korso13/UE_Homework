@@ -2,15 +2,31 @@
 	"RemapUnityFiles": 
 	{
 		"Module.QuestSystem.cpp.obj": [
-			"Objective.cpp.obj",
-			"Quest.cpp.obj",
 			"QuestLocationMarker.cpp.obj",
-			"QuestSystem.cpp.obj"
+			"QuestSystem.cpp.obj",
+			"CurrentObjectivesWidget.cpp.obj",
+			"Objective.cpp.obj",
+			"ObjectiveWidget.cpp.obj",
+			"Quest.cpp.obj",
+			"QuestBoard.cpp.obj",
+			"QuestDescriptionWidget.cpp.obj",
+			"QuestDialogueWidget.cpp.obj",
+			"QuestGiver.cpp.obj",
+			"QuestListEntry.cpp.obj",
+			"QuestManager.cpp.obj"
 		],
 		"Module.QuestSystem.gen.cpp.obj": [
-			"Objective.gen.cpp.obj",
-			"Quest.gen.cpp.obj",
 			"QuestLocationMarker.gen.cpp.obj",
+			"CurrentObjectivesWidget.gen.cpp.obj",
+			"Objective.gen.cpp.obj",
+			"ObjectiveWidget.gen.cpp.obj",
+			"Quest.gen.cpp.obj",
+			"QuestBoard.gen.cpp.obj",
+			"QuestDescriptionWidget.gen.cpp.obj",
+			"QuestDialogueWidget.gen.cpp.obj",
+			"QuestGiver.gen.cpp.obj",
+			"QuestListEntry.gen.cpp.obj",
+			"QuestManager.gen.cpp.obj",
 			"QuestSystem.init.gen.cpp.obj"
 		]
 	}

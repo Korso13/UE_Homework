@@ -22,12 +22,13 @@ void UDestroyObjective::ActivateObjective(AActor* QuestInstigator)
 	{
 		Destructible->OnTargetDestroyed.AddLambda([this, QuestInstigator](const AActor* DestroyedActor, const AActor* Destructor)
 		{
-			if(DestroyedActor == QuestTarget && CanBeCompleted && Destructor == QuestInstigator)
+			if(DestroyedActor == QuestTarget && CanBeCompleted() && Destructor == QuestInstigator)
 			{
-				IsCompleted = true;
-				if(OnObjectiveCompleted.IsBound())
+				SetCompleted();
+				if(OnObjectiveCompleted.IsBound() && !bDidOnce)
 				{
 					OnObjectiveCompleted.Broadcast(this);
+					bDidOnce = true;
 				}
 			}
 		});
@@ -46,12 +47,13 @@ void UScoreObjective::ActivateObjective(AActor* QuestInstigator)
 		ScoringTank->OnScoredKill.AddLambda([this, QuestInstigator](const FScoredKillData KillData)
 		{
 			CurrentScore += KillData.ScoreValue;
-			if(CanBeCompleted && CurrentScore >= ScoreTarget && KillData.Killer == QuestInstigator)
+			if(CanBeCompleted() && CurrentScore >= ScoreTarget && KillData.Killer == QuestInstigator)
 			{
-				IsCompleted = true;
-				if(OnObjectiveCompleted.IsBound())
+				SetCompleted();
+				if(OnObjectiveCompleted.IsBound() && !bDidOnce)
 				{
 					OnObjectiveCompleted.Broadcast(this);
+					bDidOnce = true;
 				}
 			}
 		});

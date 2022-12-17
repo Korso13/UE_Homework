@@ -51,6 +51,7 @@ void UEquipInventoryComponent::ClearItem(int32 SlotIndex)
 
 	/*ClearItem(SlotIndex);
 	InventoryContents.Add(SlotIndex, InItem);*/
+	
 	//here goes equipment logic:
 
 	if (IEquipInterface* EquipInterface = Cast<IEquipInterface>(Owner))
@@ -58,8 +59,8 @@ void UEquipInventoryComponent::ClearItem(int32 SlotIndex)
 		EEquipSlot EquipSlot = EquipSlots.FindChecked(SlotIndex);
 		if (auto* EquippedItemInfo = GetItem(SlotIndex)) //if found item already in slot - remove it
 		{
-			EquipInterface->EquipItem(EquipSlot, EquippedItemInfo->ItemId, false);
-			EquipInterface->EquipItem(EquipSlot, FName{"NoItem"}, true);
+			EquipInterface->EquipItem(EquipSlot, EquippedItemInfo->ItemId, false); //unequipping current item
+			EquipInterface->EquipItem(EquipSlot, FName{"NoItem"}, true); //equipping empty item
 		}
 
 

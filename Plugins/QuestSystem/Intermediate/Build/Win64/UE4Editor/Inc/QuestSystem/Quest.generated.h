@@ -93,9 +93,10 @@ public: \
 	FORCEINLINE static uint32 __PPO__QuestName() { return STRUCT_OFFSET(AQuest, QuestName); } \
 	FORCEINLINE static uint32 __PPO__QuestDescription() { return STRUCT_OFFSET(AQuest, QuestDescription); } \
 	FORCEINLINE static uint32 __PPO__Objectives() { return STRUCT_OFFSET(AQuest, Objectives); } \
-	FORCEINLINE static uint32 __PPO__IsTaken() { return STRUCT_OFFSET(AQuest, IsTaken); } \
-	FORCEINLINE static uint32 __PPO__IsOrderedObjectives() { return STRUCT_OFFSET(AQuest, IsOrderedObjectives); } \
-	FORCEINLINE static uint32 __PPO__IsMainQuest() { return STRUCT_OFFSET(AQuest, IsMainQuest); } \
+	FORCEINLINE static uint32 __PPO__bIsTaken() { return STRUCT_OFFSET(AQuest, bIsTaken); } \
+	FORCEINLINE static uint32 __PPO__bIsOrderedObjectives() { return STRUCT_OFFSET(AQuest, bIsOrderedObjectives); } \
+	FORCEINLINE static uint32 __PPO__bIsMainQuest() { return STRUCT_OFFSET(AQuest, bIsMainQuest); } \
+	FORCEINLINE static uint32 __PPO__bIsCompleted() { return STRUCT_OFFSET(AQuest, bIsCompleted); } \
 	FORCEINLINE static uint32 __PPO__PrerequisiteQuest() { return STRUCT_OFFSET(AQuest, PrerequisiteQuest); }
 
 

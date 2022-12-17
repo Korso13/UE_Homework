@@ -22,12 +22,16 @@ void AQuest::BeginPlay()
 
 void AQuest::OnObjectiveCompleted(UObjective* InObjective)
 {
-	if(IsOrderedObjectives)
+	if(bIsOrderedObjectives)
 	{
 		int32 ObjectiveIndex;
 		if(Objectives.Find(InObjective, ObjectiveIndex) && Objectives.IsValidIndex(ObjectiveIndex + 1))
 		{
-			Objectives[ObjectiveIndex + 1]->CanBeCompleted = true; //open next objective for completion
+			Objectives[ObjectiveIndex + 1]->SetCanBeCompleted(true); //open next objective for completion
+		}
+		else
+		{
+			bIsCompleted = true;
 		}
 	}
 
@@ -46,7 +50,7 @@ void AQuest::Tick(float DeltaTime)
 
 void AQuest::TakeQuest(AActor* QuestTaker)
 {
-	if(IsTaken)
+	if(bIsTaken)
 		return;
 
 	if(Objectives.Num() > 0)
@@ -56,13 +60,14 @@ void AQuest::TakeQuest(AActor* QuestTaker)
 			if(Objectives[i])
 			{
 				Objectives[i]->ActivateObjective(QuestTaker);
-				Objectives[i]->CanBeCompleted = !IsOrderedObjectives || i == 0;
+				Objectives[i]->SetCanBeCompleted(!bIsOrderedObjectives || i == 0);
 				Objectives[i]->OnObjectiveCompleted.AddUObject(this, &AQuest::OnObjectiveCompleted);
 			}
 		}
 	}
 
-	IsTaken = true;
+	AttachToActor(QuestTaker,FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	bIsTaken = true;
 }
 
 //resets Quest's location to that of parent that took it

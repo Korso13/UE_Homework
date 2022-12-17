@@ -25,22 +25,38 @@ class QUESTSYSTEM_API UObjective : public UObject
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere)
-	FText ObjectiveDescription;
 
 	UPROPERTY(EditAnywhere)
 	EObjectiveType ObjectiveType;
 
-public:
-	UPROPERTY(VisibleAnywhere)
-	bool CanBeCompleted = false;
+	UPROPERTY(EditAnywhere)
+	FText ObjectiveDescription;
 
 	UPROPERTY(VisibleAnywhere)
-	bool IsCompleted = false;
+	bool bCanBeCompleted = false;
+
+	UPROPERTY(VisibleAnywhere)
+	bool bIsCompleted = false;
+
+	bool bDidOnce = false;
+	
+public:
 
 	FOnObjectiveCompleted OnObjectiveCompleted;
 	
 	virtual void ActivateObjective(AActor* Instigator){}
+
+	//getters:
+	bool CanBeCompleted() const {return bCanBeCompleted;}
+
+	bool IsCompleted() const {return bIsCompleted;}
+
+	const FText& GetObjectiveDescription() const {return ObjectiveDescription;}
+
+	//setters;
+	void SetCanBeCompleted(bool InStatus) {bCanBeCompleted = InStatus;}
+
+	void SetCompleted(){bIsCompleted = true;}
 };
 
 //Objective subtypes

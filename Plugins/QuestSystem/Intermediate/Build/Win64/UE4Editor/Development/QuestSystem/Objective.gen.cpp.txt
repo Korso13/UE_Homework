@@ -1,5 +1,7 @@
 D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Development\QuestSystem\Definitions.QuestSystem.h
-D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\Objective.h
+D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem/Public/Objective.h
 D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/NoExportTypes.h
 D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/PropertyAccessUtil.h
 D:\UE_4.27\Engine\Source\Runtime\Core\Public\Math/UnitConversion.h
@@ -7,7 +9,3 @@ D:\UE_4.27\Engine\Source\Runtime\Core\Public\Math/UnitConversion.inl
 D:\UE_4.27\Engine\Source\Runtime\Core\Public\Internationalization/PolyglotTextData.h
 D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\AssetRegistry/ARFilter.h
 D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\Objective.generated.h
-D:\UE_projects\Homework\Plugins\InteractionSubsystem\Source\InteractionSubsystem\Public\InteractableActor.h
-D:\UE_projects\Homework\Plugins\InteractionSubsystem\Intermediate\Build\Win64\UE4Editor\Inc\InteractionSubsystem\InteractableActor.generated.h
-D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestLocationMarker.h
-D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\QuestLocationMarker.generated.h

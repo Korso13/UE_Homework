@@ -67,7 +67,6 @@ void UInventoryWidget::Init(int32 InventorySize)
     {
         FInventorySlotInfo SlotInfo;
         
-        
         if (CellWidgets.Num() == InventorySize)
         {
             int32 i = 0;

@@ -71,6 +71,7 @@ protected:
 	UPROPERTY()
 	FStatusHUDInfo StatusHUDInfo; //for status HUD widget
 
+	UPROPERTY()
 	ABase_Consumable* ConsumableInSlot;
 
 	// Called when the game starts or when spawned

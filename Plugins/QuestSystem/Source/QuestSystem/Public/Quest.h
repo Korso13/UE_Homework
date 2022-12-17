@@ -33,19 +33,20 @@ protected:
 	TArray<UObjective*> Objectives;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	bool IsTaken;
+	bool bIsTaken;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	bool IsOrderedObjectives;
+	bool bIsOrderedObjectives;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	bool IsMainQuest;
+	bool bIsMainQuest;
 
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+	bool bIsCompleted = false;
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	AQuest* PrerequisiteQuest;
-
-	FOnQuestStatusChanged OnQuestStatusChanged;
-
+	
 	UFUNCTION()
 	void OnObjectiveCompleted(UObjective* InObjective);
 	
@@ -56,6 +57,26 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void TakeQuest(AActor* QuestTaker);
 
+	FOnQuestStatusChanged OnQuestStatusChanged;
+
+	//Getters:
+	bool IsCompleted() const {return bIsCompleted;}
+
+	bool IsTaken() const {return bIsTaken;}
+
+	bool IsMainQuest() const {return bIsMainQuest;}
+
+	bool IsOrderedObjectives() const {return bIsOrderedObjectives;}
+
+	const AQuest* GetPrerequisiteQuest() const {return PrerequisiteQuest;}
+
+	const TArray<UObjective*>& GetObjectives() const {return Objectives;}
+
+	const FText& GetQuestName() const {return QuestName;}
+
+	const FText& GetQuestDescription() const {return QuestDescription;}
+	
+	//editor functions
 	UFUNCTION(BlueprintCallable, CallInEditor)
 	void ResetLocation();
 

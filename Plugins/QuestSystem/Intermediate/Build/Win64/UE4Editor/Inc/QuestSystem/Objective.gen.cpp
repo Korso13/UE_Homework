@@ -93,25 +93,25 @@ void EmptyLinkFunctionForGeneratedCodeObjective() {}
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Class_MetaDataParams[];
 #endif
-#if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_ObjectiveDescription_MetaData[];
-#endif
-		static const UE4CodeGen_Private::FTextPropertyParams NewProp_ObjectiveDescription;
 		static const UE4CodeGen_Private::FBytePropertyParams NewProp_ObjectiveType_Underlying;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_ObjectiveType_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FEnumPropertyParams NewProp_ObjectiveType;
 #if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_CanBeCompleted_MetaData[];
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_ObjectiveDescription_MetaData[];
 #endif
-		static void NewProp_CanBeCompleted_SetBit(void* Obj);
-		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_CanBeCompleted;
+		static const UE4CodeGen_Private::FTextPropertyParams NewProp_ObjectiveDescription;
 #if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_IsCompleted_MetaData[];
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_bCanBeCompleted_MetaData[];
 #endif
-		static void NewProp_IsCompleted_SetBit(void* Obj);
-		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_IsCompleted;
+		static void NewProp_bCanBeCompleted_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_bCanBeCompleted;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_bIsCompleted_MetaData[];
+#endif
+		static void NewProp_bIsCompleted_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_bIsCompleted;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UE4CodeGen_Private::FClassParams ClassParams;
@@ -127,13 +127,6 @@ void EmptyLinkFunctionForGeneratedCodeObjective() {}
 		{ "ModuleRelativePath", "Public/Objective.h" },
 	};
 #endif
-#if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveDescription_MetaData[] = {
-		{ "Category", "Objective" },
-		{ "ModuleRelativePath", "Public/Objective.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FTextPropertyParams Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveDescription = { "ObjectiveDescription", nullptr, (EPropertyFlags)0x0020080000000001, UE4CodeGen_Private::EPropertyGenFlags::Text, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UObjective, ObjectiveDescription), METADATA_PARAMS(Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveDescription_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveDescription_MetaData)) };
 	const UE4CodeGen_Private::FBytePropertyParams Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveType_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveType_MetaData[] = {
@@ -143,33 +136,40 @@ void EmptyLinkFunctionForGeneratedCodeObjective() {}
 #endif
 	const UE4CodeGen_Private::FEnumPropertyParams Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveType = { "ObjectiveType", nullptr, (EPropertyFlags)0x0020080000000001, UE4CodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UObjective, ObjectiveType), Z_Construct_UEnum_QuestSystem_EObjectiveType, METADATA_PARAMS(Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveType_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveType_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UObjective_Statics::NewProp_CanBeCompleted_MetaData[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveDescription_MetaData[] = {
 		{ "Category", "Objective" },
 		{ "ModuleRelativePath", "Public/Objective.h" },
 	};
 #endif
-	void Z_Construct_UClass_UObjective_Statics::NewProp_CanBeCompleted_SetBit(void* Obj)
-	{
-		((UObjective*)Obj)->CanBeCompleted = 1;
-	}
-	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UObjective_Statics::NewProp_CanBeCompleted = { "CanBeCompleted", nullptr, (EPropertyFlags)0x0010000000020001, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UObjective), &Z_Construct_UClass_UObjective_Statics::NewProp_CanBeCompleted_SetBit, METADATA_PARAMS(Z_Construct_UClass_UObjective_Statics::NewProp_CanBeCompleted_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UObjective_Statics::NewProp_CanBeCompleted_MetaData)) };
+	const UE4CodeGen_Private::FTextPropertyParams Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveDescription = { "ObjectiveDescription", nullptr, (EPropertyFlags)0x0020080000000001, UE4CodeGen_Private::EPropertyGenFlags::Text, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UObjective, ObjectiveDescription), METADATA_PARAMS(Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveDescription_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveDescription_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UObjective_Statics::NewProp_IsCompleted_MetaData[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UObjective_Statics::NewProp_bCanBeCompleted_MetaData[] = {
 		{ "Category", "Objective" },
 		{ "ModuleRelativePath", "Public/Objective.h" },
 	};
 #endif
-	void Z_Construct_UClass_UObjective_Statics::NewProp_IsCompleted_SetBit(void* Obj)
+	void Z_Construct_UClass_UObjective_Statics::NewProp_bCanBeCompleted_SetBit(void* Obj)
 	{
-		((UObjective*)Obj)->IsCompleted = 1;
+		((UObjective*)Obj)->bCanBeCompleted = 1;
 	}
-	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UObjective_Statics::NewProp_IsCompleted = { "IsCompleted", nullptr, (EPropertyFlags)0x0010000000020001, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UObjective), &Z_Construct_UClass_UObjective_Statics::NewProp_IsCompleted_SetBit, METADATA_PARAMS(Z_Construct_UClass_UObjective_Statics::NewProp_IsCompleted_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UObjective_Statics::NewProp_IsCompleted_MetaData)) };
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UObjective_Statics::NewProp_bCanBeCompleted = { "bCanBeCompleted", nullptr, (EPropertyFlags)0x0020080000020001, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UObjective), &Z_Construct_UClass_UObjective_Statics::NewProp_bCanBeCompleted_SetBit, METADATA_PARAMS(Z_Construct_UClass_UObjective_Statics::NewProp_bCanBeCompleted_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UObjective_Statics::NewProp_bCanBeCompleted_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UObjective_Statics::NewProp_bIsCompleted_MetaData[] = {
+		{ "Category", "Objective" },
+		{ "ModuleRelativePath", "Public/Objective.h" },
+	};
+#endif
+	void Z_Construct_UClass_UObjective_Statics::NewProp_bIsCompleted_SetBit(void* Obj)
+	{
+		((UObjective*)Obj)->bIsCompleted = 1;
+	}
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UObjective_Statics::NewProp_bIsCompleted = { "bIsCompleted", nullptr, (EPropertyFlags)0x0020080000020001, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UObjective), &Z_Construct_UClass_UObjective_Statics::NewProp_bIsCompleted_SetBit, METADATA_PARAMS(Z_Construct_UClass_UObjective_Statics::NewProp_bIsCompleted_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UObjective_Statics::NewProp_bIsCompleted_MetaData)) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UObjective_Statics::PropPointers[] = {
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveDescription,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveType_Underlying,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveType,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UObjective_Statics::NewProp_CanBeCompleted,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UObjective_Statics::NewProp_IsCompleted,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UObjective_Statics::NewProp_ObjectiveDescription,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UObjective_Statics::NewProp_bCanBeCompleted,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UObjective_Statics::NewProp_bIsCompleted,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UObjective_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<UObjective>::IsAbstract,
@@ -198,7 +198,7 @@ void EmptyLinkFunctionForGeneratedCodeObjective() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UObjective, 2188432642);
+	IMPLEMENT_CLASS(UObjective, 3587477627);
 	template<> QUESTSYSTEM_API UClass* StaticClass<UObjective>()
 	{
 		return UObjective::StaticClass();
@@ -275,7 +275,7 @@ void EmptyLinkFunctionForGeneratedCodeObjective() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UInteractionObjective, 1634907815);
+	IMPLEMENT_CLASS(UInteractionObjective, 225428564);
 	template<> QUESTSYSTEM_API UClass* StaticClass<UInteractionObjective>()
 	{
 		return UInteractionObjective::StaticClass();
@@ -352,7 +352,7 @@ void EmptyLinkFunctionForGeneratedCodeObjective() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(ULocationObjective, 1957387932);
+	IMPLEMENT_CLASS(ULocationObjective, 4076529748);
 	template<> QUESTSYSTEM_API UClass* StaticClass<ULocationObjective>()
 	{
 		return ULocationObjective::StaticClass();
