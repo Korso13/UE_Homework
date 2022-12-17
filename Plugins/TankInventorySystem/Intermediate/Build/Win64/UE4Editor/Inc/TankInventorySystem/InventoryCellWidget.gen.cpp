@@ -127,7 +127,9 @@ void EmptyLinkFunctionForGeneratedCodeInventoryCellWidget() {}
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UInventoryCellWidget_Statics::NewProp_IndexInInventory_MetaData[] = {
 		{ "Category", "InventoryCellWidget" },
+		{ "Comment", "/** For equipment widget: must coincide with Equipment Slot keys and have Inventory array in Equipment Component have values with respective keys*/" },
 		{ "ModuleRelativePath", "Public/InventoryCellWidget.h" },
+		{ "ToolTip", "For equipment widget: must coincide with Equipment Slot keys and have Inventory array in Equipment Component have values with respective keys" },
 	};
 #endif
 	const UE4CodeGen_Private::FIntPropertyParams Z_Construct_UClass_UInventoryCellWidget_Statics::NewProp_IndexInInventory = { "IndexInInventory", nullptr, (EPropertyFlags)0x0010000000000005, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UInventoryCellWidget, IndexInInventory), METADATA_PARAMS(Z_Construct_UClass_UInventoryCellWidget_Statics::NewProp_IndexInInventory_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UInventoryCellWidget_Statics::NewProp_IndexInInventory_MetaData)) };
@@ -174,7 +176,7 @@ void EmptyLinkFunctionForGeneratedCodeInventoryCellWidget() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UInventoryCellWidget, 3657284832);
+	IMPLEMENT_CLASS(UInventoryCellWidget, 3000597259);
 	template<> TANKINVENTORYSYSTEM_API UClass* StaticClass<UInventoryCellWidget>()
 	{
 		return UInventoryCellWidget::StaticClass();

@@ -20,6 +20,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	/** In inventory component leave this array empty if you use loadouts. In equipment component create values for every equipment slot.
+	 * The keys must coincide with IndexInInventory values of equipment slots in widget (and contain appropriate items). Without it the game will crash!!!*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TMap<int32, FInventorySlotInfo> InventoryContents;
 

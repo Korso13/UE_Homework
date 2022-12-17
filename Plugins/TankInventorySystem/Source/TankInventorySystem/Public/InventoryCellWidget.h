@@ -46,6 +46,7 @@ protected:
 
 
 public:
+	/** For equipment widget: must coincide with Equipment Slot keys and have Inventory array in Equipment Component have values with respective keys*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int32 IndexInInventory = INDEX_NONE;
 

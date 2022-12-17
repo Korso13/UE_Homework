@@ -109,7 +109,9 @@ void EmptyLinkFunctionForGeneratedCodeInventoryComponent() {}
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UInventoryComponent_Statics::NewProp_InventoryContents_MetaData[] = {
 		{ "Category", "InventoryComponent" },
+		{ "Comment", "/** In inventory component leave this array empty if you use loadouts. In equipment component create values for every equipment slot.\n\x09 * The keys must coincide with IndexInInventory values of equipment slots in widget (and contain appropriate items). Without it the game will crash!!!*/" },
 		{ "ModuleRelativePath", "Public/InventoryComponent.h" },
+		{ "ToolTip", "In inventory component leave this array empty if you use loadouts. In equipment component create values for every equipment slot.\nThe keys must coincide with IndexInInventory values of equipment slots in widget (and contain appropriate items). Without it the game will crash!!!" },
 	};
 #endif
 	const UE4CodeGen_Private::FMapPropertyParams Z_Construct_UClass_UInventoryComponent_Statics::NewProp_InventoryContents = { "InventoryContents", nullptr, (EPropertyFlags)0x0020080000000005, UE4CodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UInventoryComponent, InventoryContents), EMapPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_UInventoryComponent_Statics::NewProp_InventoryContents_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UInventoryComponent_Statics::NewProp_InventoryContents_MetaData)) };
@@ -145,7 +147,7 @@ void EmptyLinkFunctionForGeneratedCodeInventoryComponent() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UInventoryComponent, 1720136961);
+	IMPLEMENT_CLASS(UInventoryComponent, 1971273371);
 	template<> TANKINVENTORYSYSTEM_API UClass* StaticClass<UInventoryComponent>()
 	{
 		return UInventoryComponent::StaticClass();

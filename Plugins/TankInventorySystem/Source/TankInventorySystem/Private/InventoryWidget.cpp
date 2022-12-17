@@ -7,6 +7,8 @@
 #include "InventoryCellWidget.h"
 #include "Components/UniformGridPanel.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(InvWidget, All, All);
+DEFINE_LOG_CATEGORY(InvWidget);
 
 void UInventoryWidget::NativeConstruct()
 {
@@ -65,42 +67,16 @@ void UInventoryWidget::Init(int32 InventorySize)
 	}
     else if(ParentInventory)
     {
-        FInventorySlotInfo SlotInfo;
-        
-        if (CellWidgets.Num() == InventorySize)
+        for (auto* Cell : CellWidgets)
         {
-            int32 i = 0;
-            for (auto* Cell : CellWidgets)
+            FInventorySlotInfo SlotInfo;
+            SlotInfo = ParentInventory->GetInventory()[Cell->IndexInInventory];
+            
+            const FInventoryItemInfo* InitItemInfo = InventoryManager->GetItemData(SlotInfo.ItemId);
+            if (InitItemInfo != nullptr)
             {
-                if (ParentInventory->GetInventory().Find(i))
-                    SlotInfo = *ParentInventory->GetInventory().Find(i);
-                else
-                    SlotInfo = FInventorySlotInfo();
-                const FInventoryItemInfo* InitItemInfo1 = InventoryManager->GetItemData(SlotInfo.ItemId);
-                if (InitItemInfo1 != nullptr)
-                {
-                    CellWidgets[i]->Clear();
-                    CellWidgets[i]->AddItem(SlotInfo, *InitItemInfo1);
-                    CellWidgets[i]->IndexInInventory = i;
-                }
-                i++;
-            }
-        }
-        else
-        {
-            for (size_t i = 0; i < FMath::Min(CellWidgets.Num(), InventorySize); i++)
-            {
-                if (ParentInventory->GetInventory().Find(i))
-                    SlotInfo = *ParentInventory->GetInventory().Find(i);
-                else
-                    SlotInfo = FInventorySlotInfo();
-                const FInventoryItemInfo* InitItemInfo2 = InventoryManager->GetItemData(SlotInfo.ItemId);
-                if (InitItemInfo2 != nullptr)
-                {
-                    CellWidgets[i]->Clear();
-                    CellWidgets[i]->AddItem(SlotInfo, *InitItemInfo2);
-                    CellWidgets[i]->IndexInInventory = i;
-                }
+                Cell->Clear();
+                Cell->AddItem(SlotInfo, *InitItemInfo);
             }
         }
     }
