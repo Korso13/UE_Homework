@@ -1,10 +1,213 @@
 D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Development\QuestSystem\Definitions.QuestSystem.h
-D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/QuestLocationMarker.cpp
+D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/CurrentObjectivesWidget.cpp
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\CurrentObjectivesWidget.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Blueprint/UserWidget.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/SlateWrapperTypes.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\SlateWrapperTypes.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/Widget.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/Visual.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\Visual.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Slate/WidgetTransform.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetTransform.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Blueprint/WidgetNavigation.h
+D:\UE_4.27\Engine\Source\Runtime\SlateCore\Public\Types/NavigationMetaData.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetNavigation.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\Widget.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/NamedSlotInterface.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\NamedSlotInterface.generated.h
+D:\UE_4.27\Engine\Source\Runtime\Slate\Public\Widgets/Layout/Anchors.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Slate\Anchors.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Animation/WidgetAnimation.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneSequence.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneSignedObject.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneSignedObject.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneTrack.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Compilation/MovieSceneSegmentCompiler.h
+D:\UE_4.27\Engine\Source\Runtime\Core\Public\Misc/InlineValue.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation/MovieSceneSegment.h
+D:\UE_4.27\Engine\Source\Runtime\Core\Public\UObject/SequencerObjectVersion.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneFrameMigration.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneFwd.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneSequenceID.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneSequenceID.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneFrameMigration.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneSegment.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation/MovieSceneEvaluationField.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation/MovieSceneEvaluationKey.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation/MovieSceneTrackIdentifier.h
+D:\UE_4.27\Engine\Source\Runtime\Core\Public\UObject/EditorObjectVersion.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneTrackIdentifier.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneEvaluationKey.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation/MovieSceneEvaluationTree.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\EntitySystem/MovieSceneEntityIDs.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\EntitySystem/MovieSceneEntitySystemTypes.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneEvaluationField.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneSection.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\KeyParams.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieScene.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneSpawnable.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneSpawnable.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneBinding.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneBinding.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieScenePossessable.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieScenePossessable.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneObjectBindingID.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneObjectBindingID.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneTimeController.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieScene.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation/Blending/MovieSceneBlendType.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneBlendType.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation/MovieSceneCompletionMode.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneCompletionMode.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Generators/MovieSceneEasingFunction.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneEasingFunction.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation/MovieSceneEvaluationCustomVersion.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\EntitySystem/MovieSceneEntityBuilder.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\EntitySystem/MovieSceneEntityManager.h
+D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/StrongObjectPtr.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation/MovieScenePlayback.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation/MovieSceneSequenceTransform.h
+D:\UE_4.27\Engine\Source\Runtime\Core\Public\Algo/AllOf.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation\MovieSceneTimeTransform.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneTimeTransform.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Evaluation\MovieSceneTimeWarping.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneTimeWarping.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneSequenceTransform.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\EntitySystem/MovieSceneEntityFactoryTypes.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\EntitySystem/MovieSceneComponentTypeHandler.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\EntitySystem/MovieSceneComponentTypeInfo.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\EntitySystem/MovieSceneComponentDebug.h
+D:\UE_4.27\Engine\Source\Runtime\Core\Public\Algo/AnyOf.h
+D:\UE_4.27\Engine\Source\Runtime\Core\Public\Algo/NoneOf.h
+D:\UE_4.27\Engine\Source\Runtime\Core\Public\Algo/Common.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\EntitySystem/MovieSceneComponentRegistry.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\EntitySystem/MovieSceneEntityFactory.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\EntitySystem/MovieSceneEntitySystemDirectedGraph.h
+D:\UE_4.27\Engine\Source\Runtime\Core\Public\Misc/GeneratedTypeName.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneSection.generated.h
+D:\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneTrackEvaluationField.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneTrackEvaluationField.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneTrack.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneSequence.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Animation/WidgetAnimationBinding.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetAnimationBinding.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetAnimation.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Blueprint/WidgetBlueprintGeneratedClass.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Binding/DynamicPropertyPath.h
+D:\UE_4.27\Engine\Source\Runtime\PropertyPath\Public\PropertyPathHelpers.h
+D:\UE_4.27\Engine\Source\Runtime\PropertyPath\Public\PropertyTypeCompatibility.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\PropertyPath\PropertyPathHelpers.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\DynamicPropertyPath.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetBlueprintGeneratedClass.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\UserWidget.generated.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\CurrentObjectivesWidget.generated.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\ObjectiveWidget.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\ObjectiveWidget.generated.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\Quest.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\Quest.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/VerticalBox.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/PanelWidget.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/PanelSlot.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\PanelSlot.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\PanelWidget.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\VerticalBox.generated.h
+D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/Objective.cpp
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\Objective.h
+D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/NoExportTypes.h
+D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/PropertyAccessUtil.h
+D:\UE_4.27\Engine\Source\Runtime\Core\Public\Math/UnitConversion.h
+D:\UE_4.27\Engine\Source\Runtime\Core\Public\Math/UnitConversion.inl
+D:\UE_4.27\Engine\Source\Runtime\Core\Public\Internationalization/PolyglotTextData.h
+D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\AssetRegistry/ARFilter.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\Objective.generated.h
+D:\UE_projects\Homework\Plugins\InteractionSubsystem\Source\InteractionSubsystem\Public\BaseInteractionActor.h
+D:\UE_projects\Homework\Plugins\InteractionSubsystem\Source\InteractionSubsystem\Public\InteractableActor.h
+D:\UE_projects\Homework\Plugins\InteractionSubsystem\Intermediate\Build\Win64\UE4Editor\Inc\InteractionSubsystem\InteractableActor.generated.h
+D:\UE_projects\Homework\Plugins\InteractionSubsystem\Intermediate\Build\Win64\UE4Editor\Inc\InteractionSubsystem\BaseInteractionActor.generated.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\mutex
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\__msvc_chrono.hpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\limits
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\cfloat
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\cwchar
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\cstdio
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\isa_availability.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\ratio
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\system_error
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\__msvc_system_error_abi.hpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\cerrno
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\stdexcept
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xstring
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\iosfwd
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xmemory
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xcall_once.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xerrc.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\thread
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\memory
+C:\Program Files (x86)\Windows Kits\10\include\10.0.22000.0\ucrt\process.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.22000.0\ucrt\corecrt_startup.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.22000.0\ucrt\math.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\vcruntime_startup.h
 D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestLocationMarker.h
 D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\QuestLocationMarker.generated.h
+D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/ObjectiveWidget.cpp
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/CheckBox.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/ContentWidget.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\ContentWidget.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\CheckBox.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/TextBlock.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/TextWidgetTypes.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\TextWidgetTypes.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\TextBlock.generated.h
+D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/Quest.cpp
+D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/QuestBoard.cpp
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestBoard.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\QuestBoard.generated.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestDescriptionWidget.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\QuestDescriptionWidget.generated.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestListEntry.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Blueprint/IUserObjectListEntry.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Blueprint\IUserListEntry.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\IUserListEntry.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\IUserObjectListEntry.generated.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\QuestListEntry.generated.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestManager.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\QuestManager.generated.h
+D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/QuestDescriptionWidget.cpp
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/ScrollBox.h
+D:\UE_4.27\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SScrollBox.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\ScrollBox.generated.h
+D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/QuestDialogueWidget.cpp
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestDialogueWidget.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\QuestDialogueWidget.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Blueprint/WidgetBlueprintLibrary.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Blueprint/DragDropOperation.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\DragDropOperation.generated.h
+D:\UE_4.27\Engine\Source\Runtime\Engine\Public\Slate/SGameLayerManager.h
+D:\UE_4.27\Engine\Source\Runtime\Slate\Public\Widgets/SCanvas.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetBlueprintLibrary.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/Button.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\Button.generated.h
+D:\UE_4.27\Engine\Source\Runtime\Engine\Classes\Kismet/GameplayStatics.h
+D:\UE_4.27\Engine\Source\Runtime\Engine\Classes\Kismet/KismetSystemLibrary.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\KismetSystemLibrary.generated.h
+D:\UE_4.27\Engine\Source\Runtime\Engine\Classes\Sound/DialogueTypes.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DialogueTypes.generated.h
+D:\UE_4.27\Engine\Source\Runtime\Engine\Classes\Kismet\GameplayStaticsTypes.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameplayStaticsTypes.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameplayStatics.generated.h
+D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/QuestGiver.cpp
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestGiver.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem\QuestGiver.generated.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/WidgetComponent.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetComponent.generated.h
+D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/QuestListEntry.cpp
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/Border.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\Border.generated.h
+D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/QuestLocationMarker.cpp
 D:\UE_4.27\Engine\Source\Runtime\Engine\Classes\Components/BoxComponent.h
 D:\UE_4.27\Engine\Source\Runtime\Engine\Classes\Components/ShapeComponent.h
 D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ShapeComponent.generated.h
 D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\BoxComponent.generated.h
+D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/QuestManager.cpp
 D:/UE_projects/Homework/Plugins/QuestSystem/Source/QuestSystem/Private/QuestSystem.cpp
 D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestSystem.h

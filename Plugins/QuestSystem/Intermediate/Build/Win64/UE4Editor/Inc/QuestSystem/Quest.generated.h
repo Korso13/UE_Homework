@@ -15,15 +15,15 @@ class UObjective;
 #endif
 #define QUESTSYSTEM_Quest_generated_h
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_SPARSE_DATA
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_RPC_WRAPPERS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_SPARSE_DATA
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execResetLocation); \
 	DECLARE_FUNCTION(execTakeQuest); \
 	DECLARE_FUNCTION(execOnObjectiveCompleted);
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execResetLocation); \
 	DECLARE_FUNCTION(execTakeQuest); \
@@ -31,23 +31,23 @@ class UObjective;
 
 
 #if WITH_EDITOR
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_EDITOR_ONLY_RPC_WRAPPERS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_EDITOR_ONLY_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execAddLocationObjective); \
 	DECLARE_FUNCTION(execAddInteractObjective);
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_EDITOR_ONLY_RPC_WRAPPERS_NO_PURE_DECLS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_EDITOR_ONLY_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execAddLocationObjective); \
 	DECLARE_FUNCTION(execAddInteractObjective);
 
 
 #else
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_EDITOR_ONLY_RPC_WRAPPERS
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_EDITOR_ONLY_RPC_WRAPPERS_NO_PURE_DECLS
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_EDITOR_ONLY_RPC_WRAPPERS
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_EDITOR_ONLY_RPC_WRAPPERS_NO_PURE_DECLS
 #endif //WITH_EDITOR
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_INCLASS_NO_PURE_DECLS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAQuest(); \
 	friend struct Z_Construct_UClass_AQuest_Statics; \
@@ -56,7 +56,7 @@ public: \
 	DECLARE_SERIALIZER(AQuest)
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_INCLASS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_INCLASS \
 private: \
 	static void StaticRegisterNativesAQuest(); \
 	friend struct Z_Construct_UClass_AQuest_Statics; \
@@ -65,7 +65,7 @@ public: \
 	DECLARE_SERIALIZER(AQuest)
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_STANDARD_CONSTRUCTORS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API AQuest(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AQuest) \
@@ -78,7 +78,7 @@ private: \
 public:
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_ENHANCED_CONSTRUCTORS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API AQuest(AQuest&&); \
@@ -89,7 +89,7 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AQuest)
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_PRIVATE_PROPERTY_OFFSET \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_PRIVATE_PROPERTY_OFFSET \
 	FORCEINLINE static uint32 __PPO__QuestName() { return STRUCT_OFFSET(AQuest, QuestName); } \
 	FORCEINLINE static uint32 __PPO__QuestDescription() { return STRUCT_OFFSET(AQuest, QuestDescription); } \
 	FORCEINLINE static uint32 __PPO__Objectives() { return STRUCT_OFFSET(AQuest, Objectives); } \
@@ -100,29 +100,29 @@ public: \
 	FORCEINLINE static uint32 __PPO__PrerequisiteQuest() { return STRUCT_OFFSET(AQuest, PrerequisiteQuest); }
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_13_PROLOG
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_GENERATED_BODY_LEGACY \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_15_PROLOG
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_PRIVATE_PROPERTY_OFFSET \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_SPARSE_DATA \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_RPC_WRAPPERS \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_EDITOR_ONLY_RPC_WRAPPERS \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_INCLASS \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_STANDARD_CONSTRUCTORS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_PRIVATE_PROPERTY_OFFSET \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_SPARSE_DATA \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_RPC_WRAPPERS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_EDITOR_ONLY_RPC_WRAPPERS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_INCLASS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_GENERATED_BODY \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_PRIVATE_PROPERTY_OFFSET \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_SPARSE_DATA \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_EDITOR_ONLY_RPC_WRAPPERS_NO_PURE_DECLS \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_INCLASS_NO_PURE_DECLS \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_16_ENHANCED_CONSTRUCTORS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_PRIVATE_PROPERTY_OFFSET \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_SPARSE_DATA \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_EDITOR_ONLY_RPC_WRAPPERS_NO_PURE_DECLS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_INCLASS_NO_PURE_DECLS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_Quest_h_18_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+/*#include "Quest."*/
+/*#include "../../QuestSystem/Intermediate/Build/Win64/UE4Editor/Inc/QuestSystem/Quest.generated.h"*/
 #include "Quest.generated.h"
 
 class UObjective;
@@ -75,6 +77,11 @@ public:
 	const FText& GetQuestName() const {return QuestName;}
 
 	const FText& GetQuestDescription() const {return QuestDescription;}
+
+	//Setters:
+	void SetQuestName(FText InName) {QuestName = InName;}
+
+	void SetQuestDescription(FText InDescription) {QuestDescription = InDescription;}
 	
 	//editor functions
 	UFUNCTION(BlueprintCallable, CallInEditor)

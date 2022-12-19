@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-QuestEditor.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\UE_projects\Homework\Intermediate\Build\Win64\TankogeddonEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h.obj"
+"D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Development\QuestEditor\Module.QuestEditor.cpp.obj"
+"D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Development\QuestEditor\Default.rc2.res"
+/OUT:"D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Development\QuestEditor\UE4Editor-QuestEditor.lib"

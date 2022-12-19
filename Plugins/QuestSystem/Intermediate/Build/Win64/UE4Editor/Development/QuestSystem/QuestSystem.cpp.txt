@@ -1,2 +1,0 @@
-D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Development\QuestSystem\Definitions.QuestSystem.h
-D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestSystem.h

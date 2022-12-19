@@ -2,6 +2,7 @@
 	"BuildId": "17155196",
 	"Modules": 
 	{
+		"QuestEditor": "UE4Editor-QuestEditor.dll",
 		"QuestSystem": "UE4Editor-QuestSystem.dll"
 	}
 }

@@ -21,7 +21,7 @@ void EmptyLinkFunctionForGeneratedCodeQuestSystem_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0xFB5DB09A,
+				0xCBAF6299,
 				0x535BC71F,
 				METADATA_PARAMS(nullptr, 0)
 			};

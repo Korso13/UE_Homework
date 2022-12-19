@@ -2,6 +2,10 @@ D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\D
 D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
 D:\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
 D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem/Public/QuestListEntry.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Blueprint/IUserObjectListEntry.h
+D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Blueprint\IUserListEntry.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\IUserListEntry.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\IUserObjectListEntry.generated.h
 D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Blueprint/UserWidget.h
 D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/SlateWrapperTypes.h
 D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\SlateWrapperTypes.generated.h

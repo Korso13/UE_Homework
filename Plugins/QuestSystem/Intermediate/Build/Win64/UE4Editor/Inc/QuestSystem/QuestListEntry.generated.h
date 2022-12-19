@@ -13,28 +13,30 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define QUESTSYSTEM_QuestListEntry_generated_h
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_SPARSE_DATA
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_RPC_WRAPPERS
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_RPC_WRAPPERS_NO_PURE_DECLS
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_INCLASS_NO_PURE_DECLS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_SPARSE_DATA
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_RPC_WRAPPERS
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_RPC_WRAPPERS_NO_PURE_DECLS
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUQuestListEntry(); \
 	friend struct Z_Construct_UClass_UQuestListEntry_Statics; \
 public: \
 	DECLARE_CLASS(UQuestListEntry, UUserWidget, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/QuestSystem"), NO_API) \
-	DECLARE_SERIALIZER(UQuestListEntry)
+	DECLARE_SERIALIZER(UQuestListEntry) \
+	virtual UObject* _getUObject() const override { return const_cast<UQuestListEntry*>(this); }
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_INCLASS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_INCLASS \
 private: \
 	static void StaticRegisterNativesUQuestListEntry(); \
 	friend struct Z_Construct_UClass_UQuestListEntry_Statics; \
 public: \
 	DECLARE_CLASS(UQuestListEntry, UUserWidget, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/QuestSystem"), NO_API) \
-	DECLARE_SERIALIZER(UQuestListEntry)
+	DECLARE_SERIALIZER(UQuestListEntry) \
+	virtual UObject* _getUObject() const override { return const_cast<UQuestListEntry*>(this); }
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_STANDARD_CONSTRUCTORS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UQuestListEntry(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UQuestListEntry) \
@@ -47,7 +49,7 @@ private: \
 public:
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_ENHANCED_CONSTRUCTORS \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UQuestListEntry(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) : Super(ObjectInitializer) { }; \
 private: \
@@ -60,33 +62,33 @@ public: \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UQuestListEntry)
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_PRIVATE_PROPERTY_OFFSET \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_PRIVATE_PROPERTY_OFFSET \
 	FORCEINLINE static uint32 __PPO__QuestName() { return STRUCT_OFFSET(UQuestListEntry, QuestName); } \
 	FORCEINLINE static uint32 __PPO__QuestEntryBorder() { return STRUCT_OFFSET(UQuestListEntry, QuestEntryBorder); } \
 	FORCEINLINE static uint32 __PPO__Quest() { return STRUCT_OFFSET(UQuestListEntry, Quest); }
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_17_PROLOG
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_GENERATED_BODY_LEGACY \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_18_PROLOG
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_PRIVATE_PROPERTY_OFFSET \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_SPARSE_DATA \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_RPC_WRAPPERS \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_INCLASS \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_STANDARD_CONSTRUCTORS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_PRIVATE_PROPERTY_OFFSET \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_SPARSE_DATA \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_RPC_WRAPPERS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_INCLASS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_GENERATED_BODY \
+#define Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_PRIVATE_PROPERTY_OFFSET \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_SPARSE_DATA \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_INCLASS_NO_PURE_DECLS \
-	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_20_ENHANCED_CONSTRUCTORS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_PRIVATE_PROPERTY_OFFSET \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_SPARSE_DATA \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_RPC_WRAPPERS_NO_PURE_DECLS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_INCLASS_NO_PURE_DECLS \
+	Homework_Plugins_QuestSystem_Source_QuestSystem_Public_QuestListEntry_h_21_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

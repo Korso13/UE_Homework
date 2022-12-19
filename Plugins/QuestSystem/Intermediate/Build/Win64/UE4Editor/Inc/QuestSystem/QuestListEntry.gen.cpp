@@ -20,6 +20,7 @@ void EmptyLinkFunctionForGeneratedCodeQuestListEntry() {}
 	UMG_API UClass* Z_Construct_UClass_UTextBlock_NoRegister();
 	UMG_API UClass* Z_Construct_UClass_UBorder_NoRegister();
 	QUESTSYSTEM_API UClass* Z_Construct_UClass_AQuest_NoRegister();
+	UMG_API UClass* Z_Construct_UClass_UUserObjectListEntry_NoRegister();
 // End Cross Module References
 	void UQuestListEntry::StaticRegisterNativesUQuestListEntry()
 	{
@@ -47,6 +48,7 @@ void EmptyLinkFunctionForGeneratedCodeQuestListEntry() {}
 #endif
 		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_Quest;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+		static const UE4CodeGen_Private::FImplementedInterfaceParams InterfaceParams[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UE4CodeGen_Private::FClassParams ClassParams;
 	};
@@ -89,6 +91,9 @@ void EmptyLinkFunctionForGeneratedCodeQuestListEntry() {}
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UQuestListEntry_Statics::NewProp_QuestEntryBorder,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UQuestListEntry_Statics::NewProp_Quest,
 	};
+		const UE4CodeGen_Private::FImplementedInterfaceParams Z_Construct_UClass_UQuestListEntry_Statics::InterfaceParams[] = {
+			{ Z_Construct_UClass_UUserObjectListEntry_NoRegister, (int32)VTABLE_OFFSET(UQuestListEntry, IUserObjectListEntry), false },
+		};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UQuestListEntry_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<UQuestListEntry>::IsAbstract,
 	};
@@ -99,11 +104,11 @@ void EmptyLinkFunctionForGeneratedCodeQuestListEntry() {}
 		DependentSingletons,
 		nullptr,
 		Z_Construct_UClass_UQuestListEntry_Statics::PropPointers,
-		nullptr,
+		InterfaceParams,
 		UE_ARRAY_COUNT(DependentSingletons),
 		0,
 		UE_ARRAY_COUNT(Z_Construct_UClass_UQuestListEntry_Statics::PropPointers),
-		0,
+		UE_ARRAY_COUNT(InterfaceParams),
 		0x00B010A0u,
 		METADATA_PARAMS(Z_Construct_UClass_UQuestListEntry_Statics::Class_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UClass_UQuestListEntry_Statics::Class_MetaDataParams))
 	};
@@ -116,7 +121,7 @@ void EmptyLinkFunctionForGeneratedCodeQuestListEntry() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UQuestListEntry, 3403768256);
+	IMPLEMENT_CLASS(UQuestListEntry, 2987931704);
 	template<> QUESTSYSTEM_API UClass* StaticClass<UQuestListEntry>()
 	{
 		return UQuestListEntry::StaticClass();

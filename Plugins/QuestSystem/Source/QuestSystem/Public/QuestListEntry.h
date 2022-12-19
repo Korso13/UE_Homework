@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Blueprint/IUserObjectListEntry.h"
 #include "Blueprint/UserWidget.h"
 #include "QuestListEntry.generated.h"
 
@@ -15,7 +16,7 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnNewEntryPicked, const AQuest* /*NewlyPick
  * 
  */
 UCLASS()
-class QUESTSYSTEM_API UQuestListEntry : public UUserWidget
+class QUESTSYSTEM_API UQuestListEntry : public UUserWidget, public IUserObjectListEntry
 {
 	GENERATED_BODY()
 
@@ -32,7 +33,7 @@ protected:
 public:
 	void Init(AQuest* InQuest);
 
-	const AQuest* GetQuest() const {return Quest;}
+	AQuest* GetQuest() const {return Quest;}
 
 	void OnEntryDeselected();
 
