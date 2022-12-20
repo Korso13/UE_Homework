@@ -135,7 +135,7 @@ void FQuestNPCSelectorEdMode::Render(const FSceneView* View, FViewport* Viewport
 		//rendering highlight
 		for(const auto Actor : ActorsToHighlight)
 		{
-			DrawWireBox(PDI, Actor->GetComponentsBoundingBox(true), RenderColor, 0, 5.f);
+			DrawWireBox(PDI, Actor->GetComponentsBoundingBox(true), RenderColor, 0, 10.f);
 		}
 	}
 }
@@ -166,12 +166,12 @@ void FQuestNPCSelectorEdMode::DrawHUD(FEditorViewportClient* ViewportClient, FVi
 
 			//converting to 2D and adjusting to screen resolution
 			FVector2D PixelLocation;
-			View->ScreenToPixel(drawPos, PixelLocation);
+			View->ScreenToPixel(View->WorldToScreen(drawPos), PixelLocation);
 			PixelLocation /= ViewportClient->GetDPIScale();
 
 			//rendering caption
 			Canvas->DrawShadowedText(PixelLocation.X, PixelLocation.Y,
-				FText::FromString("Name: " /HighlitedActor->GetName()),
+				FText::FromString(HighlitedActor->GetName()),
 				GEngine->GetSmallFont(),
 				RenderColor,
 				FColor::Black);

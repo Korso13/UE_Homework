@@ -71,10 +71,10 @@ void FQuestNPCSelectorEdModeToolkit::Init(const TSharedPtr<IToolkitHost>& InitTo
 	SAssignNew(ToolkitWidget, SBorder)
 		[
 			SNew(SVerticalBox) //vertical box holds actual widget contents
-			+ SVerticalBox::Slot() //ignore this part (for now)
+			/*+ SVerticalBox::Slot() 
 			.AutoHeight()
 			.HAlign(HAlign_Center)
-			.Padding(50)
+			.Padding(50)*/
 			
 			+ SVerticalBox::Slot() //Quest NPC color picker here
 				[
@@ -83,19 +83,26 @@ void FQuestNPCSelectorEdModeToolkit::Init(const TSharedPtr<IToolkitHost>& InitTo
 					[
 						SNew(STextBlock)
 						.Text(FText::FromString("Quest NPC highlight color"))
+						.Font(FStyleDefaults::GetFontInfo(12))
 					]
-					.AutoWidth()
-					.Padding(5, 5, 15, 5)
+					.FillWidth(1)
+					.HAlign(HAlign_Left)
+					.Padding(10,10, 15, 10)
 					+ SHorizontalBox::Slot() //color picker goes here
 					[
 						SAssignNew(NPCColorBlockPicker, SColorBlock)
 						.OnMouseButtonDown(NPCColorPickerMouseDownHandler)
 						.Color(FLinearColor::Yellow)
 						.Color_Raw(this, &FQuestNPCSelectorEdModeToolkit::OnNewNPCColorPicked)
+						.Size(FVector2D(100,30))
+						
 					]
-					.AutoWidth()
+					.FillWidth(0.6f)
+					.HAlign(HAlign_Right)
+					.VAlign(VAlign_Center)
+					.Padding(10)
 				]
-				.HAlign(HAlign_Left)
+				.HAlign(HAlign_Fill)
 				.AutoHeight()
 				
 			+ SVerticalBox::Slot() //Quest objectives color picker here
@@ -105,19 +112,25 @@ void FQuestNPCSelectorEdModeToolkit::Init(const TSharedPtr<IToolkitHost>& InitTo
 					[
 						SNew(STextBlock)
 						.Text(FText::FromString("Quest objectives highlight color"))
+						.Font(FStyleDefaults::GetFontInfo(12))
 					]
-					.AutoWidth()
-					.Padding(5, 5, 15, 5)
+					.FillWidth(1)
+					.HAlign(HAlign_Left)
+					.Padding(10, 10, 15, 10)
 					+ SHorizontalBox::Slot() //color picker goes here
 					[
 						SAssignNew(ObjectiveColorBlockPicker, SColorBlock)
 						.OnMouseButtonDown(ObjectiveColorPickerMouseDownHandler)
 						.Color(FLinearColor::Red)
 						.Color_Raw(this, &FQuestNPCSelectorEdModeToolkit::OnNewObjectiveColorPicked)
+						.Size(FVector2D(100,30))
 					]
-					.AutoWidth()
+					.FillWidth(0.6f)
+					.HAlign(HAlign_Right)
+					.VAlign(VAlign_Center)
+					.Padding(10)
 				]
-				.HAlign(HAlign_Left)
+				.HAlign(HAlign_Fill)
 				.AutoHeight()
 				
 		];//end of SBorder and widget
