@@ -82,7 +82,7 @@ bool FQuestNPCSelectorEdMode::GetQuestGiversOrObjectives()
 		if(const AQuestGiver* QuestNPC = Cast<AQuestGiver>(LevelActor))
 		{
 			FoundNPCs.AddUnique(QuestNPC);
-			QuestNPC->GetAttachedActors(FoundQuests);
+			QuestNPC->GetAttachedActors(FoundQuests, false);
 		}
 	}
 	

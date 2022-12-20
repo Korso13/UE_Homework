@@ -3,6 +3,7 @@
 	{
 		"Module.QuestSystem.cpp.obj": [
 			"CurrentObjectivesWidget.cpp.obj",
+			"Objective.cpp.obj",
 			"ObjectiveWidget.cpp.obj",
 			"Quest.cpp.obj",
 			"QuestBoard.cpp.obj",
@@ -12,8 +13,7 @@
 			"QuestListEntry.cpp.obj",
 			"QuestLocationMarker.cpp.obj",
 			"QuestManager.cpp.obj",
-			"QuestSystem.cpp.obj",
-			"Objective.cpp.obj"
+			"QuestSystem.cpp.obj"
 		],
 		"Module.QuestSystem.gen.cpp.obj": [
 			"CurrentObjectivesWidget.gen.cpp.obj",
