@@ -3,6 +3,7 @@
   <component name="UserContentModel">
     <attachedFolders>
       <Path>Plugins/QuestSystem/Source/QuestEditor</Path>
+      <Path>Plugins/QuestSystem/Source/QuestNPCSelector</Path>
     </attachedFolders>
     <explicitIncludes />
     <explicitExcludes />

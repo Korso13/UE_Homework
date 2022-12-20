@@ -7,5 +7,7 @@
 #include "D:/UE_projects/Homework/Plugins/QuestSystem/Intermediate/Build/Win64/UE4Editor/Inc/QuestSystem/QuestDescriptionWidget.gen.cpp"
 #include "D:/UE_projects/Homework/Plugins/QuestSystem/Intermediate/Build/Win64/UE4Editor/Inc/QuestSystem/QuestDialogueWidget.gen.cpp"
 #include "D:/UE_projects/Homework/Plugins/QuestSystem/Intermediate/Build/Win64/UE4Editor/Inc/QuestSystem/QuestGiver.gen.cpp"
+#include "D:/UE_projects/Homework/Plugins/QuestSystem/Intermediate/Build/Win64/UE4Editor/Inc/QuestSystem/QuestListEntry.gen.cpp"
 #include "D:/UE_projects/Homework/Plugins/QuestSystem/Intermediate/Build/Win64/UE4Editor/Inc/QuestSystem/QuestLocationMarker.gen.cpp"
 #include "D:/UE_projects/Homework/Plugins/QuestSystem/Intermediate/Build/Win64/UE4Editor/Inc/QuestSystem/QuestManager.gen.cpp"
+#include "D:/UE_projects/Homework/Plugins/QuestSystem/Intermediate/Build/Win64/UE4Editor/Inc/QuestSystem/QuestSystem.init.gen.cpp"

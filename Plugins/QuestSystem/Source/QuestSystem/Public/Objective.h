@@ -57,6 +57,8 @@ public:
 	void SetCanBeCompleted(bool InStatus) {bCanBeCompleted = InStatus;}
 
 	void SetCompleted(){bIsCompleted = true;}
+
+	virtual AActor* GetQuestActor() const {return nullptr;}
 };
 
 //Objective subtypes
@@ -75,6 +77,8 @@ protected:
 
 public:
 	virtual void ActivateObjective(AActor* Instigator) override;
+
+	virtual AActor* GetQuestActor() const override;
 };
 
 UCLASS()
@@ -91,4 +95,7 @@ protected:
 
 public:
 	virtual void ActivateObjective(AActor* Instigator) override;
+
+	virtual AActor* GetQuestActor() const override;
 };
+

@@ -150,6 +150,10 @@
 		{
 			"Name": "ScooterUtils",
 			"Enabled": true
+		},
+		{
+			"Name": "QuestNPCSelector",
+			"Enabled": false
 		}
 	]
 }

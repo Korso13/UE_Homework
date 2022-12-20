@@ -43,6 +43,8 @@ public:
 	UDestroyObjective();
 
 	virtual void ActivateObjective(AActor* QuestInstigator) override;
+
+	virtual AActor* GetQuestActor() const override;
 };
 
 UCLASS()

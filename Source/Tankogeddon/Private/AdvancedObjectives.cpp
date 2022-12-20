@@ -35,6 +35,11 @@ void UDestroyObjective::ActivateObjective(AActor* QuestInstigator)
 	}
 }
 
+AActor* UDestroyObjective::GetQuestActor() const
+{
+	return QuestTarget;
+}
+
 UScoreObjective::UScoreObjective()
 {
 	EObjectiveTypeAdvanced = EObjectiveTypeAdvanced::OT_Score;

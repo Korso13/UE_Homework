@@ -1,0 +1,10 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.QuestNPCSelector.cpp.obj": [
+			"QuestNPCSelector.cpp.obj",
+			"QuestNPCSelectorEdMode.cpp.obj",
+			"QuestNPCSelectorEdModeToolkit.cpp.obj"
+		]
+	}
+}

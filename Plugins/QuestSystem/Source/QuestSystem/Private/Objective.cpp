@@ -39,6 +39,11 @@ void UInteractionObjective::ActivateObjective(AActor* QuestInstigator)
 		});
 }
 
+AActor* UInteractionObjective::GetQuestActor() const
+{
+	return InteractionObjectiveActor;
+}
+
 void ULocationObjective::ActivateObjective(AActor* QuestInstigator)
 {
 	if(AQuestLocationMarker* LocationActor = Cast<AQuestLocationMarker>(LocationObjective))
@@ -57,3 +62,9 @@ void ULocationObjective::ActivateObjective(AActor* QuestInstigator)
 		});
 	}
 }
+
+AActor* ULocationObjective::GetQuestActor() const
+{
+	return LocationObjective;
+}
+

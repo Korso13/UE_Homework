@@ -33,11 +33,7 @@ public:
 	void QuestEditorCalled();
 	
 private:
-
-	void RegisterMenus();
-
-	TSharedRef<class SDockTab> OnSpawnPluginTab(const class FSpawnTabArgs& SpawnTabArgs);
-
+	
 	AQuest* SelectedQuest;
 
 	TArray<TSharedPtr<AQuest>> Quests;
@@ -48,15 +44,19 @@ private:
 	TSharedPtr<SMultiLineEditableTextBox> QuestDescription;
 	TSharedPtr<SListView<TSharedPtr<AQuest>>> QuestList;
 	
+	TSharedRef<ITableRow> CreateListRow(TSharedPtr<AQuest> InEntry, const TSharedRef<class STableViewBase>& Owner);
+
 	void AddMenuExtension(FMenuBuilder& Builder);
 
 	void QuestSelected(TSharedPtr<AQuest> InEntry, ESelectInfo::Type SelectInfo);
-
-	TSharedRef<ITableRow> CreateListRow(TSharedPtr<AQuest> InEntry, const TSharedRef<class STableViewBase>& Owner);
-
+	
 	FReply FilterQuestsFromSelection();
 
 	FReply ExtractAllQuestsOnLevel();
+
+	void RegisterMenus();
+
+	TSharedRef<class SDockTab> OnSpawnPluginTab(const class FSpawnTabArgs& SpawnTabArgs);
 	
 	TSharedPtr<class FUICommandList> PluginCommands;
 };

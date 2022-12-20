@@ -87,6 +87,21 @@ void FQuestEditorModule::ShutdownModule()
 	FQuestEditorCommands::Unregister();
 
 	FGlobalTabmanager::Get()->UnregisterNomadTabSpawner(QuestEditorTabName);
+
+	if(QuestList.IsValid())
+		QuestList->Invalidate(EInvalidateWidgetReason::Layout);
+
+	if(QuestName.IsValid())
+		QuestName->Invalidate(EInvalidateWidgetReason::Layout);
+
+	if(QuestDescription.IsValid())
+		QuestDescription->Invalidate(EInvalidateWidgetReason::Layout);
+	
+	SelectedQuest = nullptr;
+
+	Quests.Empty();
+
+	
 }
 
 //Quest editor tab's Slate code:
