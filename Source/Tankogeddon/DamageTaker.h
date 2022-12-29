@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
 #include "GameFramework/Pawn.h"
-
 #include "DamageTaker.generated.h"
 
 USTRUCT(BlueprintType)

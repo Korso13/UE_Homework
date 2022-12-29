@@ -73,6 +73,11 @@ protected:
 public:	
 	// Called every frame
 	/*virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;*/
+
+	FSimpleDelegate OnInventoryChanged;
+
+	FSimpleDelegate OnEquipmentInventoryChanged;
+
 	UFUNCTION(BlueprintCallable)
 	void SetNanites(int32 InCount);
 
@@ -97,4 +102,10 @@ public:
 	int32 GetNanites() const;
 
 	void PickupAddItem(FInventorySlotInfo& InSlot);
+
+	FORCEINLINE UInventoryComponent* GetLocalInventory() const{return LocalInventory;}
+
+	FORCEINLINE UInventoryComponent* GetEquipInventory() const{return EquipInventory;}
+
+	void LoadInventoriesFromSave(TMap<int32, FInventorySlotInfo> InInventory, TMap<int32, FInventorySlotInfo> InEquipment);
 };

@@ -1,0 +1,15 @@
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Development\QuestNPCSelector\Definitions.QuestNPCSelector.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestNPCSelector\Public\QuestNPCSelectorEdModeToolkit.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestNPCSelector\Public\QuestNPCSelectorEdMode.h
+D:\UE_4.27\Engine\Source\Editor\UnrealEd\Public\EdMode.h
+D:\UE_4.27\Engine\Source\Editor\UnrealEd\Public\EditorModeRegistry.h
+D:\UE_4.27\Engine\Source\Editor\UnrealEd\Public\Tools/UEdMode.h
+D:\UE_4.27\Engine\Source\Runtime\Experimental\InteractiveToolsFramework\Public\InputState.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\InteractiveToolsFramework\InputState.generated.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UnrealEd\UEdMode.generated.h
+D:\UE_4.27\Engine\Source\Runtime\Engine\Classes\Engine/Selection.h
+D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Selection.generated.h
+D:\UE_4.27\Engine\Source\Editor\UnrealEd\Public\EditorModeManager.h
+D:\UE_4.27\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SWidgetSwitcher.h
+D:\UE_4.27\Engine\Source\Runtime\Slate\Public\Widgets/Colors/SColorBlock.h
+D:\UE_4.27\Engine\Source\Runtime\AppFramework\Public\Widgets/Colors/SColorPicker.h

@@ -2,6 +2,8 @@
 
 
 #include "InventoryComponent.h"
+#include "InventoryManagerComponent.h"
+//#include "../../../../../Source/Tankogeddon/TankWithInventory.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
@@ -33,6 +35,14 @@ void UInventoryComponent::BeginPlay()
 //	// ...
 //}
 
+void UInventoryComponent::LoadInventory(TMap<int32, FInventorySlotInfo> InInventory)
+{
+	InventoryContents.Empty();
+	InventoryContents = InInventory;
+	OwningInventoryManager->Init(this, EInventoryClass::IC_CharInventory); //must be corrected in case of inclusion in foreign code!!
+	//TODO: add backwards connection to assigned inventory manager to avoid project dependency!
+}
+
 void UInventoryComponent::SetItem(int32 SlotIndex, const FInventorySlotInfo& InItem)
 {
 	ClearItem(SlotIndex);
@@ -58,4 +68,9 @@ int32 UInventoryComponent::GetMaxItemAmount(int32 SlotIndex, const FInventoryIte
 			return 0; //not equal items, can't stack, can switch them
 	}
 
+}
+
+void UInventoryComponent::operator=(TMap<int32, FInventorySlotInfo> InInventory)
+{
+	InventoryContents = InInventory;
 }

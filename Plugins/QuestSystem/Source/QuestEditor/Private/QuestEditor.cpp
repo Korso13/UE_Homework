@@ -55,6 +55,8 @@ void FQuestEditorModule::StartupModule()
 	//placing UI button 
 	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
 	{
+		LevelEditorModule.GetGlobalLevelEditorActions()->Append(PluginCommands.ToSharedRef());
+
 		TSharedPtr<FExtender> MenuExtender = MakeShareable(new FExtender);
 
 		MenuExtender->AddMenuExtension("Miscellaneous", 

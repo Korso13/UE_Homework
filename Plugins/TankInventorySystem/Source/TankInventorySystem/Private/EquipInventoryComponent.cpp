@@ -3,6 +3,8 @@
 
 #include "EquipInventoryComponent.h"
 #include "EquipInterface.h"
+//#include "TankWithInventory.h"
+#include "InventoryManagerComponent.h"
 
 UEquipInventoryComponent::UEquipInventoryComponent()
 {
@@ -77,4 +79,11 @@ int32 UEquipInventoryComponent::GetMaxItemAmount(int32 SlotIndex, const FInvento
 		return 0; //can put item in slot, mandatory swap of items!
 	else
 		return -1; //can't put item in slot
+}
+
+void UEquipInventoryComponent::LoadInventory(TMap<int32, FInventorySlotInfo> InInventory)
+{
+	InventoryContents.Empty();
+	InventoryContents = InInventory;
+	OwningInventoryManager->Init(this, EInventoryClass::IC_EquipInventory); //must be corrected in case of inclusion in foreign code!!
 }

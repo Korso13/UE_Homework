@@ -13,6 +13,8 @@
 class USpringArmComponent;
 class UCameraComponent;
 class ATankPlayerController;
+struct FPawnState;
+
 
 
 UCLASS()
@@ -74,7 +76,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	//Save-load functionality functions
+	virtual void RegisterOnSaveFile() override;
 
+	virtual void LoadState(FPawnState& InState) override;
 
 public:	
 	// Sets default values for this pawn's properties

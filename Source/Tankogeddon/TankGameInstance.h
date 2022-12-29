@@ -7,6 +7,7 @@
 #include "TankGameInstance.generated.h"
 
 class UDataTable;
+class USaveManager;
 
 UENUM(BlueprintType)
 enum class EMenuStyle : uint8
@@ -39,7 +40,15 @@ class TANKOGEDDON_API UTankGameInstance : public UGameInstance
 
 	virtual void OnStart() override;
 
+	virtual void Init() override;
+
+	UPROPERTY()
+	USaveManager* SaveManager;
+	
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FGameSettings GameSettings;
+
+	UFUNCTION(BlueprintPure, meta=(WorldContext=WorldContextObject)) 
+	static USaveManager* GetSaveManager(UObject* WorldContextObject);
 };

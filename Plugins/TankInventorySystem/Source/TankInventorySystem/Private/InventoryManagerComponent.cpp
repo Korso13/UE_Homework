@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+// ReSharper disable CppExpressionWithoutSideEffects
 #include "InventoryManagerComponent.h"
 #include "InventoryCellWidget.h"
 #include "InventoryWidget.h"
@@ -68,6 +69,23 @@ void UInventoryManagerComponent::PickupAddItem(FInventorySlotInfo& InSlot)
 	if (LocalInventory)
 	{
 		LocalInventory->SetItem(LocalInventory->GetInventorySize(), InSlot);
+		OnInventoryChanged.ExecuteIfBound();
+	}
+}
+
+void UInventoryManagerComponent::LoadInventoriesFromSave(TMap<int32, FInventorySlotInfo> InInventory, TMap<int32, FInventorySlotInfo> InEquipment)
+{
+	if(LocalInventory)
+	{
+		*LocalInventory = InInventory;
+		StartingLoadout = nullptr;
+		Init(LocalInventory, EInventoryClass::IC_CharInventory);
+	}
+
+	if(EquipInventory)
+	{
+		*EquipInventory = InEquipment;
+		Init(EquipInventory, EInventoryClass::IC_EquipInventory);
 	}
 }
 
@@ -124,6 +142,9 @@ void UInventoryManagerComponent::OnItemDropFunc(UInventoryCellWidget* From, UInv
 	//registering widget changes in real inventory (component)
 	FromInventory->SetItem(From->IndexInInventory, NewFromItem);
 	ToInventory->SetItem(To->IndexInInventory, NewToItem);
+
+	OnInventoryChanged.ExecuteIfBound();
+	OnEquipmentInventoryChanged.ExecuteIfBound();
 }
 
 void UInventoryManagerComponent::SetNanites(int32 InCount)
@@ -162,6 +183,7 @@ void UInventoryManagerComponent::Init(UInventoryComponent* InInventory, EInvento
 			LocalInventory = InInventory;
 			if (LocalInventory)
 			{
+				LocalInventory->OwningInventoryManager = this;
 				//aligning inventory size to allow full rows of 4 cells and meet minimum inventory size requirement
 				if (LocalInventory->GetInventorySize() < MinInventorySize + 1)
 				{
@@ -226,8 +248,6 @@ void UInventoryManagerComponent::Init(UInventoryComponent* InInventory, EInvento
 				}
 			
 			}
-
-
 		}
 	}
 		break;
@@ -236,6 +256,8 @@ void UInventoryManagerComponent::Init(UInventoryComponent* InInventory, EInvento
 	{
 		if (InInventory && EquipWidgetClass)
 		{
+			EquipInventory = InInventory;
+			EquipInventory->OwningInventoryManager = this;
 			EquipWidget = CreateWidget<UInventoryWidget>(GetWorld(), EquipWidgetClass);
 			if (EquipWidget)
 			{

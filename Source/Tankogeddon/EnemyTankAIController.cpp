@@ -3,6 +3,9 @@
 
 #include "EnemyTankAIController.h"
 #include "Tank.h"
+#include "Canon.h"
+#include "Components/ArrowComponent.h"
+#include "TankSaveGame.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -67,6 +70,8 @@ void AEnemyTankAIController::Tick(float DeltaTime)
 		{
 			CurrentWaypointIndex++;
 		}
+
+		TankPawn->PawnState.PawnCurrentWaypointIndex = CurrentWaypointIndex;
 	}
 
 	if (CanFire())

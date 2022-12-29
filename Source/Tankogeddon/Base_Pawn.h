@@ -3,22 +3,27 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Canon.h"
-#include "Projectile.h"
+//#include "Canon.h"
+//#include "Projectile.h"
+//#include "Components/BoxComponent.h"
+//#include "Components/ArrowComponent.h"
+//#include "Components/StaticMeshComponent.h"
+//#include "Components/SphereComponent.h"
 #include "DamageTaker.h"
 #include "HealthComponent.h"
-#include "Components/ArrowComponent.h"
-#include "Components/BoxComponent.h"
-#include "Components/StaticMeshComponent.h"
 #include "Scorable.h"
-#include "Components/SphereComponent.h"
+#include "TankSaveGame.h"
 #include "GameFramework/Pawn.h"
 #include "Base_Pawn.generated.h"
 
 class UStaticMeshComponent;
 class UBoxComponent;
+class UArrowComponent;
+class USphereComponent;
 class ACanon;
-
+class AProjectile;
+class USaveManager;
+//class FPawnState;
 
 
 UCLASS()
@@ -62,6 +67,13 @@ public:
 	int32 TankSpawnID = -1;
 
 protected:
+
+	UPROPERTY()
+	USaveManager* SaveManager;
+
+	//UPROPERTY()
+	FPawnState& PawnState = *(new FPawnState());; //ref to pawn's FPawnState record on current save object
+
 	UPROPERTY()
 	ACanon* Cannon;
 
@@ -103,6 +115,12 @@ protected:
 	UFUNCTION()
 	void DestroyPawn();
 
+	//Save-load functionality functions
+	virtual void RegisterOnSaveFile();
+
+	virtual void LoadState(FPawnState& InState);
+
+	//damage-taker and health component-related functions
 	virtual void OnDeath();
 
 	UFUNCTION(BlueprintNativeEvent)
@@ -122,6 +140,9 @@ protected:
 	FDelegateHandle OnScoredKillDelegate;
 
 public:	
+
+	friend class USaveManager;
+
 	virtual void TakeDamage(FDamageInfo DamageData) override;
 
 	virtual int32 GetScore() const override;

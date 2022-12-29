@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
+#include "../Tank.h"
 #include "EquipInterface.h"
 //#include "Templates/SharedPointer.h"
 #include <TankInventorySystem.h>
@@ -77,6 +77,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	//Save-load functionality functions
+	virtual void RegisterOnSaveFile() override;
+
+	void UpdateSavedInventories();
+
+	virtual void LoadState(FPawnState& InState) override;
+	
 	//internal inventory-related funcs
 	void EquipCannon(const FInventoryItemInfo* InItemInfo, bool bToEquip, EEquipSlot CannonSlot);
 
@@ -87,6 +94,8 @@ protected:
 	void EquipConsumable(const FInventoryItemInfo* InItemInfo, bool bToEquip);
 	
 public:
+
+	friend class USaveManager;
 	
 	//overriding classic tank functions to suit inventory style tank
 	virtual void SetupCanon() override { return; };

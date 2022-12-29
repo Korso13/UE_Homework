@@ -1,0 +1,8 @@
+D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Development\QuestEditor\Definitions.QuestEditor.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestEditor/Public/QuestEditorCommands.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestEditor\Public\QuestEditorStyle.h
+D:\UE_4.27\Engine\Source\Runtime\SlateCore\Public\Styling/SlateStyle.h
+D:\UE_4.27\Engine\Source\Runtime\SlateCore\Public\Brushes/SlateBorderBrush.h
+D:\UE_4.27\Engine\Source\Runtime\SlateCore\Public\Brushes/SlateBoxBrush.h
+D:\UE_4.27\Engine\Source\Runtime\SlateCore\Public\Brushes/SlateColorBrush.h
+D:\UE_4.27\Engine\Source\Runtime\SlateCore\Public\Brushes/SlateImageBrush.h

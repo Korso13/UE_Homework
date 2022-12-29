@@ -3,8 +3,8 @@
 	{
 		"Module.QuestNPCSelector.cpp.obj": [
 			"QuestNPCSelector.cpp.obj",
-			"QuestNPCSelectorEdModeToolkit.cpp.obj",
-			"QuestNPCSelectorEdMode.cpp.obj"
+			"QuestNPCSelectorEdMode.cpp.obj",
+			"QuestNPCSelectorEdModeToolkit.cpp.obj"
 		]
 	}
 }

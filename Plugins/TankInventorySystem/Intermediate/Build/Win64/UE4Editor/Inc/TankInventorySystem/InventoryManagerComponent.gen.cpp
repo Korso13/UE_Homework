@@ -127,9 +127,7 @@ void EmptyLinkFunctionForGeneratedCodeInventoryManagerComponent() {}
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UInventoryManagerComponent_SetNanites_Statics::Function_MetaDataParams[] = {
-		{ "Comment", "/*virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;*/" },
 		{ "ModuleRelativePath", "Public/InventoryManagerComponent.h" },
-		{ "ToolTip", "virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;" },
 	};
 #endif
 	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_UInventoryManagerComponent_SetNanites_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UInventoryManagerComponent, nullptr, "SetNanites", nullptr, nullptr, sizeof(InventoryManagerComponent_eventSetNanites_Parms), Z_Construct_UFunction_UInventoryManagerComponent_SetNanites_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UInventoryManagerComponent_SetNanites_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UInventoryManagerComponent_SetNanites_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UInventoryManagerComponent_SetNanites_Statics::Function_MetaDataParams)) };
@@ -220,7 +218,7 @@ void EmptyLinkFunctionForGeneratedCodeInventoryManagerComponent() {}
 	const FClassFunctionLinkInfo Z_Construct_UClass_UInventoryManagerComponent_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_UInventoryManagerComponent_CloseContainer, "CloseContainer" }, // 349929861
 		{ &Z_Construct_UFunction_UInventoryManagerComponent_GetNanites, "GetNanites" }, // 1783444474
-		{ &Z_Construct_UFunction_UInventoryManagerComponent_SetNanites, "SetNanites" }, // 1352194776
+		{ &Z_Construct_UFunction_UInventoryManagerComponent_SetNanites, "SetNanites" }, // 3075682091
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UInventoryManagerComponent_Statics::Class_MetaDataParams[] = {
@@ -370,7 +368,7 @@ void EmptyLinkFunctionForGeneratedCodeInventoryManagerComponent() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UInventoryManagerComponent, 608343114);
+	IMPLEMENT_CLASS(UInventoryManagerComponent, 980211254);
 	template<> TANKINVENTORYSYSTEM_API UClass* StaticClass<UInventoryManagerComponent>()
 	{
 		return UInventoryManagerComponent::StaticClass();

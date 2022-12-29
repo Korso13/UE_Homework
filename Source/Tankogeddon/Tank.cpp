@@ -6,6 +6,9 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Engine/Engine.h"
 #include "GameStructs.h"
+#include "TankPlayerController.h"
+#include "TankSaveGame.h"
+#include "EnemyTankAIController.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(TankLog, All, All);
 DEFINE_LOG_CATEGORY(TankLog);
@@ -43,6 +46,25 @@ void ATank::BeginPlay()
 	SetupCanon();
 	if(Cannon)
 	CannonOne = Cannon;
+}
+
+void ATank::RegisterOnSaveFile()
+{
+	Super::RegisterOnSaveFile();
+
+	PawnState.AIPawnPatrollingPointTag = PatrollingPointTag;
+	PawnState.PawnCurrentWaypointIndex = Cast<AEnemyTankAIController>(GetController())->GetCurrentWaypointIndex();
+}
+
+void ATank::LoadState(FPawnState& InState)
+{
+	Super::LoadState(InState);
+
+	PatrollingPointTag = PawnState.AIPawnPatrollingPointTag;
+	if(auto EnemyAIController = Cast<AEnemyTankAIController>(GetController()))
+	{
+		EnemyAIController->SetCurrentWaypointIndex(PawnState.PawnCurrentWaypointIndex);
+	}
 }
 
 // Called every frame
@@ -86,13 +108,6 @@ void ATank::Tick(float DeltaTime)
 		//GEngine->AddOnScreenDebugMessage(21, 0.5f, FColor::Purple, FString::Printf(TEXT("Your Score: %d"), TotalScore));
 	}
 }
-
-// Called to bind functionality to input
-//void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-//{
-//	Super::SetupPlayerInputComponent(PlayerInputComponent);
-//
-//}
 
 void ATank::MoveForward(const float ForwardAxisImpulse)
 {
@@ -205,6 +220,7 @@ void ATank::PrimaryFire()
 	}
 
 	Cannon->Fire(FireType::Primary);
+	PawnState.PawnAmmoPrimary = Cannon->GetCurrAmmo();
 }
 
 void ATank::SecondaryFire()

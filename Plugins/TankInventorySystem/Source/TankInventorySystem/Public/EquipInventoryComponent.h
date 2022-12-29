@@ -28,5 +28,7 @@ public:
 
 	virtual int32 GetMaxItemAmount(int32 SlotIndex, const FInventoryItemInfo& InItem);
 
+	virtual void LoadInventory(TMap<int32, FInventorySlotInfo> InInventory) override;
+	
 	EEquipSlot GetEquipSlotByIndex(int32 InIndex) const { return EquipSlots.FindChecked(InIndex); }
 };

@@ -3,9 +3,13 @@
 
 #include "TankFactory.h"
 #include "MapLoader.h"
+#include "SaveManager.h"
 #include "Components/AudioComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "TankGameInstance.h"
+#include "SaveManager.h"
+#include "TankSaveGame.h"
 
 // Sets default values
 ATankFactory::ATankFactory()
@@ -52,12 +56,100 @@ void ATankFactory::BeginPlay()
 	if (IsWorkingOnSpawn)
 		StartProduction();
 	TankSpawnID = 0;
+
+	RegisterOnSaveFile();
 }
 
 void ATankFactory::StartProduction()
 {
 	OnSpawnTick();
 	GetWorld()->GetTimerManager().SetTimer(SpawnTimer, this, &ATankFactory::OnSpawnTick, SpawnRate, true);
+	UpdateBuildingState();
+}
+
+void ATankFactory::RegisterOnSaveFile()
+{
+	if(auto SaveManager = Cast<UTankGameInstance>(GetGameInstance())->GetSaveManager(GetWorld()))
+	{
+		BuildingSaveState = MakeShared<FBuildingState>(SaveManager->CurrentSave->Buildings.FindOrAdd(GetName(), FBuildingState{}));
+
+		if(!BuildingSaveState.IsValid())
+		{
+			return;
+		}
+		
+		BuildingSaveState->SavedBuilding = this;
+		BuildingSaveState->BuildingClass = StaticClass();
+		BuildingSaveState->BuildingLocation = GetActorLocation();
+		BuildingSaveState->BuildingRotation = GetActorRotation();
+		BuildingSaveState->IsEnemy = true;
+		BuildingSaveState->IsDestroyed = false;
+		BuildingSaveState->PatrollingPointTag = PatrollingPointTag;
+		BuildingSaveState->CurrentPatrollingID = CurrentPatrollingID;
+		BuildingSaveState->SpawnTimer = SpawnTimer;
+		BuildingSaveState->ActorTags = Tags; 
+		
+		if(HealthComponent)
+		{
+			BuildingSaveState->BuildingHP = HealthComponent->CurrentHP;
+		}
+		
+	}
+}
+
+void ATankFactory::UpdateBuildingState()
+{
+	if(!BuildingSaveState.IsValid())
+	{
+		return;
+	}
+	
+	BuildingSaveState->CurrentPatrollingID = CurrentPatrollingID;
+	BuildingSaveState->SpawnTimer = SpawnTimer;
+	BuildingSaveState->ActorTags.Empty();
+	BuildingSaveState->ActorTags = Tags; 
+	if(HealthComponent)
+	{
+		BuildingSaveState->BuildingHP = HealthComponent->CurrentHP;
+	}
+}
+
+void ATankFactory::LoadState(FBuildingState& InState)
+{
+	//checking if need to restore building
+	if(InState.IsDestroyed == false && BuildingSaveState->IsDestroyed == true)
+	{
+		//reverting OnDeath() effects
+		OnDestructionEffect->Deactivate();
+		PostDestructionPersistentEffect->Deactivate();
+		OnDestructionAudioEffect->Deactivate();
+		DestroyedBodyMesh->ToggleVisibility();
+		DestroyedBodyMesh->SetCollisionProfileName(FName("IgnoreAll"), false);
+		BodyMesh->ToggleVisibility();
+		BodyMesh->SetCollisionProfileName(FName("BlockAll"), false);
+		StartProduction();
+	}
+
+	BuildingSaveState = MakeShared<FBuildingState>(InState);
+
+	if(!BuildingSaveState.IsValid())
+	{
+		return;
+	}
+	
+	SetActorLocation(BuildingSaveState->BuildingLocation);
+	SetActorRotation(BuildingSaveState->BuildingRotation);
+
+	PatrollingPointTag = BuildingSaveState->PatrollingPointTag;
+	CurrentPatrollingID = BuildingSaveState->CurrentPatrollingID;
+	SpawnTimer = BuildingSaveState->SpawnTimer;
+	Tags.Empty();
+	Tags = BuildingSaveState->ActorTags;
+	
+	if(HealthComponent)
+	{
+		HealthComponent->CurrentHP = BuildingSaveState->BuildingHP;
+	}
 }
 
 void ATankFactory::OnDeath()
@@ -78,11 +170,17 @@ void ATankFactory::OnDeath()
 	BodyMesh->ToggleVisibility();
 
 	PostDestructionPersistentEffect->Activate();
+	UpdateBuildingState();
+
+	if(BuildingSaveState.IsValid())
+	{
+		BuildingSaveState->IsDestroyed = true;
+	}
 }
 
 void ATankFactory::OnDamage_Implementation(FDamageInfo Damage)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::Printf(TEXT("%s took damage from %s, HP: %f"), ToCStr(this->GetName()), ToCStr(Damage.Instigator->GetName()), HealthComponent->CurrentHP));
+	//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::Printf(TEXT("%s took damage from %s, HP: %f"), ToCStr(this->GetName()), ToCStr(Damage.Instigator->GetName()), HealthComponent->CurrentHP));
 }
 
 // Called every frame
@@ -95,6 +193,7 @@ void ATankFactory::Tick(float DeltaTime)
 void ATankFactory::TakeDamage(FDamageInfo DamageData)
 {
 	HealthComponent->TakeDamage(DamageData);
+	UpdateBuildingState();
 }
 
 float ATankFactory::GetHealth() const
@@ -106,7 +205,6 @@ int ATankFactory::GetScore() const
 {
 	return ScoreValue;
 }
-
 
 void ATankFactory::OnSpawnTick()
 {
@@ -123,6 +221,14 @@ void ATankFactory::OnSpawnTick()
 
 		CurrentPatrollingID++;
 		Tank->TankSpawnID = TankSpawnID;
+
+		//allowing scrapping of spawned tanks in case of game load (tanks existing in save will be respawned)
+		auto SaveManager = Cast<UTankGameInstance>(GetGameInstance())->GetSaveManager(GetWorld());
+		if(SaveManager)
+		{
+			SaveManager->ProceduralySpawnedActors.Add(Tank);
+		}
+			
 		TankSpawnID++;
 		UGameplayStatics::FinishSpawningActor(Tank, SpawnTransform);
 
@@ -132,6 +238,8 @@ void ATankFactory::OnSpawnTick()
 		FTimerDelegate SFXDelegate;
 		SFXDelegate.BindUFunction(this, FName("SFXStop"));
 		GetWorld()->GetTimerManager().SetTimer(SFXTimer, SFXDelegate, 1, false, -1);
+
+		UpdateBuildingState();
 	}
 }
 

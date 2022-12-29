@@ -6,9 +6,6 @@
 #include "Widgets/Input/SButton.h"
 #include "Widgets/Text/STextBlock.h"
 #include "EditorModeManager.h"
-
-//#include "Customizations/ColorStructCustomization.h"
-#include "Input/HittestGrid.h"
 #include "Widgets/Colors/SColorBlock.h"
 #include "Widgets/Colors/SColorPicker.h"
 
@@ -26,38 +23,6 @@ void FQuestNPCSelectorEdModeToolkit::Init(const TSharedPtr<IToolkitHost>& InitTo
 		{
 			return GEditor->GetSelectedActors()->Num() != 0;
 		}
-
-		/*static FReply OnButtonClick(FVector InOffset)
-		{
-			USelection* SelectedActors = GEditor->GetSelectedActors();
-
-			// Let editor know that we're about to do something that we want to undo/redo
-			GEditor->BeginTransaction(LOCTEXT("MoveActorsTransactionName", "MoveActors"));
-
-			// For each selected actor
-			for (FSelectionIterator Iter(*SelectedActors); Iter; ++Iter)
-			{
-				if (AActor* LevelActor = Cast<AActor>(*Iter))
-				{
-					// Register actor in opened transaction (undo/redo)
-					LevelActor->Modify();
-					// Move actor to given location
-					LevelActor->TeleportTo(LevelActor->GetActorLocation() + InOffset, FRotator(0, 0, 0));
-				}
-			}
-
-			// We're done moving actors so close transaction
-			GEditor->EndTransaction();
-
-			return FReply::Handled();
-		}
-
-		static TSharedRef<SWidget> MakeButton(FText InLabel, const FVector InOffset)
-		{
-			return SNew(SButton)
-				.Text(InLabel)
-				.OnClicked_Static(&Locals::OnButtonClick, InOffset);
-		}*/
 	};
 
 	const float Factor = 256.0f;
@@ -65,16 +30,13 @@ void FQuestNPCSelectorEdModeToolkit::Init(const TSharedPtr<IToolkitHost>& InitTo
 	NPCColorPickerMouseDownHandler.BindRaw(this, &FQuestNPCSelectorEdModeToolkit::CallColorPicker, true);
 	ObjectiveColorPickerMouseDownHandler.BindRaw(this, &FQuestNPCSelectorEdModeToolkit::CallColorPicker, false);
 
-	OnQuestNPCHighlightColorChanged(FLinearColor::Yellow); //setting default color
+	//setting default colors
+	OnQuestNPCHighlightColorChanged(FLinearColor::Yellow); 
 	OnQuestObjectiveHighlightColorChanged(FLinearColor::Red);
 	
 	SAssignNew(ToolkitWidget, SBorder)
 		[
 			SNew(SVerticalBox) //vertical box holds actual widget contents
-			/*+ SVerticalBox::Slot() 
-			.AutoHeight()
-			.HAlign(HAlign_Center)
-			.Padding(50)*/
 			
 			+ SVerticalBox::Slot() //Quest NPC color picker here
 				[
@@ -151,9 +113,6 @@ FText FQuestNPCSelectorEdModeToolkit::GetBaseToolkitName() const
 void FQuestNPCSelectorEdModeToolkit::OnQuestNPCHighlightColorChanged(FLinearColor InColor)
 {
 	static_cast<FQuestNPCSelectorEdMode*>(GetEditorMode())->SetQuestNPCHighlightColor(InColor);
-	/*SColorBlock::FArguments Args;
-	Args.Color(InColor);
-	NPCColorBlockPicker->Construct(Args);*/
 	LastNPCColorPicked = InColor;
 }
 

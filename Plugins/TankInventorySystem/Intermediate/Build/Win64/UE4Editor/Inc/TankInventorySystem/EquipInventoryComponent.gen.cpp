@@ -99,7 +99,7 @@ void EmptyLinkFunctionForGeneratedCodeEquipInventoryComponent() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UEquipInventoryComponent, 2375124690);
+	IMPLEMENT_CLASS(UEquipInventoryComponent, 824384380);
 	template<> TANKINVENTORYSYSTEM_API UClass* StaticClass<UEquipInventoryComponent>()
 	{
 		return UEquipInventoryComponent::StaticClass();

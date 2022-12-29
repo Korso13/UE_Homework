@@ -2,7 +2,16 @@
 
 #include "Turret.h"
 #include "Tank.h"
+/*#include "Components/AudioComponent.h"
+#include "Components/BoxComponent.h"
+#include "EnemyTankAIController.h"
+#include "Projectile.h"*/
+#include "Canon.h"
+#include "Components/ArrowComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Components/SphereComponent.h"
 #include "DrawDebugHelpers.h"
+#include "TankSaveGame.h"
 #include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
@@ -44,7 +53,10 @@ void ATurret::Tick(float DeltaTime)
 	if (CanFire() && Cannon)
 	{
 		if(IsVisible(CurrentTarget) || Cannon->AngleTargetingNeeded)
+		{
 			Cannon->Fire(FireType::Primary);
+			PawnState.PawnAmmoPrimary = Cannon->GetCurrAmmo();
+		}
 	}
 }
 

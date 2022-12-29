@@ -10,3 +10,5 @@ D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\EquipInventoryComponent.generated.h
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem\Public\EquipInterface.h
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\EquipInterface.generated.h
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem\Public\InventoryManagerComponent.h
+D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem\InventoryManagerComponent.generated.h

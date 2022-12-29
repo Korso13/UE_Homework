@@ -2,15 +2,24 @@
 
 
 #include "Base_Pawn.h"
-
 #include "EnemyTankAIController.h"
-#include "Projectile.h"
+#include "SaveManager.h"
+#include "TankGameInstance.h"
 #include "TankPlayerController.h"
+#include "TankSaveGame.h"
 #include "Turret.h"
+#include "Canon.h"
+#include "Projectile.h"
 #include "Components/AudioComponent.h"
+#include "Components/BoxComponent.h"
+#include "Components/ArrowComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "TankSaveGame.h"
+#include "TankGameInstance.h"
 
 // Sets default values
 ABase_Pawn::ABase_Pawn()
@@ -71,10 +80,14 @@ void ABase_Pawn::BeginPlay()
 	Super::BeginPlay();
 
 	OnScoredKill.AddUObject(this, &ABase_Pawn::ScoredKill);
+
+	RegisterOnSaveFile();
 }
 
 void ABase_Pawn::OnDeath()
 {
+	PawnState.IsDead = true;
+	
 	KilledInAction = true;
 	Tags.Empty(); //for map loader goals proper work
 	SetActorTickEnabled(false);
@@ -107,6 +120,45 @@ void ABase_Pawn::DestroyPawn()
 	Destroy();
 }
 
+void ABase_Pawn::RegisterOnSaveFile()
+{
+	if(!SaveManager)
+	{
+		SaveManager = Cast<UTankGameInstance>(GetGameInstance())->GetSaveManager(GetWorld());
+	}
+	
+	//SaveManager->CurrentSave->EnemyPawns.Add(GetName(), FPawnState{});
+	PawnState = SaveManager->CurrentSave->EnemyPawns.FindOrAdd(GetName(), FPawnState{});
+	PawnState.SavedPawn = this;
+	PawnState.PawnClass = StaticClass();
+	PawnState.PawnLocation = GetActorLocation();
+	PawnState.PawnRotation = GetActorRotation();
+	PawnState.IsAI = true;
+	if(HealthComponent)
+	{
+		PawnState.PawnHP = HealthComponent->CurrentHP;
+	}
+	if(Cannon)
+	{
+		PawnState.PawnAmmoPrimary = Cannon->GetCurrAmmo();
+	}
+}
+
+void ABase_Pawn::LoadState(FPawnState& InState)
+{
+	PawnState = InState;
+	SetActorLocation(PawnState.PawnLocation);
+	SetActorRotation(PawnState.PawnRotation);
+	if(HealthComponent)
+	{
+		HealthComponent->CurrentHP = PawnState.PawnHP;
+	}
+	if(Cannon)
+	{
+		Cannon->SetCurrAmmo(PawnState.PawnAmmoPrimary);
+	}
+}
+
 void ABase_Pawn::Destroyed()
 {
 	Super::Destroyed();
@@ -134,6 +186,7 @@ void ABase_Pawn::OnTakingDamage_Implementation(FDamageInfo Damage)
 void ABase_Pawn::TakeDamage(FDamageInfo DamageData)
 {
 	HealthComponent->TakeDamage(DamageData);
+	PawnState.PawnHP -= DamageData.DamageValue;
 }
 
 int32 ABase_Pawn::GetScore() const

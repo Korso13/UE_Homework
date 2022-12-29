@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "../Public/BaseLootContainer.h"
+#include "BaseLootContainer.h"
 #include "Components/BoxComponent.h"
 #include "InventoryComponent.h"
 #include "InventoryManagerComponent.h"
 //#include "TankWithInventory.h"
-#include "../Public/ActorWithInventory.h"
+#include "ActorWithInventory.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/WidgetComponent.h"
 

@@ -232,6 +232,13 @@
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\AIModule
 /I Runtime\AIModule\Public
 /I Runtime\AIModule\Classes
+/I D:\UE_projects\Homework\Intermediate\Build\Win64\UE4Editor\Inc\Tankogeddon
+/I D:\UE_projects\Homework\Source
+/I D:\UE_projects\Homework
+/I D:\UE_projects\Homework\Source\Tankogeddon\Public
+/I D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Inc\TankInventorySystem
+/I D:\UE_projects\Homework\Plugins\TankInventorySystem\Source
+/I D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem\Public
 /I D:\UE_projects\Homework\Plugins\QuestSystem\Source
 /I D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestEditor\Public
 /I D:\UE_projects\Homework\Plugins\QuestSystem\Intermediate\Build\Win64\UE4Editor\Inc\QuestSystem

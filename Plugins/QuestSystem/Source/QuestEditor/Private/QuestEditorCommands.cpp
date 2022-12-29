@@ -6,7 +6,7 @@
 
 void FQuestEditorCommands::RegisterCommands()
 {
-	UI_COMMAND(OpenQuestEditor, "QuestEditor", "Open QuestEditor tab", EUserInterfaceActionType::Button, FInputChord(EKeys::Q, EModifierKey::Control));
+	UI_COMMAND(OpenQuestEditor, "QuestEditor", "Open QuestEditor tab", EUserInterfaceActionType::Button, FInputChord(EKeys::Q, false, true, false, false));
 }
 
 #undef LOCTEXT_NAMESPACE

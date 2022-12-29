@@ -3,11 +3,21 @@
 
 #include "TankWithInventory.h"
 #include <TankInventorySystem.h>
+#include "../Canon.h"
+#include "../Projectile.h"
+/*#include "Components/AudioComponent.h"
+#include "Components/BoxComponent.h"*/
+#include "Components/ArrowComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "InventoryComponent.h"
-#include "Base_Consumable.h"
+#include "../Base_Consumable.h"
 #include "EquipInventoryComponent.h"
 #include "InventoryManagerComponent.h"
 #include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
+
+#include "SaveManager.h"
+#include "../TankGameInstance.h"
+#include "TankSaveGame.h"
 
 
 DEFINE_LOG_CATEGORY(InvTankLog);
@@ -35,7 +45,10 @@ void ATankWithInventory::BeginPlay()
 	if (InventoryManager)
 	{
 		if(Inventory)
+		{
 			InventoryManager->Init(Inventory, EInventoryClass::IC_CharInventory);
+			InventoryManager->OnInventoryChanged.BindUObject(this, &ATankWithInventory::UpdateSavedInventories);
+		}
 		if(EquipInventory)
 		{
 			InventoryManager->Init(EquipInventory, EInventoryClass::IC_EquipInventory);
@@ -45,6 +58,7 @@ void ATankWithInventory::BeginPlay()
 			}
 			InventoryManager->SetEquipInventory(EquipInventory);
 			Cannon = nullptr;
+			InventoryManager->OnEquipmentInventoryChanged.BindUObject(this, &ATankWithInventory::UpdateSavedInventories);
 		}
 	}
 
@@ -64,6 +78,65 @@ void ATankWithInventory::BeginPlay()
 	{
 		FirstCannonUsed = false;
 		SecondCannonUsed = false;
+	}
+}
+
+void ATankWithInventory::RegisterOnSaveFile()
+{
+	if(!SaveManager)
+	{
+		SaveManager = Cast<UTankGameInstance>(GetGameInstance())->GetSaveManager(GetWorld());
+	}
+	
+	PawnState = SaveManager->CurrentSave->TankPawnState;
+	
+	PawnState.SavedPawn = this;
+	PawnState.PawnClass = StaticClass();
+	PawnState.PawnLocation = GetActorLocation();
+	PawnState.PawnRotation = GetActorRotation();
+	PawnState.IsAI = false;
+
+	if(HealthComponent)
+	{
+		PawnState.PawnHP = HealthComponent->CurrentHP;
+	}
+
+	if(Inventory && EquipInventory)
+	{
+		PawnState.InventoryContents = Inventory->GetInventory();
+		PawnState.EquipInventoryContents = EquipInventory->GetInventory();
+	}
+
+	PawnState.PawnAmmoPrimary = PrimaryAmmo;
+	PawnState.PawnAmmoSecondary = SecondaryAmmo;
+	PawnState.PlayerTotalScore = TotalScore;
+}
+
+void ATankWithInventory::UpdateSavedInventories()
+{
+	if(Inventory && EquipInventory)
+	{
+		PawnState.InventoryContents = Inventory->GetInventory();
+		PawnState.EquipInventoryContents = EquipInventory->GetInventory();
+	}
+}
+
+void ATankWithInventory::LoadState(FPawnState& InState)
+{
+	PawnState = InState;
+	SetActorLocation(PawnState.PawnLocation);
+	SetActorRotation(PawnState.PawnRotation);
+	if(HealthComponent)
+	{
+		HealthComponent->CurrentHP = PawnState.PawnHP;
+	}
+
+	PrimaryAmmo = PawnState.PawnAmmoPrimary;
+	SecondaryAmmo = PawnState.PawnAmmoSecondary;
+
+	if(InventoryManager)
+	{
+		InventoryManager->LoadInventoriesFromSave(PawnState.InventoryContents, PawnState.EquipInventoryContents);
 	}
 }
 
@@ -95,6 +168,7 @@ void ATankWithInventory::EquipCannon(const FInventoryItemInfo* InItemInfo, bool 
 				StatusHUDInfo.CurrentWeapon = nullptr;
 				StatusHUDInfo.WeaponAmmo = 0;
 			}
+			//UpdateSavedInventories();
 			return;
 		}
 		else if(InItemInfo->ItemClass && CanonMountingPoint)
@@ -113,6 +187,7 @@ void ATankWithInventory::EquipCannon(const FInventoryItemInfo* InItemInfo, bool 
 					StatusHUDInfo.WeaponAmmo = PrimaryAmmo;
 				}
 			}
+			//UpdateSavedInventories();
 			return;
 		}
 	}
@@ -140,6 +215,7 @@ void ATankWithInventory::EquipCannon(const FInventoryItemInfo* InItemInfo, bool 
 				StatusHUDInfo.CurrentWeapon = nullptr;
 				StatusHUDInfo.WeaponAmmo = 0;
 			}
+			//UpdateSavedInventories();
 			return;
 		}
 		else if (InItemInfo->ItemClass && SecondaryCanonMountingPoint)
@@ -159,6 +235,7 @@ void ATankWithInventory::EquipCannon(const FInventoryItemInfo* InItemInfo, bool 
 					StatusHUDInfo.WeaponAmmo = SecondaryAmmo;
 				}
 			}
+			//UpdateSavedInventories();
 			return;
 		}
 	}
@@ -169,12 +246,16 @@ void ATankWithInventory::EquipArmor(const FInventoryItemInfo* InItemInfo, bool b
 	if (!bToEquip)
 	{
 		DMGReduction = 0;
+		//UpdateSavedInventories();
 		return;
 	}
 	
 	if (InItemInfo)
 		if (InItemInfo->ItemCategory == EItemSubType::EST_Armor && bToEquip)
+		{
 			DMGReduction = InItemInfo->Armor;
+			//UpdateSavedInventories();
+		}
 }
 
 void ATankWithInventory::EquipPM(const FInventoryItemInfo* InItemInfo, bool bToEquip)
@@ -182,36 +263,42 @@ void ATankWithInventory::EquipPM(const FInventoryItemInfo* InItemInfo, bool bToE
 	if (!bToEquip)
 	{
 		MovementSpeedBoost = 0;
+		//UpdateSavedInventories();
 		return;
 	}
 
 	if (InItemInfo)
 		if (InItemInfo->ItemCategory == EItemSubType::EST_EnginePowerModule && bToEquip)
+		{
 			MovementSpeedBoost = InItemInfo->StatsBoost;
+			//UpdateSavedInventories();
+		}
 }
 
 void ATankWithInventory::EquipConsumable(const FInventoryItemInfo* InItemInfo, bool bToEquip)
 {
-	UE_LOG(InvTankLog, Warning, TEXT("Equip consumable called with %s flag"), ((bToEquip) ? "True" : "False"));
+	//UE_LOG(InvTankLog, Warning, TEXT("Equip consumable called with %s flag"), ((bToEquip) ? "True" : "False"));
 	if (!bToEquip)
 	{
 		if (ConsumableInSlot)
 			ConsumableInSlot->Destroy();
 		ConsumableInSlot = nullptr;
+		//UpdateSavedInventories();
 		return;
 	}
 
 	if (InItemInfo)
 	{
-		UE_LOG(InvTankLog, Warning, TEXT("InItemInfo in EquipConsumable is valid"));
+		//UE_LOG(InvTankLog, Warning, TEXT("InItemInfo in EquipConsumable is valid"));
 		if (/*InItemInfo->ItemArchType == EItemArchType::ET_Consumable && */bToEquip && InItemInfo->ItemClass != NULL)
 		{
-			UE_LOG(InvTankLog, Warning, TEXT("ItemArchType check in EquipConsumable is green"));
+			//UE_LOG(InvTankLog, Warning, TEXT("ItemArchType check in EquipConsumable is green"));
 			ConsumableInSlot = NewObject<ABase_Consumable>(this, InItemInfo->ItemClass);
 			if (ConsumableInSlot)
 			{
 				ConsumableInSlot->OwningPawn = this;
-				UE_LOG(InvTankLog, Warning, TEXT("Consumable successfully spawned to slot"));
+				//UpdateSavedInventories();
+				//UE_LOG(InvTankLog, Warning, TEXT("Consumable successfully spawned to slot"));
 			}
 		}
 
@@ -227,20 +314,20 @@ void ATankWithInventory::SwitchWeapon()
 		SecondCannonUsed = true;
 		StatusHUDInfo.CurrentWeapon = CannonTwo;
 		StatusHUDInfo.WeaponAmmo = SecondaryAmmo;
-		UE_LOG(InvTankLog, Log, TEXT("Switch to secondary cannon called"));
+		//UE_LOG(InvTankLog, Log, TEXT("Switch to secondary cannon called"));
 		return;
 	}
-	UE_LOG(InvTankLog, Warning, TEXT("Didn't switch to secondary. FirstCannonUsed == %b, CannonTwo == %b"), FirstCannonUsed, (CannonTwo) ? true : false);
+	//UE_LOG(InvTankLog, Warning, TEXT("Didn't switch to secondary. FirstCannonUsed == %b, CannonTwo == %b"), FirstCannonUsed, (CannonTwo) ? true : false);
 	if (SecondCannonUsed && CannonOne)
 	{
 		SecondCannonUsed = false;
 		FirstCannonUsed = true;
 		StatusHUDInfo.CurrentWeapon = CannonOne;
 		StatusHUDInfo.WeaponAmmo = PrimaryAmmo;
-		UE_LOG(InvTankLog, Warning, TEXT("Switch to primary cannon called"));
+		//UE_LOG(InvTankLog, Warning, TEXT("Switch to primary cannon called"));
 		return;
 	}
-	UE_LOG(InvTankLog, Warning, TEXT("Didn't switch to primary. SecondCannonUsed == %b, CannonOne == %b"), SecondCannonUsed, (CannonOne) ? true : false);
+	//UE_LOG(InvTankLog, Warning, TEXT("Didn't switch to primary. SecondCannonUsed == %b, CannonOne == %b"), SecondCannonUsed, (CannonOne) ? true : false);
 
 }
 
@@ -261,6 +348,7 @@ void ATankWithInventory::PrimaryFire()
 				StatusHUDInfo.WeaponAmmo -= CannonOne->GetAmmoComsumption();
 			}
 		}
+		PawnState.PawnAmmoPrimary = PrimaryAmmo;
 		return;
 	}
 
@@ -276,6 +364,7 @@ void ATankWithInventory::PrimaryFire()
 				StatusHUDInfo.WeaponAmmo -= CannonTwo->GetAmmoComsumption();
 			}
 		}
+		PawnState.PawnAmmoSecondary = SecondaryAmmo;
 		return;
 	}
 }
@@ -327,13 +416,17 @@ void ATankWithInventory::ToggleInventoryWidget() const
 void ATankWithInventory::SetNanites(int32 InCount)
 {
 	if (InventoryManager)
+	{
 		InventoryManager->SetNanites(InCount);
+		UpdateSavedInventories();
+	}
 }
 
 void ATankWithInventory::TakeDamage(FDamageInfo DamageData)
 {
 	DamageData.DamageValue = DamageData.DamageValue * (1 - DMGReduction);
 	HealthComponent->TakeDamage(DamageData);
+	PawnState.PawnHP -= DamageData.DamageValue;
 }
 
 void ATankWithInventory::UseConsumable()
@@ -362,6 +455,7 @@ void ATankWithInventory::UseConsumable()
 	{
 		StatusHUDInfo.WeaponAmmo = SecondaryAmmo;
 	}
+	UpdateSavedInventories();
 }
 
 void ATankWithInventory::EquipItem(EEquipSlot Slot, FName ItemId, bool bToEquip) //bToEquip determines whether we equip, or take off the item
@@ -393,6 +487,7 @@ void ATankWithInventory::EquipItem(EEquipSlot Slot, FName ItemId, bool bToEquip)
 	default:
 		break;
 	}
+	UpdateSavedInventories();
 }
 
 void ATankWithInventory::PickUpItem(FInventorySlotInfo& InItem)

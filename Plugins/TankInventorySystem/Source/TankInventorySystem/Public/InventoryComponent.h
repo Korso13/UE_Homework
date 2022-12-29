@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 #include "InventoryComponent.generated.h"
 
+class UInventoryManagerComponent;
 UCLASS( ClassGroup="Inventory", meta=(BlueprintSpawnableComponent) )
 class TANKINVENTORYSYSTEM_API UInventoryComponent : public UActorComponent
 {
@@ -29,6 +30,9 @@ public:
 	// Called every frame
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UPROPERTY()
+	UInventoryManagerComponent* OwningInventoryManager;
+	
 	//Getters:
 	UFUNCTION(BlueprintCallable)
 	int32 GetNanites() const { return GetItem(-1)->ItemCount; }
@@ -37,6 +41,8 @@ public:
 
 	FORCEINLINE const TMap<int32, FInventorySlotInfo>& GetInventory() const { return InventoryContents;}
 
+	virtual void LoadInventory(TMap<int32, FInventorySlotInfo> InInventory); //for save-load mechanic
+	
 	FORCEINLINE int32 GetInventorySize() const {return InventoryContents.Num();}
 
 	//Setters:
@@ -46,4 +52,6 @@ public:
 	virtual void ClearItem(int32 SlotIndex);
 
 	virtual int32 GetMaxItemAmount(int32 SlotIndex, const FInventoryItemInfo& InItem);
+
+	void operator=(TMap<int32, FInventorySlotInfo> InInventory);
 };

@@ -7,11 +7,13 @@
 #include "HealthComponent.h"
 #include "Scorable.h"
 #include "Tank.h"
+#include "TankSaveGame.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "TankFactory.generated.h"
 
+struct FBuildingState;
 static int32 TankSpawnID = 0;
 
 UCLASS()
@@ -69,6 +71,7 @@ protected:
 	class AMapLoader* DepricatedConnectedMapLoader;
 
 	const FString DestroyedMeshPath = "StaticMesh'/Game/CSC/Meshes/SM_TankFactoryDestroyed.SM_TankFactoryDestroyed'";
+
 private:
 	FTimerHandle SpawnTimer;
 
@@ -102,6 +105,17 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void StartProduction();
+
+	//Save-load functionality functions
+	void RegisterOnSaveFile(); //registers building on save file object
+
+	void UpdateBuildingState(); //updates dynamically changing data on save file object
+
+	void LoadState(FBuildingState& InState); //called on GameLoad 
+
+	//UPROPERTY()
+	TSharedPtr<FBuildingState> BuildingSaveState /*= *(new FBuildingState())*/;
+	
 private:
 	void OnSpawnTick();
 };
