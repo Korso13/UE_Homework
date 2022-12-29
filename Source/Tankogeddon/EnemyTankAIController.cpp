@@ -71,7 +71,8 @@ void AEnemyTankAIController::Tick(float DeltaTime)
 			CurrentWaypointIndex++;
 		}
 
-		TankPawn->PawnState.PawnCurrentWaypointIndex = CurrentWaypointIndex;
+		if(TankPawn->PawnState.IsValid())
+			TankPawn->PawnState->PawnCurrentWaypointIndex = CurrentWaypointIndex;
 	}
 
 	if (CanFire())

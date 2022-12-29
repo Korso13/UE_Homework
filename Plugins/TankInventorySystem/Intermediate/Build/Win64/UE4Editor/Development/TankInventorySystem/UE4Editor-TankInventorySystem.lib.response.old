@@ -7,6 +7,7 @@
 /IGNORE:4221
 /NODEFAULTLIB
 "D:\UE_projects\Homework\Intermediate\Build\Win64\TankogeddonEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.Cpp17.h.obj"
+"D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\BaseLootContainer.cpp.obj"
 "D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\EquipInventoryComponent.cpp.obj"
 "D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\InventoryComponent.cpp.obj"
 "D:\UE_projects\Homework\Plugins\TankInventorySystem\Intermediate\Build\Win64\UE4Editor\Development\TankInventorySystem\InventoryManagerComponent.cpp.obj"

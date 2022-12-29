@@ -55,7 +55,8 @@ void ATurret::Tick(float DeltaTime)
 		if(IsVisible(CurrentTarget) || Cannon->AngleTargetingNeeded)
 		{
 			Cannon->Fire(FireType::Primary);
-			PawnState.PawnAmmoPrimary = Cannon->GetCurrAmmo();
+			if(PawnState.IsValid())
+				PawnState->PawnAmmoPrimary = Cannon->GetCurrAmmo();
 		}
 	}
 }

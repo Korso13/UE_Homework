@@ -86,7 +86,10 @@ void ABase_Pawn::BeginPlay()
 
 void ABase_Pawn::OnDeath()
 {
-	PawnState.IsDead = true;
+	if(PawnState.IsValid())
+	{
+		PawnState->IsDead = true;
+	}
 	
 	KilledInAction = true;
 	Tags.Empty(); //for map loader goals proper work
@@ -128,34 +131,46 @@ void ABase_Pawn::RegisterOnSaveFile()
 	}
 	
 	//SaveManager->CurrentSave->EnemyPawns.Add(GetName(), FPawnState{});
-	PawnState = SaveManager->CurrentSave->EnemyPawns.FindOrAdd(GetName(), FPawnState{});
-	PawnState.SavedPawn = this;
-	PawnState.PawnClass = StaticClass();
-	PawnState.PawnLocation = GetActorLocation();
-	PawnState.PawnRotation = GetActorRotation();
-	PawnState.IsAI = true;
+	PawnState = MakeShared<FPawnState>(SaveManager->CurrentSave->EnemyPawns.FindOrAdd(GetName(), FPawnState{}));
+
+	if(!PawnState.IsValid())
+	{
+		return;
+	}
+	
+	PawnState->SavedPawn = this;
+	PawnState->PawnClass = StaticClass();
+	PawnState->PawnLocation = GetActorLocation();
+	PawnState->PawnRotation = GetActorRotation();
+	PawnState->IsAI = true;
 	if(HealthComponent)
 	{
-		PawnState.PawnHP = HealthComponent->CurrentHP;
+		PawnState->PawnHP = HealthComponent->CurrentHP;
 	}
 	if(Cannon)
 	{
-		PawnState.PawnAmmoPrimary = Cannon->GetCurrAmmo();
+		PawnState->PawnAmmoPrimary = Cannon->GetCurrAmmo();
 	}
 }
 
 void ABase_Pawn::LoadState(FPawnState& InState)
 {
-	PawnState = InState;
-	SetActorLocation(PawnState.PawnLocation);
-	SetActorRotation(PawnState.PawnRotation);
+	PawnState = MakeShared<FPawnState>(InState);
+
+	if(!PawnState.IsValid())
+	{
+		return;
+	}
+	
+	SetActorLocation(PawnState->PawnLocation);
+	SetActorRotation(PawnState->PawnRotation);
 	if(HealthComponent)
 	{
-		HealthComponent->CurrentHP = PawnState.PawnHP;
+		HealthComponent->CurrentHP = PawnState->PawnHP;
 	}
 	if(Cannon)
 	{
-		Cannon->SetCurrAmmo(PawnState.PawnAmmoPrimary);
+		Cannon->SetCurrAmmo(PawnState->PawnAmmoPrimary);
 	}
 }
 
@@ -186,7 +201,8 @@ void ABase_Pawn::OnTakingDamage_Implementation(FDamageInfo Damage)
 void ABase_Pawn::TakeDamage(FDamageInfo DamageData)
 {
 	HealthComponent->TakeDamage(DamageData);
-	PawnState.PawnHP -= DamageData.DamageValue;
+	if(PawnState.IsValid())
+		PawnState->PawnHP -= DamageData.DamageValue;
 }
 
 int32 ABase_Pawn::GetScore() const

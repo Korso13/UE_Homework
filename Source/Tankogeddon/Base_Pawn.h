@@ -72,7 +72,7 @@ protected:
 	USaveManager* SaveManager;
 
 	//UPROPERTY()
-	FPawnState& PawnState = *(new FPawnState());; //ref to pawn's FPawnState record on current save object
+	TSharedPtr<FPawnState> PawnState;; //ref to pawn's FPawnState record on current save object
 
 	UPROPERTY()
 	ACanon* Cannon;

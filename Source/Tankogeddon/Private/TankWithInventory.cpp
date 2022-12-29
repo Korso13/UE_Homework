@@ -88,55 +88,66 @@ void ATankWithInventory::RegisterOnSaveFile()
 		SaveManager = Cast<UTankGameInstance>(GetGameInstance())->GetSaveManager(GetWorld());
 	}
 	
-	PawnState = SaveManager->CurrentSave->TankPawnState;
+	PawnState = MakeShared<FPawnState>(SaveManager->CurrentSave->TankPawnState);
+
+	if(!PawnState.IsValid())
+	{
+		return;
+	}
 	
-	PawnState.SavedPawn = this;
-	PawnState.PawnClass = StaticClass();
-	PawnState.PawnLocation = GetActorLocation();
-	PawnState.PawnRotation = GetActorRotation();
-	PawnState.IsAI = false;
+	PawnState->SavedPawn = this;
+	PawnState->PawnClass = StaticClass();
+	PawnState->PawnLocation = GetActorLocation();
+	PawnState->PawnRotation = GetActorRotation();
+	PawnState->IsAI = false;
 
 	if(HealthComponent)
 	{
-		PawnState.PawnHP = HealthComponent->CurrentHP;
+		PawnState->PawnHP = HealthComponent->CurrentHP;
 	}
 
 	if(Inventory && EquipInventory)
 	{
-		PawnState.InventoryContents = Inventory->GetInventory();
-		PawnState.EquipInventoryContents = EquipInventory->GetInventory();
+		PawnState->InventoryContents = Inventory->GetInventory();
+		PawnState->EquipInventoryContents = EquipInventory->GetInventory();
 	}
 
-	PawnState.PawnAmmoPrimary = PrimaryAmmo;
-	PawnState.PawnAmmoSecondary = SecondaryAmmo;
-	PawnState.PlayerTotalScore = TotalScore;
+	PawnState->PawnAmmoPrimary = PrimaryAmmo;
+	PawnState->PawnAmmoSecondary = SecondaryAmmo;
+	PawnState->PlayerTotalScore = TotalScore;
 }
 
 void ATankWithInventory::UpdateSavedInventories()
 {
-	if(Inventory && EquipInventory)
+	if(Inventory && EquipInventory && PawnState.IsValid()) 
 	{
-		PawnState.InventoryContents = Inventory->GetInventory();
-		PawnState.EquipInventoryContents = EquipInventory->GetInventory();
+		PawnState->InventoryContents = Inventory->GetInventory();
+		PawnState->EquipInventoryContents = EquipInventory->GetInventory();
 	}
 }
 
 void ATankWithInventory::LoadState(FPawnState& InState)
 {
-	PawnState = InState;
-	SetActorLocation(PawnState.PawnLocation);
-	SetActorRotation(PawnState.PawnRotation);
-	if(HealthComponent)
+	PawnState = MakeShared<FPawnState>(InState);
+
+	if(!PawnState.IsValid())
 	{
-		HealthComponent->CurrentHP = PawnState.PawnHP;
+		return;
 	}
 
-	PrimaryAmmo = PawnState.PawnAmmoPrimary;
-	SecondaryAmmo = PawnState.PawnAmmoSecondary;
+	SetActorLocation(PawnState->PawnLocation);
+	SetActorRotation(PawnState->PawnRotation);
+	if(HealthComponent)
+	{
+		HealthComponent->CurrentHP = PawnState->PawnHP;
+	}
+
+	PrimaryAmmo = PawnState->PawnAmmoPrimary;
+	SecondaryAmmo = PawnState->PawnAmmoSecondary;
 
 	if(InventoryManager)
 	{
-		InventoryManager->LoadInventoriesFromSave(PawnState.InventoryContents, PawnState.EquipInventoryContents);
+		InventoryManager->LoadInventoriesFromSave(PawnState->InventoryContents, PawnState->EquipInventoryContents);
 	}
 }
 
@@ -348,7 +359,9 @@ void ATankWithInventory::PrimaryFire()
 				StatusHUDInfo.WeaponAmmo -= CannonOne->GetAmmoComsumption();
 			}
 		}
-		PawnState.PawnAmmoPrimary = PrimaryAmmo;
+
+		if(PawnState.IsValid())
+			PawnState->PawnAmmoPrimary = PrimaryAmmo;
 		return;
 	}
 
@@ -364,7 +377,9 @@ void ATankWithInventory::PrimaryFire()
 				StatusHUDInfo.WeaponAmmo -= CannonTwo->GetAmmoComsumption();
 			}
 		}
-		PawnState.PawnAmmoSecondary = SecondaryAmmo;
+		
+		if(PawnState.IsValid())
+			PawnState->PawnAmmoSecondary = SecondaryAmmo;
 		return;
 	}
 }
@@ -426,7 +441,9 @@ void ATankWithInventory::TakeDamage(FDamageInfo DamageData)
 {
 	DamageData.DamageValue = DamageData.DamageValue * (1 - DMGReduction);
 	HealthComponent->TakeDamage(DamageData);
-	PawnState.PawnHP -= DamageData.DamageValue;
+	
+	if(PawnState.IsValid())
+		PawnState->PawnHP -= DamageData.DamageValue;
 }
 
 void ATankWithInventory::UseConsumable()

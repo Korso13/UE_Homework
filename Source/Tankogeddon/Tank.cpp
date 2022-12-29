@@ -52,18 +52,21 @@ void ATank::RegisterOnSaveFile()
 {
 	Super::RegisterOnSaveFile();
 
-	PawnState.AIPawnPatrollingPointTag = PatrollingPointTag;
-	PawnState.PawnCurrentWaypointIndex = Cast<AEnemyTankAIController>(GetController())->GetCurrentWaypointIndex();
+	if(PawnState.IsValid())
+	{
+		PawnState->AIPawnPatrollingPointTag = PatrollingPointTag;
+		PawnState->PawnCurrentWaypointIndex = Cast<AEnemyTankAIController>(GetController())->GetCurrentWaypointIndex();
+	}
 }
 
 void ATank::LoadState(FPawnState& InState)
 {
 	Super::LoadState(InState);
 
-	PatrollingPointTag = PawnState.AIPawnPatrollingPointTag;
+	PatrollingPointTag = PawnState->AIPawnPatrollingPointTag;
 	if(auto EnemyAIController = Cast<AEnemyTankAIController>(GetController()))
 	{
-		EnemyAIController->SetCurrentWaypointIndex(PawnState.PawnCurrentWaypointIndex);
+		EnemyAIController->SetCurrentWaypointIndex(PawnState->PawnCurrentWaypointIndex);
 	}
 }
 
@@ -220,7 +223,9 @@ void ATank::PrimaryFire()
 	}
 
 	Cannon->Fire(FireType::Primary);
-	PawnState.PawnAmmoPrimary = Cannon->GetCurrAmmo();
+
+	if(PawnState.IsValid())
+		PawnState->PawnAmmoPrimary = Cannon->GetCurrAmmo();
 }
 
 void ATank::SecondaryFire()
