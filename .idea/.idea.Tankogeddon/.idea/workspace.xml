@@ -6,9 +6,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1ab99bf-fb46-4e15-a2e3-4bcd1238eddc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Tankogeddon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tankogeddon/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/BP_HUD_Manager.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/BP_HUD_Manager.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/BP_Menu_Game_Mode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/BP_Menu_Game_Mode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/BP_TankGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/BP_TankGameMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/BP_TankWithInventory.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/BP_TankWithInventory.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/NPCs/Enemies/BP_TankFactory.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/NPCs/Enemies/BP_TankFactory.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/NPCs/Enemies/BP_TestTank.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/NPCs/Enemies/BP_TestTank.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Weapons/BP_BlitzProjectile.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Weapons/BP_BlitzProjectile.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Weapons/BP_MortarShell.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Weapons/BP_MortarShell.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Weapons/BP_Projectile.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Weapons/BP_Projectile.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/Level1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/Level1.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/Level1_BuiltData.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/Level1_BuiltData.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/Level2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/Level2.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/MainMenuLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/MainMenuLevel.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/QuestSystem/BP_QuestLocation.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/QuestSystem/BP_QuestLocation.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Widgets/DataTables/DT_RichTextWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Widgets/DataTables/DT_RichTextWidget.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Widgets/W_DualMainMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Widgets/W_DualMainMenu.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Widgets/W_MainMenu.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Widgets/W_PlayerStatus.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Widgets/W_PlayerStatus.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/InteractionSubsystem/Intermediate/Build/Win64/UE4Editor/Inc/InteractionSubsystem/Timestamp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/InteractionSubsystem/Intermediate/Build/Win64/UE4Editor/Inc/InteractionSubsystem/Timestamp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/QuestSystem/Intermediate/Build/Win64/UE4Editor/Inc/QuestSystem/Timestamp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/QuestSystem/Intermediate/Build/Win64/UE4Editor/Inc/QuestSystem/Timestamp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Binaries/Win64/UE4Editor-TankInventorySystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Binaries/Win64/UE4Editor-TankInventorySystem.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Binaries/Win64/UE4Editor-TankInventorySystem.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Binaries/Win64/UE4Editor-TankInventorySystem.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/InventoryWidget.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/InventoryWidget.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/LiveCodingInfo.json" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/LiveCodingInfo.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/Module.TankInventorySystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/Module.TankInventorySystem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/Module.TankInventorySystem.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/Module.TankInventorySystem.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/Module.TankInventorySystem.cpp.old" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/Module.TankInventorySystem.cpp.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/Module.TankInventorySystem.cpp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/Module.TankInventorySystem.cpp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/Module.TankInventorySystem.gen.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/Module.TankInventorySystem.gen.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.dll.response" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.dll.response" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.dll.response.old" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.dll.response.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.exp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.exp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.lib" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.lib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.lib.response" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.lib.response" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.lib.response.old" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.lib.response.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.suppressed.exp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.suppressed.exp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.suppressed.lib" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Development/TankInventorySystem/UE4Editor-TankInventorySystem.suppressed.lib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Inc/TankInventorySystem/Timestamp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Intermediate/Build/Win64/UE4Editor/Inc/TankInventorySystem/Timestamp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Source/TankInventorySystem/Private/InventoryWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Source/TankInventorySystem/Private/InventoryWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/TankInventorySystem/Source/TankInventorySystem/Public/InventoryComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/TankInventorySystem/Source/TankInventorySystem/Public/InventoryComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/Base_Pawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/Base_Pawn.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/Base_Pawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/Base_Pawn.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/EnemyTankAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/EnemyTankAIController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/EnemyTankAIController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/EnemyTankAIController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/Private/SaveManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/Private/SaveManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/Private/TankWithInventory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/Private/TankWithInventory.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/Public/TankSaveGame.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/Public/TankSaveGame.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/Public/TankWithInventory.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/Public/TankWithInventory.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/Tank.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/Tank.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/Tank.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/Tank.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/TankFactory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/TankFactory.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/TankFactory.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/TankFactory.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/TankPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/TankPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/Turret.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Tankogeddon/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Tankogeddon/Turret.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +80,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
@@ -261,7 +317,8 @@
       <option name="presentableId" value="Default" />
       <updated>1672261983554</updated>
       <workItem from="1672261986616" duration="1506000" />
-      <workItem from="1672329873527" duration="2814000" />
+      <workItem from="1672329873527" duration="10980000" />
+      <workItem from="1672387302326" duration="21630000" />
     </task>
     <servers />
   </component>

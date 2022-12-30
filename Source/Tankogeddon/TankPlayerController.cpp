@@ -8,6 +8,7 @@
 #include "SlateBasics.h"
 #include "TankWithInventory.h"
 #include "InventoryManagerComponent.h"
+#include "Components/ArrowComponent.h"
 
 
 ATankPlayerController::ATankPlayerController()

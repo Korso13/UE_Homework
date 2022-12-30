@@ -47,8 +47,7 @@ public:
 		UParticleSystemComponent* PostDestructionPersistentEffect;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SFX")
 		UAudioComponent* OnDestructionAudioEffect;
-
-
+	
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tank Factory")
 		bool IsWorkingOnSpawn = true;
@@ -111,10 +110,12 @@ public:
 
 	void UpdateBuildingState(); //updates dynamically changing data on save file object
 
-	void LoadState(FBuildingState& InState); //called on GameLoad 
+	void LoadState(FBuildingState& InState); //called on GameLoad
+
+	FBuildingState GetBuildingState() const {return *BuildingSaveState;}
 
 	//UPROPERTY()
-	TSharedPtr<FBuildingState> BuildingSaveState /*= *(new FBuildingState())*/;
+	FBuildingState* BuildingSaveState;
 	
 private:
 	void OnSpawnTick();

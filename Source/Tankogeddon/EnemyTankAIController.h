@@ -61,4 +61,6 @@ public:
 	FORCEINLINE int32 GetCurrentWaypointIndex() const {return CurrentWaypointIndex;};
 
 	FORCEINLINE void SetCurrentWaypointIndex(int32 InIndex) {CurrentWaypointIndex = InIndex;};
+
+	void ResetBehavior();
 };

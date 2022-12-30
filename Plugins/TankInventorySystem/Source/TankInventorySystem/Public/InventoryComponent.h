@@ -41,6 +41,8 @@ public:
 
 	FORCEINLINE const TMap<int32, FInventorySlotInfo>& GetInventory() const { return InventoryContents;}
 
+	TMap<int32, FInventorySlotInfo> GetInventoryCopy() const { return InventoryContents;}
+	
 	virtual void LoadInventory(TMap<int32, FInventorySlotInfo> InInventory); //for save-load mechanic
 	
 	FORCEINLINE int32 GetInventorySize() const {return InventoryContents.Num();}

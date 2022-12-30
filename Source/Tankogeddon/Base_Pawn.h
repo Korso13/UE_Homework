@@ -72,7 +72,7 @@ protected:
 	USaveManager* SaveManager;
 
 	//UPROPERTY()
-	TSharedPtr<FPawnState> PawnState;; //ref to pawn's FPawnState record on current save object
+	FPawnState* PawnState;; //ref to pawn's FPawnState record on current save object
 
 	UPROPERTY()
 	ACanon* Cannon;
@@ -130,7 +130,7 @@ protected:
 	virtual void ScoredKill(FScoredKillData KillData);
 
 	UFUNCTION()
-	virtual void OnBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	virtual void OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
 	UFUNCTION()
 	virtual void OnDetectionSphereEndOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
@@ -143,9 +143,13 @@ public:
 
 	friend class USaveManager;
 
+	FORCEINLINE FPawnState GetPawnState() const {return *PawnState;}
+
 	virtual void TakeDamage(FDamageInfo DamageData) override;
 
 	virtual int32 GetScore() const override;
+
+	virtual ACanon* GetCannon() const { return Cannon;};
 
 	virtual void ResetScoreOnDeath() override { ScoreValue = 0; }
 

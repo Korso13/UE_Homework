@@ -104,9 +104,12 @@ public:
 
 	virtual void ChangeCanon(TSubclassOf<ACanon> _CanonType) override { return; };
 
-	virtual void PrimaryFire();
+	UFUNCTION(BlueprintCallable)
+	virtual ACanon* GetCannon() const override;
 
-	virtual void SecondaryFire();
+	virtual void PrimaryFire() override;
+
+	virtual void SecondaryFire() override;
 
 	virtual void MoveForward(const float ForwardAxisImpulse) override;
 
@@ -127,7 +130,7 @@ public:
 
 	void HPTopup(float RestoredHP);
 	
-	virtual UInventoryManagerComponent* GetInventoryManager() { return InventoryManager; }
+	virtual UInventoryManagerComponent* GetInventoryManager() override { return InventoryManager; }
 	
 	UFUNCTION()
 	void ToggleInventoryWidget() const;

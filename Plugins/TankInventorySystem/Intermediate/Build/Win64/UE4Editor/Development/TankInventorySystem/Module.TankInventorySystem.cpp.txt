@@ -148,12 +148,5 @@ D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetBlueprintLibr
 D:/UE_projects/Homework/Plugins/TankInventorySystem/Source/TankInventorySystem/Private/InventoryComponent.cpp
 D:/UE_projects/Homework/Plugins/TankInventorySystem/Source/TankInventorySystem/Private/InventoryManagerComponent.cpp
 D:/UE_projects/Homework/Plugins/TankInventorySystem/Source/TankInventorySystem/Private/InventoryStructs.cpp
-D:/UE_projects/Homework/Plugins/TankInventorySystem/Source/TankInventorySystem/Private/InventoryWidget.cpp
-D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/UniformGridPanel.h
-D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/PanelWidget.h
-D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/PanelSlot.h
-D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\PanelSlot.generated.h
-D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\PanelWidget.generated.h
-D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\UniformGridPanel.generated.h
 D:/UE_projects/Homework/Plugins/TankInventorySystem/Source/TankInventorySystem/Private/TankInventorySystem.cpp
 D:\UE_projects\Homework\Plugins\TankInventorySystem\Source\TankInventorySystem\Public\TankInventorySystem.h

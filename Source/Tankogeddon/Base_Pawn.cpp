@@ -80,13 +80,11 @@ void ABase_Pawn::BeginPlay()
 	Super::BeginPlay();
 
 	OnScoredKill.AddUObject(this, &ABase_Pawn::ScoredKill);
-
-	RegisterOnSaveFile();
 }
 
 void ABase_Pawn::OnDeath()
 {
-	if(PawnState.IsValid())
+	if(PawnState)
 	{
 		PawnState->IsDead = true;
 	}
@@ -131,15 +129,16 @@ void ABase_Pawn::RegisterOnSaveFile()
 	}
 	
 	//SaveManager->CurrentSave->EnemyPawns.Add(GetName(), FPawnState{});
-	PawnState = MakeShared<FPawnState>(SaveManager->CurrentSave->EnemyPawns.FindOrAdd(GetName(), FPawnState{}));
-
-	if(!PawnState.IsValid())
+	SaveManager->CurrentSave->EnemyPawns.FindOrAdd(GetName(), FPawnState{});
+	PawnState = SaveManager->CurrentSave->EnemyPawns.Find(GetName());
+		
+	if(!PawnState)
 	{
 		return;
 	}
 	
 	PawnState->SavedPawn = this;
-	PawnState->PawnClass = StaticClass();
+	//PawnState->PawnClass = GetClass(); needs to be called from derived class!!!
 	PawnState->PawnLocation = GetActorLocation();
 	PawnState->PawnRotation = GetActorRotation();
 	PawnState->IsAI = true;
@@ -155,9 +154,9 @@ void ABase_Pawn::RegisterOnSaveFile()
 
 void ABase_Pawn::LoadState(FPawnState& InState)
 {
-	PawnState = MakeShared<FPawnState>(InState);
+	PawnState = &InState;
 
-	if(!PawnState.IsValid())
+	if(!PawnState)
 	{
 		return;
 	}
@@ -172,6 +171,8 @@ void ABase_Pawn::LoadState(FPawnState& InState)
 	{
 		Cannon->SetCurrAmmo(PawnState->PawnAmmoPrimary);
 	}
+
+	RegisterOnSaveFile();
 }
 
 void ABase_Pawn::Destroyed()
@@ -201,7 +202,7 @@ void ABase_Pawn::OnTakingDamage_Implementation(FDamageInfo Damage)
 void ABase_Pawn::TakeDamage(FDamageInfo DamageData)
 {
 	HealthComponent->TakeDamage(DamageData);
-	if(PawnState.IsValid())
+	if(PawnState)
 		PawnState->PawnHP -= DamageData.DamageValue;
 }
 
@@ -227,6 +228,7 @@ void ABase_Pawn::ScoredKill(FScoredKillData KillData)
 		if((KillData.ScoreValue > 0) && KillData.Killer == this)
 		{
 			TotalScore += KillData.ScoreValue;
+			PawnState->PlayerTotalScore = TotalScore;
 		}
 	}
 }

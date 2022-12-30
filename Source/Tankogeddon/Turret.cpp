@@ -43,6 +43,35 @@ void ATurret::BeginPlay()
 	}
 
 	GetWorld()->GetTimerManager().SetTimer(TargetingTimer, this, &ATurret::Targeting, TargetingUpdateRate, true);
+
+	RegisterOnSaveFile();
+}
+
+void ATurret::RegisterOnSaveFile()
+{
+	ABase_Pawn::RegisterOnSaveFile();
+
+	if(PawnState)
+	{
+		PawnState->PawnClass = GetClass();
+		PawnState->PawnAmmoPrimary = 100;
+	}
+}
+
+void ATurret::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor == this || OtherActor == GetInstigator() || OtherActor == nullptr)
+	{
+		return;
+	}
+	//if (!OtherActor->IsA<APawn>())
+	if (OtherActor->GetClass() != TargetType)
+	{
+		return;
+	}
+	Targets.Add(OtherActor);
+	FindBestTarget();
 }
 
 // Called every frame
@@ -55,7 +84,7 @@ void ATurret::Tick(float DeltaTime)
 		if(IsVisible(CurrentTarget) || Cannon->AngleTargetingNeeded)
 		{
 			Cannon->Fire(FireType::Primary);
-			if(PawnState.IsValid())
+			if(PawnState)
 				PawnState->PawnAmmoPrimary = Cannon->GetCurrAmmo();
 		}
 	}

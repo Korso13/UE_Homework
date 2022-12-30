@@ -15,7 +15,7 @@ USTRUCT(BlueprintType)
 struct FPawnState
 {
 	GENERATED_BODY()
-
+	
 	UPROPERTY(BlueprintReadWrite)
 	FVector PawnLocation;
 	
@@ -46,7 +46,7 @@ struct FPawnState
 	bool IsDead = false; //needed for loads for earlier save (or level start) into the same level but with some enemies already killed
 
 	UPROPERTY(BlueprintReadWrite)
-	TWeakObjectPtr<ABase_Pawn> SavedPawn; //if not valid on load, spawn anew and write into this var
+	ABase_Pawn* SavedPawn; //if not valid on load, spawn anew and write into this var
 
 	UPROPERTY(BlueprintReadWrite)
 	TSubclassOf<ABase_Pawn> PawnClass; //in case need to respawn non-existing pawn
@@ -65,7 +65,7 @@ struct FBuildingState //such as TankFactories and Satellite stations
 
 	//general data
 	UPROPERTY()
-	TWeakObjectPtr<AActor> SavedBuilding;
+	AActor* SavedBuilding;
 
 	UPROPERTY(BlueprintReadWrite)
 	TSubclassOf<AActor> BuildingClass;

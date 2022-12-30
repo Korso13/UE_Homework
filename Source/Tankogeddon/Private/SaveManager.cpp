@@ -8,6 +8,7 @@
 #include "Tankogeddon/Base_Pawn.h"
 #include "Tankogeddon/TankFactory.h"
 #include "TankWithInventory.h"
+#include "Tankogeddon/EnemyTankAIController.h"
 
 void USaveManager::OnGameLoadedFunc(const FString& SlotName, const int32 UserIndex, USaveGame* SaveGame)
 {
@@ -26,71 +27,73 @@ void USaveManager::OnGameLoadedFunc(const FString& SlotName, const int32 UserInd
 	//restoring player tank's state
 	Cast<ATankWithInventory>(UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn())->LoadState(CurrentSave->TankPawnState);
 
-	//removing Proceduraly Spawned Actors that may not exist in loaded save state. Those, which did will be respawned later in this function
-	for(auto ToBeScrappedActor : ProceduralySpawnedActors)
-	{
-		if(ToBeScrappedActor)
-		{
-			ToBeScrappedActor->Destroy();
-			ToBeScrappedActor->DisableComponentsSimulatePhysics();
-			ToBeScrappedActor->SetActorEnableCollision(false);
-			ToBeScrappedActor->SetHidden(true);
-		}
-	}
-	ProceduralySpawnedActors.Empty();
-
+	//copying TMap with pawns to avoid changes to it during for-ranged cycle. Clearing original TMap as well
+	auto PawnsToRestore = CurrentSave->EnemyPawns; 
+	CurrentSave->EnemyPawns.Empty();
 	//restoring enemy pawns
-	for(auto [PawnName, Pawn] : CurrentSave->EnemyPawns)
+	for(auto [PawnName, Pawn] : PawnsToRestore)
 	{
-		if(!Pawn.SavedPawn.IsValid() && !Pawn.IsDead)
+		if(Pawn.SavedPawn)
+		{
+			FString NameOld = Pawn.SavedPawn->GetName();
+			Pawn.SavedPawn->Destroy();
+			Pawn.SavedPawn->DisableComponentsSimulatePhysics();
+			Pawn.SavedPawn->SetActorEnableCollision(false);
+			Pawn.SavedPawn->SetHidden(true);
+		}
+
+		if(!Pawn.IsDead)
 		{
 			FActorSpawnParameters SpawnParams;
-			SpawnParams.Name = FName{PawnName};
-			SpawnParams.Instigator = UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn();
-			SpawnParams.Owner = UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn();
+			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			Pawn.SavedPawn = GetWorld()->SpawnActor<ABase_Pawn>(Pawn.PawnClass, Pawn.PawnLocation, Pawn.PawnRotation, SpawnParams);
 		}
-
-		if(Pawn.SavedPawn.IsValid() && Pawn.IsDead) //pawn should be dead but is valid in as per pre-load world.
+		
+		if(Pawn.SavedPawn) //pawn is and should be alive, restoring previous state
 		{
-			Pawn.SavedPawn->Destroy();
-			Pawn.SavedPawn->SetHidden(true);
-			Pawn.SavedPawn->SetActorEnableCollision(false);
-			Pawn.SavedPawn->LoadState(Pawn);
-			break;
-		}
-
-		if(Pawn.SavedPawn.IsValid()) //pawn is and should be alive, restoring previous state
-		{
+			FString NameNew = Pawn.SavedPawn->GetName();
 			Pawn.SavedPawn->LoadState(Pawn);
 		}
+		CurrentSave->EnemyPawns.Remove(PawnName); //removing records of no longer valid old pawns. New ones have already registered
 	}
 
+	//copying TMap with buildings to avoid changes to it during for-ranged cycle. Clearing original TMap as well
+	auto BuildingsToRestore = CurrentSave->Buildings;
+	CurrentSave->Buildings.Empty();
+
 	//restoring interactive Actor-buildings (Only TankFactory for now, TODO: add satellite stations, depots, pickups (preferably via an interface)
-	for(auto [BuildingName, Building] : CurrentSave->Buildings)
+	for(auto [BuildingName, Building] : BuildingsToRestore)
 	{
-		if(!Building.SavedBuilding.IsValid() && !Building.IsDestroyed) //in case building can be fully removed from level
+		if(Building.SavedBuilding)
 		{
-			FActorSpawnParameters SpawnParams;
-			SpawnParams.Name = FName{BuildingName};
-			SpawnParams.Instigator = UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn();
-			SpawnParams.Owner = UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn();
-			Building.SavedBuilding = GetWorld()->SpawnActor<ABase_Pawn>(Building.BuildingClass, Building.BuildingLocation, Building.BuildingRotation, SpawnParams);
+			Building.SavedBuilding->Destroy();
+			Building.SavedBuilding->DisableComponentsSimulatePhysics();
+			Building.SavedBuilding->SetActorEnableCollision(false);
+			Building.SavedBuilding->SetHidden(true);
 		}
 
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		Building.SavedBuilding = GetWorld()->SpawnActor<AActor>(Building.BuildingClass, Building.BuildingLocation, Building.BuildingRotation, SpawnParams);
+		
 		//restoring tank factory TODO: remake via interface for all buildings
-		if(Building.SavedBuilding.IsValid())
+		if(Building.SavedBuilding)
 		{
 			Cast<ATankFactory>(Building.SavedBuilding)->LoadState(Building);
 		}
+		CurrentSave->Buildings.Remove(BuildingName); //removing old instances of Buildings
 	}
 }
 
 void USaveManager::OnGameSavedFunc(const FString& SlotName, const int32 UserIndex, bool bSuccess)
 {
-	if (OnGameSaved.IsBound())
+	if (OnGameSaved.IsBound() && bSuccess)
 	{
 		OnGameSaved.Broadcast(SlotName);
+	}
+	else if(!bSuccess)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Save failed"));
 	}
 }
 
@@ -108,10 +111,30 @@ void USaveManager::UpateDynamicSaveData()
 
 	for(auto& [PawnName, Pawn ]: CurrentSave->EnemyPawns)
 	{
-		if(Pawn.SavedPawn.IsValid() && !Pawn.IsDead)
+		if(Pawn.SavedPawn && !Pawn.IsDead)
 		{
 			Pawn.PawnLocation = Pawn.SavedPawn->GetActorLocation();
 			Pawn.PawnRotation = Pawn.SavedPawn->GetActorRotation();
+		}
+
+		if(Pawn.SavedPawn)
+		{
+			Pawn = Pawn.SavedPawn->GetPawnState();
+		}
+
+		if(!Pawn.SavedPawn)
+			Pawn.IsDead = true;
+	}
+
+	for(auto& [BuildingName, Building ]: CurrentSave->Buildings)
+	{
+		if(Building.SavedBuilding)
+		{
+			auto TankFactory = Cast<ATankFactory>(Building.SavedBuilding);
+			if(TankFactory)
+			{
+				Building = TankFactory->GetBuildingState();
+			}
 		}
 	}
 

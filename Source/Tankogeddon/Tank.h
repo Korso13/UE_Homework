@@ -109,9 +109,8 @@ public:
 
 	UFUNCTION()
 	virtual void SwitchWeapon();
-
-	UFUNCTION(BlueprintCallable)
-	ACanon* GetCannon() const { return Cannon; }
+	
+	virtual ACanon* GetCannon() const { return Cannon; }
 
 	UFUNCTION(BlueprintCallable)
 	TSubclassOf<ACanon> GetCannonClass() const { return CurrentCanonClass; }

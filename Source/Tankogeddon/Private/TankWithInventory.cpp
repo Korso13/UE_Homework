@@ -79,6 +79,8 @@ void ATankWithInventory::BeginPlay()
 		FirstCannonUsed = false;
 		SecondCannonUsed = false;
 	}
+	
+	RegisterOnSaveFile();
 }
 
 void ATankWithInventory::RegisterOnSaveFile()
@@ -88,17 +90,19 @@ void ATankWithInventory::RegisterOnSaveFile()
 		SaveManager = Cast<UTankGameInstance>(GetGameInstance())->GetSaveManager(GetWorld());
 	}
 	
-	PawnState = MakeShared<FPawnState>(SaveManager->CurrentSave->TankPawnState);
-
-	if(!PawnState.IsValid())
+	//PawnState = MakeShared<FPawnState>(SaveManager->CurrentSave->TankPawnState);
+	PawnState = &SaveManager->CurrentSave->TankPawnState;
+	
+	if(!PawnState)
 	{
 		return;
 	}
 	
 	PawnState->SavedPawn = this;
-	PawnState->PawnClass = StaticClass();
+	PawnState->PawnClass = GetClass();
 	PawnState->PawnLocation = GetActorLocation();
 	PawnState->PawnRotation = GetActorRotation();
+	PawnState->PlayerTotalScore = TotalScore;
 	PawnState->IsAI = false;
 
 	if(HealthComponent)
@@ -119,18 +123,20 @@ void ATankWithInventory::RegisterOnSaveFile()
 
 void ATankWithInventory::UpdateSavedInventories()
 {
-	if(Inventory && EquipInventory && PawnState.IsValid()) 
+	if(Inventory && EquipInventory && PawnState) 
 	{
-		PawnState->InventoryContents = Inventory->GetInventory();
-		PawnState->EquipInventoryContents = EquipInventory->GetInventory();
+		PawnState->InventoryContents.Empty();
+		PawnState->InventoryContents = Inventory->GetInventoryCopy();
+		PawnState->EquipInventoryContents.Empty();
+		PawnState->EquipInventoryContents = EquipInventory->GetInventoryCopy();
 	}
 }
 
 void ATankWithInventory::LoadState(FPawnState& InState)
 {
-	PawnState = MakeShared<FPawnState>(InState);
+	PawnState = &InState;
 
-	if(!PawnState.IsValid())
+	if(!PawnState)
 	{
 		return;
 	}
@@ -143,12 +149,25 @@ void ATankWithInventory::LoadState(FPawnState& InState)
 	}
 
 	PrimaryAmmo = PawnState->PawnAmmoPrimary;
+	if(CannonOne)
+	{
+		CannonOne->SetCurrAmmo(PrimaryAmmo);
+	}
 	SecondaryAmmo = PawnState->PawnAmmoSecondary;
+	if(CannonTwo)
+	{
+		CannonTwo->SetCurrAmmo(SecondaryAmmo);
+	}
 
+	TotalScore = PawnState->PlayerTotalScore;
+	
 	if(InventoryManager)
 	{
 		InventoryManager->LoadInventoriesFromSave(PawnState->InventoryContents, PawnState->EquipInventoryContents);
 	}
+
+	StatusHUDInfo.CurrentWeapon = (FirstCannonUsed ? CannonOne : CannonTwo);
+	StatusHUDInfo.WeaponAmmo = (FirstCannonUsed ? PrimaryAmmo : SecondaryAmmo);
 }
 
 void ATankWithInventory::EquipCannon(const FInventoryItemInfo* InItemInfo, bool bToEquip, EEquipSlot CannonSlot)
@@ -342,6 +361,11 @@ void ATankWithInventory::SwitchWeapon()
 
 }
 
+ACanon* ATankWithInventory::GetCannon() const
+{
+	return (FirstCannonUsed ? CannonOne : CannonTwo);
+}
+
 void ATankWithInventory::PrimaryFire()
 {
 	if (!FirstCannonUsed && !SecondCannonUsed)
@@ -360,7 +384,7 @@ void ATankWithInventory::PrimaryFire()
 			}
 		}
 
-		if(PawnState.IsValid())
+		if(PawnState)
 			PawnState->PawnAmmoPrimary = PrimaryAmmo;
 		return;
 	}
@@ -378,7 +402,7 @@ void ATankWithInventory::PrimaryFire()
 			}
 		}
 		
-		if(PawnState.IsValid())
+		if(PawnState)
 			PawnState->PawnAmmoSecondary = SecondaryAmmo;
 		return;
 	}
@@ -442,7 +466,7 @@ void ATankWithInventory::TakeDamage(FDamageInfo DamageData)
 	DamageData.DamageValue = DamageData.DamageValue * (1 - DMGReduction);
 	HealthComponent->TakeDamage(DamageData);
 	
-	if(PawnState.IsValid())
+	if(PawnState)
 		PawnState->PawnHP -= DamageData.DamageValue;
 }
 

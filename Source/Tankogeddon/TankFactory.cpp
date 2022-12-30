@@ -71,15 +71,16 @@ void ATankFactory::RegisterOnSaveFile()
 {
 	if(auto SaveManager = Cast<UTankGameInstance>(GetGameInstance())->GetSaveManager(GetWorld()))
 	{
-		BuildingSaveState = MakeShared<FBuildingState>(SaveManager->CurrentSave->Buildings.FindOrAdd(GetName(), FBuildingState{}));
-
-		if(!BuildingSaveState.IsValid())
+		SaveManager->CurrentSave->Buildings.FindOrAdd(GetName(), FBuildingState{});
+		BuildingSaveState = SaveManager->CurrentSave->Buildings.Find(GetName());
+		
+		if(!BuildingSaveState)
 		{
 			return;
 		}
 		
-		BuildingSaveState->SavedBuilding = this;
-		BuildingSaveState->BuildingClass = StaticClass();
+		BuildingSaveState->SavedBuilding = this; 
+		BuildingSaveState->BuildingClass = GetClass();
 		BuildingSaveState->BuildingLocation = GetActorLocation();
 		BuildingSaveState->BuildingRotation = GetActorRotation();
 		BuildingSaveState->IsEnemy = true;
@@ -99,7 +100,7 @@ void ATankFactory::RegisterOnSaveFile()
 
 void ATankFactory::UpdateBuildingState()
 {
-	if(!BuildingSaveState.IsValid())
+	if(!BuildingSaveState)
 	{
 		return;
 	}
@@ -117,7 +118,7 @@ void ATankFactory::UpdateBuildingState()
 void ATankFactory::LoadState(FBuildingState& InState)
 {
 	//checking if need to restore building
-	if(InState.IsDestroyed == false && BuildingSaveState->IsDestroyed == true)
+	/*if(InState.IsDestroyed == false && BuildingSaveState->IsDestroyed == true)
 	{
 		//reverting OnDeath() effects
 		OnDestructionEffect->Deactivate();
@@ -128,11 +129,11 @@ void ATankFactory::LoadState(FBuildingState& InState)
 		BodyMesh->ToggleVisibility();
 		BodyMesh->SetCollisionProfileName(FName("BlockAll"), false);
 		StartProduction();
-	}
+	}*/
 
-	BuildingSaveState = MakeShared<FBuildingState>(InState);
+	BuildingSaveState = &InState;
 
-	if(!BuildingSaveState.IsValid())
+	if(!BuildingSaveState)
 	{
 		return;
 	}
@@ -140,16 +141,28 @@ void ATankFactory::LoadState(FBuildingState& InState)
 	SetActorLocation(BuildingSaveState->BuildingLocation);
 	SetActorRotation(BuildingSaveState->BuildingRotation);
 
-	PatrollingPointTag = BuildingSaveState->PatrollingPointTag;
-	CurrentPatrollingID = BuildingSaveState->CurrentPatrollingID;
-	SpawnTimer = BuildingSaveState->SpawnTimer;
-	Tags.Empty();
-	Tags = BuildingSaveState->ActorTags;
-	
-	if(HealthComponent)
+	if(BuildingSaveState->IsDestroyed == true)
 	{
+		OnDeath();
 		HealthComponent->CurrentHP = BuildingSaveState->BuildingHP;
 	}
+	else
+	{
+		PatrollingPointTag = BuildingSaveState->PatrollingPointTag;
+		CurrentPatrollingID = BuildingSaveState->CurrentPatrollingID;
+		SpawnTimer = BuildingSaveState->SpawnTimer;
+		Tags.Empty();
+		Tags = BuildingSaveState->ActorTags;
+		
+		if(HealthComponent)
+		{
+			HealthComponent->CurrentHP = BuildingSaveState->BuildingHP;
+		}
+
+		StartProduction();
+	}
+
+	RegisterOnSaveFile();
 }
 
 void ATankFactory::OnDeath()
@@ -172,7 +185,7 @@ void ATankFactory::OnDeath()
 	PostDestructionPersistentEffect->Activate();
 	UpdateBuildingState();
 
-	if(BuildingSaveState.IsValid())
+	if(BuildingSaveState)
 	{
 		BuildingSaveState->IsDestroyed = true;
 	}
@@ -222,12 +235,12 @@ void ATankFactory::OnSpawnTick()
 		CurrentPatrollingID++;
 		Tank->TankSpawnID = TankSpawnID;
 
-		//allowing scrapping of spawned tanks in case of game load (tanks existing in save will be respawned)
+		/*//allowing scrapping of spawned tanks in case of game load (tanks existing in save will be respawned)
 		auto SaveManager = Cast<UTankGameInstance>(GetGameInstance())->GetSaveManager(GetWorld());
 		if(SaveManager)
 		{
 			SaveManager->ProceduralySpawnedActors.Add(Tank);
-		}
+		}*/
 			
 		TankSpawnID++;
 		UGameplayStatics::FinishSpawningActor(Tank, SpawnTransform);

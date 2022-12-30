@@ -71,7 +71,7 @@ void AEnemyTankAIController::Tick(float DeltaTime)
 			CurrentWaypointIndex++;
 		}
 
-		if(TankPawn->PawnState.IsValid())
+		if(TankPawn->PawnState)
 			TankPawn->PawnState->PawnCurrentWaypointIndex = CurrentWaypointIndex;
 	}
 
@@ -244,4 +244,20 @@ FVector AEnemyTankAIController::GetTargetLocation() const
 	}
 
 	return TankPawn->GetActorLocation() + TankPawn->GetActorForwardVector();
+}
+
+void AEnemyTankAIController::ResetBehavior()
+{
+	if(TankPawn)
+	{
+		PatrollingPointTag = TankPawn->PatrollingPointTag;
+	}
+	if(TankPawn)
+	{
+		TargetChangedDelegate = TankPawn->OnTargetsChanged.AddUObject(this, &AEnemyTankAIController::OnTargetsChanged);
+	}
+	RebuildWaypoints();
+	CurrentWaypointIndex = TankPawn->GetPawnState().PawnCurrentWaypointIndex;
+	OnTargetsChanged();
+	
 }

@@ -70,7 +70,12 @@ void UInventoryWidget::Init(int32 InventorySize)
         for (auto* Cell : CellWidgets)
         {
             FInventorySlotInfo SlotInfo;
-            SlotInfo = ParentInventory->GetInventory()[Cell->IndexInInventory];
+            if(Cell && ParentInventory->GetInventory().Num() > 0)
+                SlotInfo = ParentInventory->GetInventory()[Cell->IndexInInventory];
+            else
+            {
+                SlotInfo = FInventorySlotInfo();
+            }
             
             const FInventoryItemInfo* InitItemInfo = InventoryManager->GetItemData(SlotInfo.ItemId);
             if (InitItemInfo != nullptr)

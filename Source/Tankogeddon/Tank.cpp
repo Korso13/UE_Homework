@@ -46,14 +46,17 @@ void ATank::BeginPlay()
 	SetupCanon();
 	if(Cannon)
 	CannonOne = Cannon;
+	
+	RegisterOnSaveFile();
 }
 
 void ATank::RegisterOnSaveFile()
 {
 	Super::RegisterOnSaveFile();
 
-	if(PawnState.IsValid())
+	if(PawnState)
 	{
+		PawnState->PawnClass = GetClass();
 		PawnState->AIPawnPatrollingPointTag = PatrollingPointTag;
 		PawnState->PawnCurrentWaypointIndex = Cast<AEnemyTankAIController>(GetController())->GetCurrentWaypointIndex();
 	}
@@ -67,6 +70,7 @@ void ATank::LoadState(FPawnState& InState)
 	if(auto EnemyAIController = Cast<AEnemyTankAIController>(GetController()))
 	{
 		EnemyAIController->SetCurrentWaypointIndex(PawnState->PawnCurrentWaypointIndex);
+		EnemyAIController->ResetBehavior();
 	}
 }
 
@@ -224,7 +228,7 @@ void ATank::PrimaryFire()
 
 	Cannon->Fire(FireType::Primary);
 
-	if(PawnState.IsValid())
+	if(PawnState)
 		PawnState->PawnAmmoPrimary = Cannon->GetCurrAmmo();
 }
 
