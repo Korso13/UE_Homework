@@ -126,9 +126,9 @@ void ATankWithInventory::UpdateSavedInventories()
 	if(Inventory && EquipInventory && PawnState) 
 	{
 		PawnState->InventoryContents.Empty();
-		PawnState->InventoryContents = Inventory->GetInventoryCopy();
+		PawnState->InventoryContents = Inventory->GetInventory();
 		PawnState->EquipInventoryContents.Empty();
-		PawnState->EquipInventoryContents = EquipInventory->GetInventoryCopy();
+		PawnState->EquipInventoryContents = EquipInventory->GetInventory();
 	}
 }
 
@@ -164,8 +164,81 @@ void ATankWithInventory::LoadState(FPawnState& InState)
 	if(InventoryManager)
 	{
 		InventoryManager->LoadInventoriesFromSave(PawnState->InventoryContents, PawnState->EquipInventoryContents);
+
+		//updating tank's equipment from restored equip inventory
+		for(auto [id, item] : EquipInventory->GetInventory())
+		{
+			switch (id)
+			{
+				case (0):
+					{
+						if(item.ItemId == "NoItem")
+						{
+							EquipItem(EEquipSlot::EQ_PrimaryCannon, item.ItemId, false);
+						}
+						else
+						{
+							EquipItem(EEquipSlot::EQ_PrimaryCannon, item.ItemId, true);
+						}
+						break;
+					}
+				case (1):
+					{
+						if(item.ItemId == "NoItem")
+						{
+							EquipItem(EEquipSlot::EQ_SecondaryCannon, item.ItemId, false);
+						}
+						else
+						{
+							EquipItem(EEquipSlot::EQ_SecondaryCannon, item.ItemId, true);
+						}
+						break;
+					}
+				case (2):
+					{
+						if(item.ItemId == "NoItem")
+						{
+							EquipItem(EEquipSlot::EQ_Armor, item.ItemId, false);
+						}
+						else
+						{
+							EquipItem(EEquipSlot::EQ_Armor, item.ItemId, true);
+						}
+						break;
+					}
+				case (3):
+					{
+						if(item.ItemId == "NoItem")
+						{
+							EquipItem(EEquipSlot::EQ_PowerModule, item.ItemId, false);
+						}
+						else
+						{
+							EquipItem(EEquipSlot::EQ_PowerModule, item.ItemId, true);
+						}
+						break;
+					}
+				case (4):
+					{
+						if(item.ItemId == "NoItem")
+						{
+							EquipItem(EEquipSlot::EQ_Consumable, item.ItemId, false);
+						}
+						else
+						{
+							EquipItem(EEquipSlot::EQ_Consumable, item.ItemId, true);
+						}
+						break;
+					}
+				default:
+					{
+						break;
+					}
+			}
+		}
 	}
 
+	//updating info for HUD
 	StatusHUDInfo.CurrentWeapon = (FirstCannonUsed ? CannonOne : CannonTwo);
 	StatusHUDInfo.WeaponAmmo = (FirstCannonUsed ? PrimaryAmmo : SecondaryAmmo);
 }

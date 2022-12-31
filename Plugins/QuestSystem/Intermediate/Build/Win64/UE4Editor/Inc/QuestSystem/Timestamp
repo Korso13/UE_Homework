@@ -1,11 +1,11 @@
 D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\CurrentObjectivesWidget.h
-D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\Objective.h
-D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\ObjectiveWidget.h
 D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\Quest.h
 D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestBoard.h
 D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestDescriptionWidget.h
 D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestDialogueWidget.h
 D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestGiver.h
 D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestListEntry.h
-D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestManager.h
 D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestLocationMarker.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\QuestManager.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\Objective.h
+D:\UE_projects\Homework\Plugins\QuestSystem\Source\QuestSystem\Public\ObjectiveWidget.h

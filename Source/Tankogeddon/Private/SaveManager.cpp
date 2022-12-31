@@ -25,8 +25,11 @@ void USaveManager::OnGameLoadedFunc(const FString& SlotName, const int32 UserInd
 	}
 
 	//restoring player tank's state
-	Cast<ATankWithInventory>(UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn())->LoadState(CurrentSave->TankPawnState);
-
+	if(ATankWithInventory* PlayerTank = Cast<ATankWithInventory>(UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn()))
+	{
+		PlayerTank->LoadState(CurrentSave->TankPawnState);
+	}
+	
 	//copying TMap with pawns to avoid changes to it during for-ranged cycle. Clearing original TMap as well
 	auto PawnsToRestore = CurrentSave->EnemyPawns; 
 	CurrentSave->EnemyPawns.Empty();

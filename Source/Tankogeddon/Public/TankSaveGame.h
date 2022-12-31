@@ -35,7 +35,9 @@ struct FPawnState
 	int32 PlayerTotalScore; //for player character only
 
 	// call LoadInventory() (through GetInventoryManager() fields) in respective inventories on load game after nulling Starting Loadout!
+	UPROPERTY(BlueprintReadWrite)
 	TMap<int32, FInventorySlotInfo> InventoryContents;  //for main character only
+	UPROPERTY(BlueprintReadWrite)
 	TMap<int32, FInventorySlotInfo> EquipInventoryContents; //for main character only
 	
 	UPROPERTY(BlueprintReadWrite)
