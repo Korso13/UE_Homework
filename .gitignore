@@ -1,3 +1,4 @@
+.idea/*
 .vs/*
 Binaries/*
 Build/*
@@ -6,3 +7,7 @@ DerivedDataCache/*
 Intermediate/*
 Saved/*
 Plugins/Developer/*
+Plugins/*/Binaries/*
+Plugins/*/Intermediate/*
+Plugins/*/Build/*
+Plugins/*/Saved/*

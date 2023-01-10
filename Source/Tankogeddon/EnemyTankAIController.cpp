@@ -233,6 +233,11 @@ void AEnemyTankAIController::OnTargetsChanged()
 	FindBestTarget();
 }
 
+FVector AEnemyTankAIController::GetTargetLocation(AActor* RequestedBy) const
+{
+	return Super::GetTargetLocation(RequestedBy);
+}
+
 FVector AEnemyTankAIController::GetTargetLocation() const
 {
 	if (!TankPawn)

@@ -203,6 +203,12 @@ void ATankFactory::Tick(float DeltaTime)
 
 }
 
+float ATankFactory::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	return Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+}
+
 void ATankFactory::TakeDamage(FDamageInfo DamageData)
 {
 	HealthComponent->TakeDamage(DamageData);

@@ -29,6 +29,12 @@ void ADestructibleWall::OnDeath()
 	Destroy();
 }
 
+float ADestructibleWall::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	return Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+}
+
 void ADestructibleWall::TakeDamage(FDamageInfo DamageData)
 {
 	HealthComponent->TakeDamage(DamageData);

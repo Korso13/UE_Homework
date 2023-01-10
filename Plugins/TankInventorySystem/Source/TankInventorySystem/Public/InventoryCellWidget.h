@@ -59,7 +59,7 @@ public:
 	
 	FORCEINLINE const FInventorySlotInfo& GetItem() const { return Item; };
 
-	FORCEINLINE UInventoryComponent* GetParentInventory() const;
+	UInventoryComponent* GetParentInventory() const;
 
 	void Clear();
 

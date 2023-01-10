@@ -49,7 +49,10 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void OnNewButtonSelected(int32 InIndex) const;
 
+#if WITH_EDITOR
 	virtual const FText GetPaletteCategory() override;
+#endif
+	
 public:
 	void ReleaseSlateResources(bool bReleaseChildren);
 

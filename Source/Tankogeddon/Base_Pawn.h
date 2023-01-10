@@ -145,6 +145,8 @@ public:
 
 	FORCEINLINE FPawnState GetPawnState() const {return *PawnState;}
 
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	
 	virtual void TakeDamage(FDamageInfo DamageData) override;
 
 	virtual int32 GetScore() const override;

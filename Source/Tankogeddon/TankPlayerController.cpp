@@ -86,6 +86,11 @@ void ATankPlayerController::Tick(float DeltaTime)
 	}
 }
 
+FVector ATankPlayerController::GetTargetLocation(AActor* RequestedBy) const
+{
+	return Super::GetTargetLocation(RequestedBy);
+}
+
 void ATankPlayerController::MoveForward(float ForwardAxisImpulse)
 {
 	if (TankPawn)

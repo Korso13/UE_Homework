@@ -20,6 +20,7 @@ UInventoryManagerComponent::UInventoryManagerComponent()
 	// ...
 
 	ItemsData = CreateDefaultSubobject<UDataTable>("Loaded Data Table");
+	ItemsData->RowStruct = FInventoryItemInfo::StaticStruct();
 
 }
 
@@ -31,7 +32,10 @@ void UInventoryManagerComponent::BeginPlay()
 
 	//initializing Items Data Table if path is set and data table is not selected
 	if(!ItemsData)
+	{
 		ItemsData = NewObject<UDataTable>();
+		ItemsData->RowStruct = FInventoryItemInfo::StaticStruct();
+	}
 	if (!PathToItemsData.IsEmpty() && ItemsData)
 	{
 		FFileHelper::LoadFileToString(JSONData, PathToItemsData.GetCharArray().GetData());
@@ -214,6 +218,7 @@ void UInventoryManagerComponent::Init(UInventoryComponent* InInventory, EInvento
 						if (Row)
 						{
 							if (ItemsData)
+							{
 								if (ItemsData->FindRow<FInventoryItemInfo>(Row->ItemId, "")->ItemArchType == EItemArchType::ET_Currency)
 								{
 									LocalInventory->SetItem(-1, *Row);
@@ -223,6 +228,7 @@ void UInventoryManagerComponent::Init(UInventoryComponent* InInventory, EInvento
 									LocalInventory->SetItem(i, *Row);
 									i++;
 								}
+							}
 						}
 					}
 				}

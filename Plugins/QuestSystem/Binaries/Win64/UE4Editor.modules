@@ -1,9 +1,0 @@
-{
-	"BuildId": "17155196",
-	"Modules": 
-	{
-		"QuestEditor": "UE4Editor-QuestEditor.dll",
-		"QuestNPCSelector": "UE4Editor-QuestNPCSelector.dll",
-		"QuestSystem": "UE4Editor-QuestSystem.dll"
-	}
-}

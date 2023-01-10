@@ -199,6 +199,12 @@ void ABase_Pawn::OnTakingDamage_Implementation(FDamageInfo Damage)
 }
 
 
+float ABase_Pawn::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	return Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+}
+
 void ABase_Pawn::TakeDamage(FDamageInfo DamageData)
 {
 	HealthComponent->TakeDamage(DamageData);

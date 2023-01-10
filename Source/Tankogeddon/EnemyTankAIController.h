@@ -56,6 +56,8 @@ protected:
 
 	FDelegateHandle TargetChangedDelegate;
 public:
+	virtual FVector GetTargetLocation(AActor* RequestedBy = nullptr) const override;
+
 	virtual FVector GetTargetLocation() const override;
 
 	FORCEINLINE int32 GetCurrentWaypointIndex() const {return CurrentWaypointIndex;};

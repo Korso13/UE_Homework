@@ -35,7 +35,7 @@ public:
 	ATank* TankPawn = nullptr;
 
 protected:
-	TSharedPtr<GenericApplication, ESPMode::NotThreadSafe> App;
+	TSharedPtr<class GenericApplication> App;
 
 public:
 	ATankPlayerController();
@@ -48,6 +48,8 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	virtual FVector GetTargetLocation(AActor* RequestedBy = nullptr) const override;
+	
 	virtual FVector GetTargetLocation() const override;
 
 	void ToggleInventoryWindow();
