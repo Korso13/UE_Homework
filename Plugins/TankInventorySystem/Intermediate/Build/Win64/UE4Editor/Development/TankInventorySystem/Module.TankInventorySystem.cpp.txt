@@ -146,6 +146,7 @@ D:\UE_4.27\Engine\Source\Runtime\Engine\Public\Slate/SGameLayerManager.h
 D:\UE_4.27\Engine\Source\Runtime\Slate\Public\Widgets/SCanvas.h
 D:\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetBlueprintLibrary.generated.h
 D:/UE_projects/Homework/Plugins/TankInventorySystem/Source/TankInventorySystem/Private/InventoryComponent.cpp
+D:/UE_projects/Homework/Plugins/TankInventorySystem/Source/TankInventorySystem/Private/InventoryManagerComponent.cpp
 D:/UE_projects/Homework/Plugins/TankInventorySystem/Source/TankInventorySystem/Private/InventoryStructs.cpp
 D:/UE_projects/Homework/Plugins/TankInventorySystem/Source/TankInventorySystem/Private/InventoryWidget.cpp
 D:\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/UniformGridPanel.h
